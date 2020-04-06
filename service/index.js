@@ -44,11 +44,20 @@ app.get('/consultaTodosClientes', function (req, res) {
         // Executando a query MySQL (selecionar todos os dados da tabela usuário).
         connection.query('SELECT * FROM CLIENTE', function (error, results, fields) {
             // Caso ocorra algum erro, não irá executar corretamente.if (error) throw error;
+            if (isEmptyObject(results)) {
 
-            // Pegando a 'resposta' do servidor pra nossa requisição. Ou seja, aqui ele vai mandar nossos dados.
-            res.send(results)
-            console.log('Consulta de todos os clientes Realizada com Sucesso');
-            connection.destroy()
+                res.json({ Status: "Não existe nenhum cliente cadastrado", Code_Status: 00 });
+                connection.destroy();
+            } else {
+                // Pegando a 'resposta' do servidor pra nossa requisição. Ou seja, aqui ele vai mandar nossos dados.
+                res.send(results)
+                console.log('Consulta de todos os clientes Realizada com Sucesso');
+                connection.destroy()
+            }
+
+
+
+
         });
     });
 });
@@ -66,7 +75,7 @@ app.get('/consultaClienteId/:id', function (req, res) {
             // Pegando a 'resposta' do servidor pra nossa requisição. Ou seja, aqui ele vai mandar nossos dados.
             if (isEmptyObject(results)) {
 
-                res.json({ Status: "Informar um ID válido", Code_Status: 01 });
+                res.json({ Status: "Informar um ID válido", Code_Status: 00 });
                 connection.destroy();
             } else {
                 res.send(results)
@@ -91,16 +100,47 @@ app.get('/apagarClienteId/:id', function (req, res) {
             // Pegando a 'resposta' do servidor pra nossa requisição. Ou seja, aqui ele vai mandar nossos dados.
             if (results["affectedRows"] < 1) {
                 console.log('Não existe usuário para ser deletado');
-                res.json({ Status: "Informar um ID válido", Code_Status: 01 });
+                res.json({ Status: "Informar um ID válido", Code_Status: 00 });
                 connection.destroy();
             } else {
-                res.json({ Status: "Deleção Realizada com Sucesso", Code_Status: 02 })
-                
+                res.json({ Status: "Deleção Realizada com Sucesso", Code_Status: 01 })
+
             }
         });
     });
 
 })
+
+app.get('/realizarLogin/:login&:password', function (req, res) {
+
+    connection.getConnection(function (err, connection) {
+        //variavel para filtro
+        let filter_login = '';
+        let filter_password = '';
+        //validação se o id não está nulo
+        if (req.params.login) filter_login = "'"+ (req.params.login) + "'";
+        if (req.params.password) filter_password = 'AND CD_SENHA =' + "'" +  (req.params.password) + "'";
+        console.log(filter_login)
+        console.log(filter_password)
+        // Executando a query MySQL (selecionar todos os dados da tabela usuário).
+        connection.query('SELECT CD_LOGIN,CD_SENHA FROM LOGIN WHERE CD_LOGIN = '+ filter_login + filter_password, function (error, results, fields) {
+            // Pegando a 'resposta' do servidor pra nossa requisição. Ou seja, aqui ele vai mandar nossos dados.
+            if (isEmptyObject(results)) {
+
+                res.json({ Status: "Usuário ou Senha Inválido", Code_Status: 00 });
+                connection.destroy();
+            } else {
+                res.json({ Status: "Login Realizado com Sucesso", Code_Status: 01 });
+                connection.destroy();
+
+            }
+            
+        });
+    });
+
+})
+
+
 
 
 
