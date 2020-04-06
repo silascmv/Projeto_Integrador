@@ -35,7 +35,7 @@ const router = express.Router();
 router.get('/', (req, res) => res.json({ message: 'API Funcionando!' }));
 app.use('/', router);
 
-
+// -------------SEÇÃO DE API PARA CLIENTE-----------------
 //CONSULTAR TODOS OS CLIENTE
 app.get('/consultaTodosClientes', function (req, res) {
     // Conectando ao banco para usar na API.
@@ -54,9 +54,6 @@ app.get('/consultaTodosClientes', function (req, res) {
                 console.log('Consulta de todos os clientes Realizada com Sucesso');
                 connection.destroy()
             }
-
-
-
 
         });
     });
@@ -88,7 +85,7 @@ app.get('/consultaClienteId/:id', function (req, res) {
 
 
 //EXCLUINDO CLIENTE POR ID
-app.get('/apagarClienteId/:id', function (req, res) {
+app.delete('/apagarClienteId/:id', function (req, res) {
 
     connection.getConnection(function (err, connection) {
         //variavel para filtro
@@ -120,8 +117,6 @@ app.get('/realizarLogin/:login&:password', function (req, res) {
         //validação se o id não está nulo
         if (req.params.login) filter_login = "'"+ (req.params.login) + "'";
         if (req.params.password) filter_password = 'AND CD_SENHA =' + "'" +  (req.params.password) + "'";
-        console.log(filter_login)
-        console.log(filter_password)
         // Executando a query MySQL (selecionar todos os dados da tabela usuário).
         connection.query('SELECT CD_LOGIN,CD_SENHA FROM LOGIN WHERE CD_LOGIN = '+ filter_login + filter_password, function (error, results, fields) {
             // Pegando a 'resposta' do servidor pra nossa requisição. Ou seja, aqui ele vai mandar nossos dados.
@@ -139,11 +134,6 @@ app.get('/realizarLogin/:login&:password', function (req, res) {
     });
 
 })
-
-
-
-
-
 
 // Iniciando o servidor.
 app.listen(4000, () => {
