@@ -136,6 +136,6 @@ app.get('/realizarLogin/:login&:password', function (req, res) {
 })
 
 // Iniciando o servidor.
-app.listen(4000, () => {
+app.listen(8080, () => {
     console.log('Service is UP - LocalHost:4000');
 });
