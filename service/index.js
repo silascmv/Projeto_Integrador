@@ -5,7 +5,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const mysql = require('mysql');
-const mysql = require('cors');
+const cors = require('cors');
 //Verificar se o Objeto está vazio
 function isEmptyObject(obj) {
     return !Object.keys(obj).length;
