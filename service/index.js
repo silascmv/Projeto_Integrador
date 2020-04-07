@@ -5,7 +5,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const mysql = require('mysql');
-
+const mysql = require('cors');
 //Verificar se o Objeto está vazio
 function isEmptyObject(obj) {
     return !Object.keys(obj).length;
@@ -26,7 +26,7 @@ const port = 3000; //porta padrão
 //configurando o body parser para pegar POSTS mais tarde
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-
+app.use(cors());
 //Definindo Rotas
 const router = express.Router();
 
