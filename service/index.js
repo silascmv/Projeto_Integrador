@@ -1,11 +1,22 @@
 /* eslint-disable handle-callback-err */
 /* eslint-disable prettier/prettier */
 // Isso aqui é no arquivo routes.js!
-//IMPORTAÇÃO EXPRESS(API),MYSQL(DATABASE),BODYPARSER(JSON)
+//IMPORTAÇÃO DE BIBLIOTECAS EXPRESS(API),MYSQL(DATABASE),BODYPARSER(JSON)
 const express = require('express');
 const bodyParser = require('body-parser');
 const mysql = require('mysql');
 const cors = require('cors');
+const https = require('https');
+const fs = require('fs');
+var path = require('path');
+
+
+
+
+
+
+
+
 //Verificar se o Objeto está vazio
 function isEmptyObject(obj) {
     return !Object.keys(obj).length;
@@ -135,7 +146,19 @@ app.get('/realizarLogin/:login&:password', function (req, res) {
 
 })
 
-// Iniciando o servidor.
-app.listen(8080, () => {
-    console.log('Service is UP - LocalHost:4000');
-});
+
+//CONFIGURAÇÃO PARA HTTPS,VÁRIAVIES PARA CERTIFICADO.
+//var key = fs.readFileSync(path.resolve('./service/key.pem'));
+//var cert = fs.readFileSync(path.resolve('./service/cert.pem'));
+
+console.log("Chegou aqui")
+
+
+https.createServer({
+    key: fs.readFileSync(__dirname + '/key.pem'),
+    cert: fs.readFileSync(__dirname + '/cert.pem'),
+    passphrase: 'keypem'
+  }, app)
+  .listen(8080, function () {
+    console.log('Example app listening on port 8080! Go to https://localhost:8080/')
+  })
