@@ -12,11 +12,6 @@ var path = require('path');
 
 
 
-
-
-
-
-
 //Verificar se o Objeto está vazio
 function isEmptyObject(obj) {
     return !Object.keys(obj).length;
@@ -150,15 +145,15 @@ app.get('/realizarLogin/:login&:password', function (req, res) {
 //CONFIGURAÇÃO PARA HTTPS,VÁRIAVIES PARA CERTIFICADO.
 //var key = fs.readFileSync(path.resolve('./service/key.pem'));
 //var cert = fs.readFileSync(path.resolve('./service/cert.pem'));
-
-console.log("Chegou aqui")
-
-
-https.createServer({
+/*https.createServer({
     key: fs.readFileSync(__dirname + '/key.pem'),
     cert: fs.readFileSync(__dirname + '/cert.pem'),
     passphrase: 'keypem'
   }, app)
   .listen(8080, function () {
     console.log('Example app listening on port 8080! Go to https://localhost:8080/')
-  })
+  }) */
+
+app.listen(8080, () => {
+    console.log('Service is UP - LocalHost:4000');
+});
