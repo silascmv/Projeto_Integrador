@@ -41,6 +41,36 @@ const router = express.Router();
 router.get('/', (req, res) => res.json({ message: 'API Funcionando!' }));
 app.use('/', router);
 
+
+app.get('/inserirclienteteste', function (req, res) {
+    // Conectando ao banco para usar na API.
+    connection.getConnection(function (err, connection) {
+
+        const cd_login = 'teste_01'
+        const cd_senha = 'senha01'
+        const sn_ativo_login = 1;
+        const tp_login = 'cliente'
+
+        var query = 'INSERT INTO LOGIN VALUES ('
+            + 'NULL,'
+            + "'" + cd_login + "'" + ','
+            + "'" + cd_senha + "'" + ','
+            + sn_ativo_login + ','
+            + "'" + tp_login + "'" + ')'
+
+        console.log("Query" + query);
+
+
+        // Executando a query MySQL (selecionar todos os dados da tabela usuário).
+        connection.query(query, function (error, results, fields) {
+
+            console.log("Executou query");
+
+        });
+    });
+});
+
+
 // -------------SEÇÃO DE API PARA CLIENTE-----------------
 //CONSULTAR TODOS OS CLIENTE
 app.get('/consultaTodosClientes', function (req, res) {
@@ -121,10 +151,10 @@ app.get('/realizarLogin/:login&:password', function (req, res) {
         let filter_login = '';
         let filter_password = '';
         //validação se o id não está nulo
-        if (req.params.login) filter_login = "'"+ (req.params.login) + "'";
-        if (req.params.password) filter_password = 'AND CD_SENHA =' + "'" +  (req.params.password) + "'";
+        if (req.params.login) filter_login = "'" + (req.params.login) + "'";
+        if (req.params.password) filter_password = 'AND CD_SENHA =' + "'" + (req.params.password) + "'";
         // Executando a query MySQL (selecionar todos os dados da tabela usuário).
-        connection.query('SELECT CD_LOGIN,CD_SENHA FROM LOGIN WHERE CD_LOGIN = '+ filter_login + filter_password, function (error, results, fields) {
+        connection.query('SELECT CD_LOGIN,CD_SENHA FROM LOGIN WHERE CD_LOGIN = ' + filter_login + filter_password, function (error, results, fields) {
             // Pegando a 'resposta' do servidor pra nossa requisição. Ou seja, aqui ele vai mandar nossos dados.
             if (isEmptyObject(results)) {
 
@@ -133,13 +163,88 @@ app.get('/realizarLogin/:login&:password', function (req, res) {
             } else {
                 res.json({ Status: "Login Realizado com Sucesso", Code_Status: 01 });
                 connection.destroy();
-
             }
-            
+
+
         });
     });
 
 })
+
+
+app.post('/addCliente/', (req, res) => {
+
+    connection.getConnection(function (err, connection) {
+
+        async function insertCliente(req) {
+
+            try {
+
+            var cd_login = req.param('cd_login');
+            console.log(cd_login);
+            var cd_senha = req.param('cd_senha');
+            console.log(cd_senha);
+            var sn_ativo_login = 1;
+            var tp_login = 'cliente'
+
+            var query = 'INSERT INTO LOGIN VALUES ('
+                + 'NULL,'
+                + "'" + cd_login + "'" + ','
+                + "'" + cd_senha + "'" + ','
+                + sn_ativo_login + ','
+                + "'" + tp_login + "'" + ')'
+
+
+                connection.query(query, function (error, results, fields) {
+                    console.log(results);
+                    if (error);
+                    return results;
+                
+                });
+
+                console.log("Fim do TRY");
+                
+            } catch (error) {
+
+                throw new Error(err);
+                
+            }
+
+            
+
+        }
+
+        insertCliente(req,(error,  res) => {
+
+            if(error) res.send(error);
+            res.json(res);
+
+        });
+
+
+        
+
+        // Executando a query MySQL (selecionar todos os dados da tabela usuário).
+        /*connection.query(query, function (error, results, fields) {
+            
+            console.log("Executou query");
+            console.log(results);
+            console.log(fields);
+            res.send(results);
+            connection.destroy();
+
+        });*/
+    });
+
+
+    //criar função para pegar o login;
+    //    const id_login;
+    //const nome = req.body.nome.substring(0, 150);
+    //const sn_ativo_cliente = 1;
+    //const telefone = req.body.telefone.substring(0, 11);
+    //const celular = req.body.celular.substring(0, 11);
+
+});
 
 
 //CONFIGURAÇÃO PARA HTTPS,VÁRIAVIES PARA CERTIFICADO.
@@ -155,5 +260,5 @@ app.get('/realizarLogin/:login&:password', function (req, res) {
   }) */
 
 app.listen(8080, () => {
-    console.log('Service is UP - LocalHost:4000');
+    console.log('Service is UP - LocalHost:8080');
 });
