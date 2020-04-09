@@ -9,7 +9,8 @@ const cors = require('cors');
 const https = require('https');
 const fs = require('fs');
 var path = require('path');
-
+var DataAcessLayer = require((__dirname)+"/dal.js");
+var dal = new DataAcessLayer();
 
 
 //Verificar se o Objeto está vazio
@@ -46,20 +47,10 @@ app.get('/inserirclienteteste', function (req, res) {
     // Conectando ao banco para usar na API.
     connection.getConnection(function (err, connection) {
 
-        const cd_login = 'teste_01'
-        const cd_senha = 'senha01'
-        const sn_ativo_login = 1;
-        const tp_login = 'cliente'
+        //Função para Inserir Clientes
+        var retorno = dal.insertCliente(req);
 
-        var query = 'INSERT INTO LOGIN VALUES ('
-            + 'NULL,'
-            + "'" + cd_login + "'" + ','
-            + "'" + cd_senha + "'" + ','
-            + sn_ativo_login + ','
-            + "'" + tp_login + "'" + ')'
-
-        console.log("Query" + query);
-
+        console.log(retorno);
 
         // Executando a query MySQL (selecionar todos os dados da tabela usuário).
         connection.query(query, function (error, results, fields) {
