@@ -43,21 +43,19 @@ router.get('/', (req, res) => res.json({ message: 'API Funcionando!' }));
 app.use('/', router);
 
 
-app.get('/inserirclienteteste', function (req, res) {
+app.post('/addCliente', function (req, res) {
     // Conectando ao banco para usar na API.
     connection.getConnection(function (err, connection) {
 
         //Função para Inserir Clientes
-        var retorno = dal.insertCliente(req);
-
+        console.log('Antes da Função');
+        const retorno = dal.insertCliente(req,connection);
         console.log(retorno);
+        res.send(retorno);
 
+        
         // Executando a query MySQL (selecionar todos os dados da tabela usuário).
-        connection.query(query, function (error, results, fields) {
-
-            console.log("Executou query");
-
-        });
+        
     });
 });
 
@@ -163,79 +161,6 @@ app.get('/realizarLogin/:login&:password', function (req, res) {
 })
 
 
-app.post('/addCliente/', (req, res) => {
-
-    connection.getConnection(function (err, connection) {
-
-        async function insertCliente(req) {
-
-            try {
-
-            var cd_login = req.param('cd_login');
-            console.log(cd_login);
-            var cd_senha = req.param('cd_senha');
-            console.log(cd_senha);
-            var sn_ativo_login = 1;
-            var tp_login = 'cliente'
-
-            var query = 'INSERT INTO LOGIN VALUES ('
-                + 'NULL,'
-                + "'" + cd_login + "'" + ','
-                + "'" + cd_senha + "'" + ','
-                + sn_ativo_login + ','
-                + "'" + tp_login + "'" + ')'
-
-
-                connection.query(query, function (error, results, fields) {
-                    console.log(results);
-                    if (error);
-                    return results;
-                
-                });
-
-                console.log("Fim do TRY");
-                
-            } catch (error) {
-
-                throw new Error(err);
-                
-            }
-
-            
-
-        }
-
-        insertCliente(req,(error,  res) => {
-
-            if(error) res.send(error);
-            res.json(res);
-
-        });
-
-
-        
-
-        // Executando a query MySQL (selecionar todos os dados da tabela usuário).
-        /*connection.query(query, function (error, results, fields) {
-            
-            console.log("Executou query");
-            console.log(results);
-            console.log(fields);
-            res.send(results);
-            connection.destroy();
-
-        });*/
-    });
-
-
-    //criar função para pegar o login;
-    //    const id_login;
-    //const nome = req.body.nome.substring(0, 150);
-    //const sn_ativo_cliente = 1;
-    //const telefone = req.body.telefone.substring(0, 11);
-    //const celular = req.body.celular.substring(0, 11);
-
-});
 
 
 //CONFIGURAÇÃO PARA HTTPS,VÁRIAVIES PARA CERTIFICADO.

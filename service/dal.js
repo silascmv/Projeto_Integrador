@@ -9,29 +9,57 @@ class DataAcessLayer {
         const fs = require('fs');
         var path = require('path');
 
-    }
+    };
 
-    insertCliente(req){
 
-        const cd_login = 'teste_01'
-        const cd_login_request =  req.param('cd_login');
+
+    insertCliente(req, connection) {
+
+
+
+        let cd_login_request = req.param("cd_login");
         console.log(cd_login_request)
-        const cd_senha = 'senha01'
-        const cd_senha_request = req.param("cd_senha");
+        let cd_senha_request = req.param("cd_senha");
         console.log(cd_senha_request)
-        const sn_ativo_login = 1;
-        const tp_login = 'cliente'
+        let sn_ativo_login = 1;
+        let tp_login = 'cliente'
+        var resultado_sql = '';
 
         var query = 'INSERT INTO LOGIN VALUES ('
             + 'NULL,'
-            + "'" + cd_login + "'" + ','
-            + "'" + cd_senha + "'" + ','
+            + "'" + cd_login_request + "'" + ','
+            + "'" + cd_senha_request + "'" + ','
             + sn_ativo_login + ','
             + "'" + tp_login + "'" + ')'
 
-        console.log("Query" + query);
+        console.log("Query ----> " + query);
 
-        return query;
+        try {
+
+            const retorno_sql = connection.query(query, function (err, results, fields) {
+                if (!err) {
+
+                    console.log("Chegou aqui")
+                    console.log("Usuário Inserido com Sucesso");
+                    console.log(results);
+                    return results;
+                } else if(err.code === 'ER_DUP_ENTRY'){
+                    console.log('Já existe um usuário com esse ID');
+                }
+
+                
+            });
+
+            
+
+        } catch (err) {
+
+
+          console.log("Errrrrrrouuuuur");
+
+        }
+
+
 
     }
 
