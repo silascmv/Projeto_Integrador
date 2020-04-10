@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="aef16c1a-6c49-4ad3-804b-8c4aaa7405b3" name="Default Changelist" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ComposerSettings">
+    <execution>
+      <executable />
+    </execution>
+  </component>
+  <component name="ProjectId" id="1aE1t3bxpYGwk8iFPXxO4u7joYX" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+  </component>
+  <component name="RunManager">
+    <configuration name="teste.php" type="PhpLocalRunConfigurationType" factoryName="PHP Console" temporary="true" path="$PROJECT_DIR$/WEB/_projeto-meu-cardapio/_php/teste.php">
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="PHP Script.teste.php" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="aef16c1a-6c49-4ad3-804b-8c4aaa7405b3" name="Default Changelist" comment="" />
+      <created>1586286156207</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1586286156207</updated>
+      <workItem from="1586286167938" duration="405000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="263" y="22" key="#CLI_Interpreters" timestamp="1586286575438">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="263" y="22" key="#CLI_Interpreters/0.0.1366.728/1366.-167.1920.1040@0.0.1366.728" timestamp="1586286575438" />
+    <state x="275" y="26" key="#Deployment" timestamp="1586286571424">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="275" y="26" key="#Deployment/0.0.1366.728/1366.-167.1920.1040@0.0.1366.728" timestamp="1586286571424" />
+    <state x="406" y="0" key="#PHP" timestamp="1586286576768">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="406" y="0" key="#PHP/0.0.1366.728/1366.-167.1920.1040@0.0.1366.728" timestamp="1586286576768" />
+    <state x="409" y="79" key="#teste.php" timestamp="1586286577801">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="409" y="79" key="#teste.php/0.0.1366.728/1366.-167.1920.1040@0.0.1366.728" timestamp="1586286577801" />
+    <state x="463" y="120" key="FileChooserDialogImpl" timestamp="1586286560486">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="463" y="120" key="FileChooserDialogImpl/0.0.1366.728/1366.-167.1920.1040@0.0.1366.728" timestamp="1586286560486" />
+    <state x="547" y="272" key="WebDeployment.AddServerDialog.v.1" timestamp="1586286569202">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="547" y="272" key="WebDeployment.AddServerDialog.v.1/0.0.1366.728/1366.-167.1920.1040@0.0.1366.728" timestamp="1586286569202" />
+    <state x="390" y="191" key="com.intellij.ide.util.TipDialog" timestamp="1586286170429">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="390" y="191" key="com.intellij.ide.util.TipDialog/0.0.1366.728/1366.-167.1920.1040@0.0.1366.728" timestamp="1586286170429" />
+  </component>
+</project>
