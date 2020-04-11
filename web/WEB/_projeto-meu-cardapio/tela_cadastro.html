@@ -19,19 +19,36 @@
 			<form class="form-detail" action="_php/teste_cadastro.php" method="post" id="myform">
 				<div class="form-row">
 					<label for="username">USUÁRIO</label>
-					<input type="text" name="username" id="username" class="input-text" required>
+					<input type="text" name="username" id="username" class="input-text" maxlength="30" placeholder="Digite seu Usuário" required>
 				</div>
 				<div class="form-row">
 					<label for="your_email">E-MAIL</label>
-					<input type="text" name="your_email" id="your_email" class="input-text" required pattern="[^@]+@[^@]+.[a-zA-Z]{2,6}" title="Formato Inválido." > <!-- Eu usei o "required pattern" para fazer a validação e o "title" para dar a msg de erro  -->
+					<input type="text" name="your_email" id="your_email" class="input-text" placeholder="Digite seu E-mail" required pattern="[^@]+@[^@]+.[a-zA-Z]{2,6}" title="Formato Inválido." >
 				</div>
-				<div class="form-row">
+<div class="form-row">
 					<label for="password">SENHA</label>
-					<input type="password" name="password" id="password" class="input-text" required pattern=".{8,}" title="Sua senha precisa ter 8 caracteres ou mais.">
+					<input type="password" name="password" id="password" class="input-text" placeholder="Digite sua Senha" required pattern=".{8,}" title="Sua senha precisa ter 8 caracteres ou mais.">
 				</div>
 				<div class="form-row">
 					<label for="comfirm_password">CONFIRME SUA SENHA</label>
-					<input type="password" name="comfirm_password" id="comfirm_password" class="input-text" required>
+					<input type="password" name="comfirm_password" id="comfirm_password" class="input-text" placeholder="Confirme sua Senha" required>
+				</div>
+				<div class="form-row">
+					<label for="name">NOME</label>
+					<input type="text" name="name" id="name" class="input-text" maxlength="80" placeholder="Digite seu Nome" required pattern="[a-zA-Z]" title="Esse campo é obrigatório.">
+				</div>
+				<div class="form-row">
+					<label for="address">ENDEREÇO</label>
+					<input type="text" name="address" id="address" class="input-text" placeholder="Digite seu Endereço"required pattern="[a-zA-Z]" title="Esse campo é 
+					obrigatório.">
+				</div>
+				<div class="form-row">
+					<label for="telephone">TELEFONE</label>
+					<input type="number" name="telephone" id="telephone" class="input-text" maxlenght="11" placeholder="Digite seu Telefone:">
+				</div>
+				<div class="form-row">
+					<label for="cellphone">CELULAR</label>
+					<input type="number" name="cellphone" id="cellphone" class="input-text" maxlenght="11" placeholder="Digite seu Telefone Celular:">
 				</div>
 				<div class="form-row-last">
 					<input type="submit" name="register" class="register" value="Cadastrar">
