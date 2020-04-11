@@ -155,7 +155,7 @@ app.get('/realizarLogin/:login&:password', function (req, res) {
             console.log(results);
             if (isEmptyObject(results)) {
 
-                res.json({ status: "Usuário ou Senha Inválido", code_status: 00 });
+                res.json({ status: "Usuario ou Senha Invalido", code_status: 00 });
                 pool.destroy();
             } else {
                 res.json({ Status: "Login Realizado com Sucesso", code_status: 01 });
