@@ -1,6 +1,5 @@
 package com.example.meucardapio.service;
 
-import com.google.gson.Gson;
 
 import android.os.AsyncTask;
 import android.util.Log;
