@@ -5,25 +5,18 @@ class DataAcessLayer {
         const bodyParser = require('body-parser');
         const mysql = require('mysql');
         const cors = require('cors');
-        const https = require('https');
-        const fs = require('fs');
-        var path = require('path');
 
     };
 
 
 
-    insertCliente(req, connection) {
-
+    insertLogin(req, res, pool) {
 
 
         let cd_login_request = req.param("cd_login");
-        console.log(cd_login_request)
         let cd_senha_request = req.param("cd_senha");
-        console.log(cd_senha_request)
         let sn_ativo_login = 1;
         let tp_login = 'cliente'
-        var resultado_sql = '';
 
         var query = 'INSERT INTO LOGIN VALUES ('
             + 'NULL,'
@@ -32,41 +25,73 @@ class DataAcessLayer {
             + sn_ativo_login + ','
             + "'" + tp_login + "'" + ')'
 
-        console.log("Query ----> " + query);
-
-        try {
-
-            const retorno_sql = connection.query(query, function (err, results, fields) {
+        return new Promise((resolve, reject) => {
+            pool.query(query, res, function (err, results, fields) {
                 if (!err) {
+                    var resultado = JSON.parse('{"Resultado":"Login Criado com Sucesso","Code_Status":"01"}');
+                    resolve(results.insertId);
 
-                    console.log("Chegou aqui")
-                    console.log("Usuário Inserido com Sucesso");
-                    console.log(results);
-                    return results;
-                } else if(err.code === 'ER_DUP_ENTRY'){
-                    console.log('Já existe um usuário com esse ID');
+                } else if (err.code === 'ER_DUP_ENTRY') {
+                    var resultado = JSON.parse('{"Resultado":"Já existe um usuário com esse ID","Code_Status":"02"}');
+                    resolve(resultado);
+
+                } else {
+                    reject(err);
+
                 }
-
-                
             });
 
-            
 
-        } catch (err) {
+        })
 
 
-          console.log("Errrrrrrouuuuur");
-
-        }
 
 
 
     }
 
+    insertCliente(req, res, pool, id_login) {
+
+        let nome = req.param("nome");
+        let email = req.param("email");
+        let endereco = req.param("endereco");
+        let sn_ativo = 1;
+        let telefone = req.param("telefone");
+        let celular = req.param("celular");
+
+        var query = 'INSERT INTO CLIENTE VALUES ('
+            + 'NULL,'
+            + "'" + id_login + "'" + ","
+            + "'" + nome + "'" + ','
+            + "'" + email + "'" + ','
+            + "'" + endereco + "'" + ','
+            + sn_ativo + ','
+            + "'" + telefone + "'" + ','
+            + "'" + celular + "'" + ')'
+
+        return new Promise((resolve, reject) => {
+            pool.query(query, res, function (err, results, fields) {
+                if (!err) {
+                    var resultado_cliente = JSON.parse('{"Resultado":"Cliente Cadastrado com Sucesso","Code_Status":"01"}');
+                    resolve(resultado_cliente);
+
+                } else if (err.code === 'ER_DUP_ENTRY') {
+                    var resultado_cliente = JSON.parse('{"Resultado":"Já existe um Cliente com esse E-mail Cadastrado","Code_Status":"02"}');
+                    resolve(resultado_cliente);
+                } else {
+                    reject(err);
+
+                }
+            });
+
+
+        })
 
 
 
 
+
+    }
 
 
 }

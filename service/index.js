@@ -1,34 +1,23 @@
-/* eslint-disable handle-callback-err */
-/* eslint-disable prettier/prettier */
-// Isso aqui é no arquivo routes.js!
 //IMPORTAÇÃO DE BIBLIOTECAS EXPRESS(API),MYSQL(DATABASE),BODYPARSER(JSON)
 const express = require('express');
 const bodyParser = require('body-parser');
-const mysql = require('mysql');
 const cors = require('cors');
-const https = require('https');
-const fs = require('fs');
-var path = require('path');
-var DataAcessLayer = require((__dirname)+"/dal.js");
-var dal = new DataAcessLayer();
 
+
+
+
+//APP INICIANDO O EXPRESS
+const app = express();
+//CONEXÃO COM O BANCO - IMPORTAÇÃO DA CLASSE DE CONEXÃO
+var pool = require(__dirname + '/database.js');
+//CLASSE QUE REALIZA AS TRANSAÇÕES COM O BANCO
+var DataAcessLayer = require((__dirname) + "/dal.js");
+var dal = new DataAcessLayer();
 
 //Verificar se o Objeto está vazio
 function isEmptyObject(obj) {
     return !Object.keys(obj).length;
 }
-
-//CONEXÃO COM O BANCO
-const connection = mysql.createPool({
-    host: 'remotemysql.com',
-    user: 'wIp1MpiKOt',
-    password: 'pyiEqBNdgy',
-    database: 'wIp1MpiKOt',
-});
-//APP INICIANDO O EXPRESS
-const app = express();
-//PORTA NO QUAL A API IRA EXECUTAR
-const port = 3000; //porta padrão
 
 //configurando o body parser para pegar POSTS mais tarde
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -36,27 +25,43 @@ app.use(bodyParser.json());
 app.use(cors());
 //Definindo Rotas
 const router = express.Router();
-
 //Criação de API'S
 //Acessando HOME e Informando que o serviço está ON
 router.get('/', (req, res) => res.json({ message: 'API Funcionando!' }));
 app.use('/', router);
 
-
 app.post('/addCliente', function (req, res) {
-    // Conectando ao banco para usar na API.
-    connection.getConnection(function (err, connection) {
+    //Abrindo Conexão com o Banco de Dados (Objeto Pool Importado da Classe DataBase)
+    pool.getConnection(function (err, pool) {
+        const objeto_dal = new DataAcessLayer();
+        async function realizarCadastro() {
+            const resultados_login = await objeto_dal.insertLogin(req, res, pool).then(resultado => {
+                return resultado;
+            });
 
-        //Função para Inserir Clientes
-        console.log('Antes da Função');
-        const retorno = dal.insertCliente(req,connection);
-        console.log(retorno);
-        res.send(retorno);
+            if (Number(resultados_login.Code_Status) === 2) {
+                res.send(resultados_login);
+                return;
+            } else {
+                const resultado = await objeto_dal.insertCliente(req, res, pool, resultados_login).then(resultado_cliente => {
+                    if (typeof (resultado_cliente) !== 'number') {
+                        res.send(resultado_cliente);
+                    } else {
+                        res.send(resultado_cliente)
+                    }
+                    pool.destroy();
+                });
+            }
 
-        
-        // Executando a query MySQL (selecionar todos os dados da tabela usuário).
-        
+        }
+
+        realizarCadastro();
+
+
     });
+
+
+
 });
 
 
@@ -64,20 +69,20 @@ app.post('/addCliente', function (req, res) {
 //CONSULTAR TODOS OS CLIENTE
 app.get('/consultaTodosClientes', function (req, res) {
     // Conectando ao banco para usar na API.
-    connection.getConnection(function (err, connection) {
+    pool.getConnection(function (err, pool) {
 
         // Executando a query MySQL (selecionar todos os dados da tabela usuário).
-        connection.query('SELECT * FROM CLIENTE', function (error, results, fields) {
+        pool.query('SELECT * FROM CLIENTE', function (error, results, fields) {
             // Caso ocorra algum erro, não irá executar corretamente.if (error) throw error;
             if (isEmptyObject(results)) {
 
                 res.json({ Status: "Não existe nenhum cliente cadastrado", Code_Status: 00 });
-                connection.destroy();
+                pool.destroy();
             } else {
                 // Pegando a 'resposta' do servidor pra nossa requisição. Ou seja, aqui ele vai mandar nossos dados.
                 res.send(results)
                 console.log('Consulta de todos os clientes Realizada com Sucesso');
-                connection.destroy()
+                pool.destroy()
             }
 
         });
@@ -87,18 +92,18 @@ app.get('/consultaTodosClientes', function (req, res) {
 //CONSULTANDO CLIENTE POR ID
 app.get('/consultaClienteId/:id', function (req, res) {
     // Conectando ao banco para usar na API.
-    connection.getConnection(function (err, connection) {
+    pool.getConnection(function (err, pool) {
         //variavel para filtro
         let filter = '';
         //validação se o id não está nulo
         if (req.params.id) filter = parseInt(req.params.id);
         // Executando a query MySQL (selecionar todos os dados da tabela usuário).
-        connection.query('SELECT * FROM CLIENTE WHERE ID_CLIENTE = ' + filter, function (error, results, fields) {
+        pool.query('SELECT * FROM CLIENTE WHERE ID_CLIENTE = ' + filter, function (error, results, fields) {
             // Pegando a 'resposta' do servidor pra nossa requisição. Ou seja, aqui ele vai mandar nossos dados.
             if (isEmptyObject(results)) {
 
                 res.json({ Status: "Informar um ID válido", Code_Status: 00 });
-                connection.destroy();
+                pool.destroy();
             } else {
                 res.send(results)
                 console.log('Consulta por id Realizada com Sucesso');
@@ -112,18 +117,18 @@ app.get('/consultaClienteId/:id', function (req, res) {
 //EXCLUINDO CLIENTE POR ID
 app.delete('/apagarClienteId/:id', function (req, res) {
 
-    connection.getConnection(function (err, connection) {
+    pool.getConnection(function (err, pool) {
         //variavel para filtro
         let filter = '';
         //validação se o id não está nulo
         if (req.params.id) filter = parseInt(req.params.id);
         // Executando a query MySQL (selecionar todos os dados da tabela usuário).
-        connection.query('DELETE FROM CLIENTE WHERE ID_CLIENTE = ' + filter, function (error, results, fields) {
+        pool.query('DELETE FROM CLIENTE WHERE ID_CLIENTE = ' + filter, function (error, results, fields) {
             // Pegando a 'resposta' do servidor pra nossa requisição. Ou seja, aqui ele vai mandar nossos dados.
             if (results["affectedRows"] < 1) {
                 console.log('Não existe usuário para ser deletado');
                 res.json({ Status: "Informar um ID válido", Code_Status: 00 });
-                connection.destroy();
+                pool.destroy();
             } else {
                 res.json({ Status: "Deleção Realizada com Sucesso", Code_Status: 01 })
 
@@ -135,23 +140,26 @@ app.delete('/apagarClienteId/:id', function (req, res) {
 
 app.get('/realizarLogin/:login&:password', function (req, res) {
 
-    connection.getConnection(function (err, connection) {
+    pool.getConnection(function (err, pool) {
         //variavel para filtro
         let filter_login = '';
         let filter_password = '';
         //validação se o id não está nulo
         if (req.params.login) filter_login = "'" + (req.params.login) + "'";
+        console.log(filter_login);
         if (req.params.password) filter_password = 'AND CD_SENHA =' + "'" + (req.params.password) + "'";
         // Executando a query MySQL (selecionar todos os dados da tabela usuário).
-        connection.query('SELECT CD_LOGIN,CD_SENHA FROM LOGIN WHERE CD_LOGIN = ' + filter_login + filter_password, function (error, results, fields) {
+        pool.query('SELECT CD_LOGIN,CD_SENHA FROM LOGIN WHERE CD_LOGIN = ' + filter_login + filter_password, function (error, results, fields) {
             // Pegando a 'resposta' do servidor pra nossa requisição. Ou seja, aqui ele vai mandar nossos dados.
+
+            console.log(results);
             if (isEmptyObject(results)) {
 
                 res.json({ Status: "Usuário ou Senha Inválido", Code_Status: 00 });
-                connection.destroy();
+                pool.destroy();
             } else {
                 res.json({ Status: "Login Realizado com Sucesso", Code_Status: 01 });
-                connection.destroy();
+                pool.destroy();
             }
 
 
