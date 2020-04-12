@@ -72,11 +72,11 @@ class DataAcessLayer {
         return new Promise((resolve, reject) => {
             pool.query(query, res, function (err, results, fields) {
                 if (!err) {
-                    var resultado_cliente = JSON.parse('{"Resultado":"Cliente Cadastrado com Sucesso","Code_Status":"01"}');
+                    var resultado_cliente = JSON.parse('{"status":"Cliente Cadastrado com Sucesso","code_status":"01"}');
                     resolve(resultado_cliente);
 
                 } else if (err.code === 'ER_DUP_ENTRY') {
-                    var resultado_cliente = JSON.parse('{"Resultado":"Já existe um Cliente com esse E-mail Cadastrado","Code_Status":"02"}');
+                    var resultado_cliente = JSON.parse('{"status":"Já existe um Cliente com esse E-mail Cadastrado","code_status":"02"}');
                     resolve(resultado_cliente);
                 } else {
                     reject(err);
