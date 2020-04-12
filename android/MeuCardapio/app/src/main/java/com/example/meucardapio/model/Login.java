@@ -7,9 +7,11 @@ public class Login {
     private String senhaUsuario;
     private String emailUsuario;
     private String resposta;
+    private String code_status;
 
-    public Login(String resposta){
+    public Login(String resposta, String code_status){
         this.resposta=resposta;
+        this.code_status=code_status;
 
     }
     public String getResposta() {

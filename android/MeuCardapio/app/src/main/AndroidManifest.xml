@@ -14,6 +14,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:targetApi="n">
+        <activity android:name=".MainActivityPrincipalUsuario"></activity>
+
         <meta-data
             android:name="com.google.android.actions"
             android:resource="@xml/network_security_config" />
