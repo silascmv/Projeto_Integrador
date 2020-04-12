@@ -7,5 +7,5 @@ function login() {
       'Accept': 'application/json',
       'Content-Type': 'application/json'
     },
-}).then(response => response.json()).then(data => alert(data.Status));
+}).then(response => response.json()).then(data => alert(data.status));
 }
