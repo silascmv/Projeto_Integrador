@@ -13,5 +13,5 @@ function cadastro() {
       'Content-Type': 'application/json'
     },
 
-}).then(response => response.json()).then(data => alert(data.Resultado));
+}).then(response => response.json()).then(data => alert(data.status));
 }
