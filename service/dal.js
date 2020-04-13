@@ -69,6 +69,8 @@ class DataAcessLayer {
             + "'" + telefone + "'" + ','
             + "'" + celular + "'" + ')'
 
+            console.log('QUERRRYYYYYYYY----->' + query);
+
         return new Promise((resolve, reject) => {
             pool.query(query, res, function (err, results, fields) {
                 if (!err) {
