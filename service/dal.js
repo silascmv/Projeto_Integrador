@@ -53,6 +53,7 @@ class DataAcessLayer {
     insertCliente(req, res, pool, id_login) {
 
         let nome = req.param("nome");
+        console.log("NOMEEEE ------->>>>>>" + nome);
         let email = req.param("email");
         let endereco = req.param("endereco");
         let sn_ativo = 1;
