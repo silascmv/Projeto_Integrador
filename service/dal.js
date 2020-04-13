@@ -28,7 +28,7 @@ class DataAcessLayer {
         return new Promise((resolve, reject) => {
             pool.query(query, res, function (err, results, fields) {
                 if (!err) {
-                    var resultado = JSON.parse('{"Resultado":"Login Criado com Sucesso","Code_Status":"01"}');
+                    var resultado = JSON.parse('{"status":"Login Criado com Sucesso","code_status":"01"}');
                     resolve(results.insertId);
 
                 } else if (err.code === 'ER_DUP_ENTRY') {
