@@ -14,9 +14,8 @@
 		<div class="form-v7-content">
 			<div class="form-left">
 				<img src="_imagens/bg-heading-02.jpg" alt="form">
-				<p class="text-1">Cadastro</p>
 			</div>
-			<form class="form-detail" action="_php/teste_cadastro.php" method="post" id="myform">
+			<form class="form-detail" action="javascript:void(0);" method="POST" onsubmit="cadastro()" id="myform">
 				<div class="form-row">
 					<label for="username">USUÁRIO</label>
 					<input type="text" name="username" id="username" class="input-text" maxlength="30" placeholder="Digite seu Usuário" required>
@@ -35,20 +34,19 @@
 				</div>
 				<div class="form-row">
 					<label for="name">NOME</label>
-					<input type="text" name="name" id="name" class="input-text" maxlength="80" placeholder="Digite seu Nome" required pattern="[a-zA-Z]" title="Esse campo é obrigatório.">
+					<input type="text" name="name" id="name" class="input-text" maxlength="80" placeholder="Digite seu Nome" required pattern="^([A-Za-z\u00C0-\u00D6\u00D8-\u00f6\u00f8-\u00ff\s]*)$" title="Esse campo é obrigatório.">
 				</div>
 				<div class="form-row">
 					<label for="address">ENDEREÇO</label>
-					<input type="text" name="address" id="address" class="input-text" placeholder="Digite seu Endereço"required pattern="[a-zA-Z]" title="Esse campo é 
-					obrigatório.">
+					<input type="text" name="address" id="address" class="input-text" placeholder="Digite seu Endereço"required pattern="^([A-Za-z0-9\u00C0-\u00D6\u00D8-\u00f6\u00f8-\u00ff\s]*)$" title="Esse campo é obrigatório.">
 				</div>
 				<div class="form-row">
 					<label for="telephone">TELEFONE</label>
-					<input type="number" name="telephone" id="telephone" class="input-text" maxlenght="11" placeholder="Digite seu Telefone:">
+					<input type="number" name="telephone" id="telephone" class="input-text"  placeholder="Digite seu Telefone:">
 				</div>
 				<div class="form-row">
 					<label for="cellphone">CELULAR</label>
-					<input type="number" name="cellphone" id="cellphone" class="input-text" maxlenght="11" placeholder="Digite seu Telefone Celular:">
+					<input type="number" name="cellphone" id="cellphone" class="input-text"  placeholder="Digite seu Telefone Celular:">
 				</div>
 				<div class="form-row-last">
 					<input type="submit" name="register" class="register" value="Cadastrar">
@@ -60,6 +58,7 @@
 	<script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
+	<script src="_js/cadastro.js"></script>
 	<script>
 		jQuery.validator.setDefaults({
 		  	debug: true,
