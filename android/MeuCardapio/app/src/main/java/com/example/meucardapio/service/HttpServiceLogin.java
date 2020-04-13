@@ -24,6 +24,7 @@ public class HttpServiceLogin extends  AsyncTask<Void, Void, CodeStatus>{
     private final String cd_senha;
     private static final String TAG = "MyActivity";
     JSONObject jsonObj;
+    Gson gson = new Gson();
 
     public HttpServiceLogin(String login,String cd_senha) {
         this.login = login;
@@ -32,7 +33,7 @@ public class HttpServiceLogin extends  AsyncTask<Void, Void, CodeStatus>{
 
     @Override
     protected CodeStatus doInBackground(Void... voids) {
-        Gson gson = new Gson();
+
 
         StringBuilder resposta = new StringBuilder();
         //Se não for nulo o login e a senha realiza a consulta ao webservice

@@ -1,8 +1,22 @@
 <resources>
     <string name="app_name">MeuCardapio</string>
-    <string name="inputLogin">Usuário</string>
-    <string name="inputSenha">Senha</string>
+
+    <!-- Tela de Login -->
+    <string name="inputLogin">Usuário*</string>
+    <string name="inputSenha">Senha*</string>
+
+    <!-- Tela de Cadastro - Usa alguns componentes da tela de login -->
+    <string name="inputSenhaNovamente">Confirmar Senha*</string>
+    <string name="inputNome">Nome*</string>
+    <string name="inputEmail">E-mail*</string>
+    <string name="inputEndereco">Endereço*</string>
+    <string name="inputTelefone">Telefone</string>
+    <string name="inputCelular">Celular*</string>
+    <string name="txtCheckBox">Eu li e concordo com os termos *</string>
+    <string name="btnCadastrar">Cadastrar</string>
+
+
     <string name="tlPrincipalTextCadastro">Cadastre-se</string>
-    <string name="action_sign_in">Login</string>;
+    <string name="action_sign_in">Login</string>
 
 </resources>

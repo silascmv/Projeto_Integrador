@@ -13,29 +13,35 @@
 
     <EditText
         android:id="@+id/username"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_width="332dp"
+        android:layout_height="27dp"
         android:layout_marginStart="24dp"
         android:layout_marginTop="288dp"
         android:layout_marginEnd="24dp"
+        android:autofillHints=""
+        android:background="@drawable/edit_round"
+        android:fontFamily="@font/alfa_slab_one"
         android:hint="@string/inputLogin"
         android:inputType="text"
+        android:paddingLeft="10dp"
         android:selectAllOnFocus="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:autofillHints="" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/password"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_width="332dp"
+        android:layout_height="27dp"
         android:layout_marginStart="24dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="24dp"
+        android:background="@drawable/edit_round"
+        android:fontFamily="@font/alfa_slab_one"
         android:hint="@string/inputSenha"
         android:imeOptions="actionDone"
         android:inputType="textPassword"
+        android:paddingLeft="10dp"
         android:selectAllOnFocus="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -51,22 +57,15 @@
         android:layout_marginEnd="48dp"
         android:layout_marginBottom="64dp"
         android:enabled="true"
-        android:fontFamily="sans-serif-smallcaps"
+        android:fontFamily="@font/alfa_slab_one"
         android:text="@string/action_sign_in"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/password"
-        app:layout_constraintVertical_bias="0.467" />
-
-    <TextView
-        android:id="@+id/etMain_resposta"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:textColor="#595959"
-        android:textSize="20sp"
-        tools:layout_editor_absoluteX="-53dp"
-        tools:layout_editor_absoluteY="-142dp" />
+        app:layout_constraintVertical_bias="0.467"
+        android:background="@drawable/edit_round"
+        />
 
 
     <ImageView
@@ -84,7 +83,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="612dp"
         android:drawableTint="#FFF7F7"
-        android:fontFamily="sans-serif-smallcaps"
+        android:fontFamily="@font/alfa_slab_one"
         android:text="@string/tlPrincipalTextCadastro"
         android:textColor="#F6F6F6"
         android:textSize="10pt"

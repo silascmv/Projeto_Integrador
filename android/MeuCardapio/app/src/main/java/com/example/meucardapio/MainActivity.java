@@ -31,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
         //Pegar os Valores da Tela
         final EditText login = findViewById(R.id.username);
         final EditText senha = findViewById(R.id.password);
+        Log.i(TAG, getClasseName() + "CHEGOU AQUI " + senha);
         final TextView cadastrarUsuario = findViewById(R.id.lblCadastrar);
 
         //Criação de Objeto btnLogin para caputar clique da tela:
@@ -40,6 +41,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 try {
+
+                    String verificaUsuario = login.getText().toString();
+                    String verificaSenha = senha.getText().toString();
+                    if(verificaUsuario.matches("") || verificaSenha.matches((""))){
+                        Toast.makeText(getApplicationContext(),"Usuário e senha são campos obrigatórios", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+
                     CodeStatus retorno;
                     retorno = new HttpServiceLogin(login.getText().toString(),senha.getText().toString()).execute().get();
                     if(retorno.getCode_status() == 0){
@@ -61,8 +70,8 @@ public class MainActivity extends AppCompatActivity {
         cadastrarUsuario.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent_tela_princiapl = new Intent(getApplicationContext(), MainActivityPrincipalUsuario.class );
-                startActivity(intent_tela_princiapl);
+                Intent intentTelaCadastro = new Intent(getApplicationContext(), MainActivityCadastro.class );
+                startActivity(intentTelaCadastro);
 
             }
         });

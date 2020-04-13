@@ -32,7 +32,7 @@ class DataAcessLayer {
                     resolve(results.insertId);
 
                 } else if (err.code === 'ER_DUP_ENTRY') {
-                    var resultado = JSON.parse('{"Resultado":"Já existe um usuário com esse ID","Code_Status":"02"}');
+                    var resultado = JSON.parse('{"status":"Já existe um usuário com esse ID","code_status":"02"}');
                     resolve(resultado);
 
                 } else {

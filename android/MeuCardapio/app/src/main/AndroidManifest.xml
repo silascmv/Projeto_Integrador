@@ -14,11 +14,15 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:targetApi="n">
-        <activity android:name=".MainActivityPrincipalUsuario"></activity>
+        <activity android:name=".MainActivityCadastro"></activity>
+        <activity android:name=".MainActivityPrincipalUsuario" />
 
         <meta-data
             android:name="com.google.android.actions"
             android:resource="@xml/network_security_config" />
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
 
         <activity android:name=".MainActivity">
             <intent-filter>
