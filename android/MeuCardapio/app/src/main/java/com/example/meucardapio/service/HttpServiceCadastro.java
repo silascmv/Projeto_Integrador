@@ -7,11 +7,7 @@ import com.example.meucardapio.model.Cadastro;
 import com.example.meucardapio.model.RetrofitClient;
 import com.google.gson.Gson;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.io.IOException;
-import java.lang.reflect.Type;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -37,6 +33,7 @@ public class HttpServiceCadastro extends AsyncTask<Void, Void, CodeStatus> {
 
         Log.i(TAG, getClasseName() + "Sucesso --------------->" + call.toString());
 
+
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -54,13 +51,14 @@ public class HttpServiceCadastro extends AsyncTask<Void, Void, CodeStatus> {
 
 
 
-
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
 
 
             }
+
+
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
@@ -70,9 +68,10 @@ public class HttpServiceCadastro extends AsyncTask<Void, Void, CodeStatus> {
         });
 
 
-
         return codeStatus;
+
     }
+
 
     private String getClasseName() {
         //retorna o nome da classe sem o pacote

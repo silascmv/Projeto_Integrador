@@ -12,7 +12,7 @@
     <string name="inputEndereco">Endereço*</string>
     <string name="inputTelefone">Telefone</string>
     <string name="inputCelular">Celular*</string>
-    <string name="txtCheckBox">Eu li e concordo com os termos *</string>
+    <string name="txtCheckBox">Eu li e concordo com os termos de uso *</string>
     <string name="btnCadastrar">Cadastrar</string>
 
 

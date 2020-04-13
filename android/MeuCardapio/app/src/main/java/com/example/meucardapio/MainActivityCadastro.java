@@ -42,7 +42,6 @@ public class MainActivityCadastro extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_cadastro);
 
-
         //Variavies para pegar valores da tela
         final EditText login = findViewById(R.id.inputUsuario);
         Log.i(TAG, getClasseName() + "CHEGOU AQUI " + login.toString());
@@ -88,6 +87,11 @@ public class MainActivityCadastro extends AppCompatActivity {
                     try {
                         CodeStatus cadastro = new HttpServiceCadastro(cadastro_usuario).execute().get();
 
+                        Thread.sleep(600);
+                        Log.i(TAG, getClasseName() + "DEPOIS QUE EXECUTOU O METODO " + cadastro);
+                        Log.i(TAG, getClasseName() + "JSON CONVERTION DO OBJETO " + cadastro);
+
+
                         /*if(cadastro.getCode_status() == 1){
                             Toast.makeText(getApplicationContext(),"Cadastro Realizado com Sucesso!", Toast.LENGTH_SHORT).show();
 
@@ -115,6 +119,8 @@ public class MainActivityCadastro extends AppCompatActivity {
 
             }
         });
+
+
         //Criação de Objeto para armazenar Valores
         //Mudar para construtor na classe
 
