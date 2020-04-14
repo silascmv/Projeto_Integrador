@@ -35,6 +35,8 @@ app.post('/addCliente', function (req, res) {
     pool.getConnection(function (err, pool) {
         
         const objeto_dal = new DataAcessLayer();
+
+        try{
         async function realizarCadastro() {
             const resultados_login = await objeto_dal.insertLogin(req, res, pool).then(resultado => {
 
@@ -52,13 +54,19 @@ app.post('/addCliente', function (req, res) {
                     } else {
                         res.send(resultado_cliente)
                     }
-                    pool.destroy();
+                    pool.release();
                 });
             }
 
         }
 
         realizarCadastro();
+        
+
+    }catch(err){
+        console.log('ERRRRO DOS GRANDES.')
+
+    }
 
 
     });
@@ -159,9 +167,11 @@ app.get('/realizarLogin/:login&:password', function (req, res) {
             if (isEmptyObject(results)) {
 
                 res.json({ status: "Usuario ou Senha Invalido", code_status: 00 });
+                pool.release();
                 pool.destroy();
             } else {
                 res.json({ status: "Login Realizado com Sucesso", code_status: 01 });
+                pool.release();
                 pool.destroy();
             }
 

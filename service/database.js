@@ -9,10 +9,13 @@ var pool = mysql.createPool({
     user: 'wIp1MpiKOt',
     password: 'pyiEqBNdgy',
     database: 'wIp1MpiKOt',
+    connectionLimit: 10,
+    multipleStatements: true
 });
 
 pool.getConnection((err, connection) => {
     if (err) {
+        
         if (err.code === 'PROTOCOL_CONNECTION_LOST') {
             console.error('Database connection was closed.')
         }

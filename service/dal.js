@@ -27,28 +27,34 @@ class DataAcessLayer {
 
             console.log(query);
 
+
+            try{
+
             
 
         return new Promise((resolve, reject) => {
             pool.query(query, res, function (err, results, fields) {
                 if (!err) {
                     var resultado = JSON.parse('{"status":"Login Criado com Sucesso","code_status":"01"}');
+                    pool.release();
                     resolve(results.insertId);
-                    console.log(results.insertId);
+                    
                     
 
                 } else if (err.code === 'ER_DUP_ENTRY') {
                     var resultado = JSON.parse('{"status":"Já existe um usuário com esse ID","code_status":"02"}');
+                    pool.release();
                     resolve(resultado);
                     
 
                 } else if (err.code = 'ER_DATA_TOO_LONG'){
                     
                     var resultado = JSON.parse('{"status":"Coluna com o valor maior do que o permitido","code_status":"03"}');
+                    pool.release();
                     resolve(resultado);
 
                 }else{
-
+                    pool.release();
                     reject(new Error('woops')).catch(error => {
                         console.log('ERRROOOOOOOOOOOO')
 
@@ -60,9 +66,11 @@ class DataAcessLayer {
 
         })
 
+    }catch(err){
+        console.log('ERRRRO DOS GRANDES.')
+        pool.release();
 
-
-
+    }
 
     }
 
@@ -98,8 +106,10 @@ class DataAcessLayer {
 
                 } else if (err.code === 'ER_DUP_ENTRY') {
                     var resultado_cliente = JSON.parse('{"status":"Já existe um Cliente com esse E-mail Cadastrado","code_status":"02"}');
+                    pool.release();
                     resolve(resultado_cliente);
                 } else {
+                    pool.release();
                     reject(err);
 
                 }
