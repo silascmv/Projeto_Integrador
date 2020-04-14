@@ -33,13 +33,16 @@ app.use('/', router);
 app.post('/addCliente', function (req, res) {
     //Abrindo Conexão com o Banco de Dados (Objeto Pool Importado da Classe DataBase)
     pool.getConnection(function (err, pool) {
+        
         const objeto_dal = new DataAcessLayer();
         async function realizarCadastro() {
             const resultados_login = await objeto_dal.insertLogin(req, res, pool).then(resultado => {
+
+                console.log('RESULTADO DO RETORNO DO LOGIN - ' + resultado);
                 return resultado;
             });
 
-            if (Number(resultados_login.Code_Status) === 2) {
+            if (Number(resultados_login.code_status) === 2) {
                 res.send(resultados_login);
                 return;
             } else {
