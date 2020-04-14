@@ -54,7 +54,6 @@ app.post('/addCliente', function (req, res) {
                     } else {
                         res.send(resultado_cliente)
                     }
-                    pool.release();
                 });
             }
 

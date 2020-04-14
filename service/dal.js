@@ -36,7 +36,6 @@ class DataAcessLayer {
             pool.query(query, res, function (err, results, fields) {
                 if (!err) {
                     var resultado = JSON.parse('{"status":"Login Criado com Sucesso","code_status":"01"}');
-                    pool.release();
                     resolve(results.insertId);
                     
                     
