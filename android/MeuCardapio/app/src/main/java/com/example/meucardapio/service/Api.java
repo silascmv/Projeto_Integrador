@@ -17,7 +17,7 @@ public interface Api {
 
 @FormUrlEncoded
 @POST("addCliente")
-    Call<ResponseBody> addCliente(
+    Call<CodeStatus> addCliente(
             @Field("cd_login") String cd_login,
             @Field("nome") String nome,
             @Field("cd_senha") String cd_senha,

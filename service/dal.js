@@ -82,7 +82,7 @@ class DataAcessLayer {
                                 var resultado = JSON.parse('{"status":"Coluna com o valor maior do que o permitido","code_status":"03"}');
                                 resolve(resultado);
                             } else {
-                                var resultado = JSON.parse('{"status":"Operação desconhecida, entre em contato com TI","code_status":"XX"}');
+                                var resultado = JSON.parse('{"status":"Operação desconhecida, entre em contato com TI","code_status":"00"}');
                                 resolve(resultado);
 
                             }
@@ -94,11 +94,11 @@ class DataAcessLayer {
 
                     } else if (error.code === 'ER_DUP_ENTRY') {
                         return pool.rollback(function () {
-                            var resultado = JSON.parse('{"status":"Já existe um usuário com esse Login","code_status":"02"}');
+                            var resultado = JSON.parse('{"status":"Já existe um usuário com esse Login","code_status":"04"}');
                             resolve(resultado);
                         });
                     } else {
-                        var resultado = JSON.parse('{"status":"Operação desconhecida, necessário debugar o código","code_status":"XX"}');
+                        var resultado = JSON.parse('{"status":"Operação desconhecida, entre em contato com TI","code_status":"00"}');
                         resolve(resultado);
 
                     }
