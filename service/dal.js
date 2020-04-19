@@ -55,16 +55,19 @@ class DataAcessLayer {
                             //Se a query de inserção não falhar irá realizar o commit da operação
                             if (!error) {
                                 pool.commit(function (err) {
-                                    //Caso apresente algua falha no commit irá enviar essa informação.
-                                    if (err) {
-                                        return pool.rollback(function () {
-                                            var resultado_cliente = JSON.parse('{"status":"Falha ao realizar o cadastro tenta novamente","code_status":"00"}');
-                                            resolve(resultado_cliente);
-                                        });
-                                    }else{
+                                    
                                     //Finalização do cadastro.
-                                    var resultado_cliente = JSON.parse('{"status":"Cliente Cadastrado com Sucesso","code_status":"01"}');
-                                    resolve(resultado_cliente);
+                                    if (!err) {
+                                        var resultado_cliente = JSON.parse('{"status":"Cliente Cadastrado com Sucesso","code_status":"01"}');
+                                        resolve(resultado_cliente);
+                                        
+                                    }else{
+                                    //Caso apresente algua falha no commit irá enviar essa informação.
+                                    return pool.rollback(function () {
+                                        var resultado_cliente = JSON.parse('{"status":"Falha ao realizar o cadastro tenta novamente","code_status":"00"}');
+                                        resolve(resultado_cliente);
+                                    });
+                                    
                                 }
                                 });
 

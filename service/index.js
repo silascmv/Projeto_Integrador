@@ -40,9 +40,8 @@ app.post('/addCliente', function (req, res) {
                     res.send(resultado);
                 });
             }
-
         realizarCadastro();
-        
+
         } catch (err) {
             var error_status = JSON.parse('{"status":"Não foi possível realizar sua operação, entre em contato com o administrador.","code_status":"00"}');
             res.send(error_status);

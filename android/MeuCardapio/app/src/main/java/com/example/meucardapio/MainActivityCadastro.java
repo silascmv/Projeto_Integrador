@@ -59,13 +59,16 @@ public class MainActivityCadastro extends AppCompatActivity {
         btnCadastrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 //Variavel para verificar Checkbox Quando clicar
                 CheckBox checkBox = findViewById(R.id.checkBox);
 
-                if (login.getText().toString().matches("") || senha.getText().toString().matches("") || senha2.getText().toString().matches("")
+                if (!checkBox.isChecked()){
+                    Toast.makeText(getApplicationContext(), "É necessário concordar com os termos de uso!", Toast.LENGTH_LONG).show();
+                    return;
+
+                } else if (login.getText().toString().matches("") || senha.getText().toString().matches("") || senha2.getText().toString().matches("")
                         || senha2.getText().toString().matches("") || nome.getText().toString().matches("") || email.getText().toString().matches("")
-                        || endereco.getText().toString().matches("") || celular.getText().toString().matches("") || !checkBox.isChecked()) {
+                        || endereco.getText().toString().matches("") || celular.getText().toString().matches("")) {
                     Toast.makeText(getApplicationContext(), "É necessário preencher todos os campos obrigatórios", Toast.LENGTH_LONG).show();
                     return;
                 } else {
@@ -86,11 +89,6 @@ public class MainActivityCadastro extends AppCompatActivity {
                     //
                     try {
                         CodeStatus cadastro = new HttpServiceCadastro(cadastro_usuario).execute().get();
-
-                        Thread.sleep(600);
-                        Log.i(TAG, getClasseName() + "DEPOIS QUE EXECUTOU O METODO " + cadastro);
-                        Log.i(TAG, getClasseName() + "JSON CONVERTION DO OBJETO " + cadastro);
-
 
                         /*if(cadastro.getCode_status() == 1){
                             Toast.makeText(getApplicationContext(),"Cadastro Realizado com Sucesso!", Toast.LENGTH_SHORT).show();
