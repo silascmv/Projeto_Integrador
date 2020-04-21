@@ -7,7 +7,7 @@ class DataAcessLayer {
         const cors = require('cors');
     };
 
-    insertLoginTransaction(req,pool) {
+    insertLoginTransaction(req, pool) {
         // Parâmetros para TABELA-LOGIN
         let cd_login_request = req.param("cd_login");
         let cd_senha_request = req.param("cd_senha");
@@ -50,25 +50,25 @@ class DataAcessLayer {
                             + sn_ativo + ','
                             + "'" + telefone + "'" + ','
                             + "'" + celular + "'" + ')'
-                        
+
                         pool.query(query, function (error, results, fields) {
                             //Se a query de inserção não falhar irá realizar o commit da operação
                             if (!error) {
                                 pool.commit(function (err) {
-                                    
+
                                     //Finalização do cadastro.
                                     if (!err) {
                                         var resultado_cliente = JSON.parse('{"status":"Cliente Cadastrado com Sucesso","code_status":"01"}');
                                         resolve(resultado_cliente);
-                                        
-                                    }else{
-                                    //Caso apresente algua falha no commit irá enviar essa informação.
-                                    return pool.rollback(function () {
-                                        var resultado_cliente = JSON.parse('{"status":"Falha ao realizar o cadastro tenta novamente","code_status":"00"}');
-                                        resolve(resultado_cliente);
-                                    });
-                                    
-                                }
+
+                                    } else {
+                                        //Caso apresente algua falha no commit irá enviar essa informação.
+                                        return pool.rollback(function () {
+                                            var resultado_cliente = JSON.parse('{"status":"Falha ao realizar o cadastro tenta novamente","code_status":"00"}');
+                                            resolve(resultado_cliente);
+                                        });
+
+                                    }
                                 });
 
                             } else if (error.code === 'ER_DUP_ENTRY') {
@@ -114,125 +114,72 @@ class DataAcessLayer {
 
     }
 
-    insertLogin(req, res, pool) {
 
+    insertFotoTransaction(req, pool) {
 
-        let cd_login_request = req.param("cd_login");
-        let cd_senha_request = req.param("cd_senha");
-        let sn_ativo_login = 1;
-        let tp_login = 'cliente'
+        let nome_image = req.param("nome_imagem");
+        console.log(nome_image);
+        let path_imagem = req.param("caminho_imagem");
+        console.log(path_imagem);
 
-        let query = 'INSERT INTO LOGIN VALUES ('
+        var query = '';
+
+        query = 'INSERT INTO IMAGEM_TESTE VALUES ('
             + 'NULL,'
-            + "'" + cd_login_request + "'" + ','
-            + "'" + cd_senha_request + "'" + ','
-            + sn_ativo_login + ','
-            + "'" + tp_login + "'" + ')'
-
-        console.log(query);
-
-
-        try {
-
-
-
-            return new Promise((resolve, reject) => {
-                pool.query(query, res, function (err, results, fields) {
-                    if (!err) {
-                        var resultado = JSON.parse('{"status":"Login Criado com Sucesso","code_status":"01"}');
-                        resolve(results.insertId);
-
-
-
-                    } else if (err.code === 'ER_DUP_ENTRY') {
-                        var resultado = JSON.parse('{"status":"Já existe um usuário com esse ID","code_status":"02"}');
-                        pool.rollback(function () {
-                            pool.release();
-                            resolve(resultado);
-
-                        });
-
-
-
-                    } else if (err.code = 'ER_DATA_TOO_LONG') {
-
-                        var resultado = JSON.parse('{"status":"Coluna com o valor maior do que o permitido","code_status":"03"}');
-                        pool.release();
-                        resolve(resultado);
-
-                    } else {
-                        pool.release();
-                        reject(new Error('woops')).catch(error => {
-                            console.log('ERRROOOOOOOOOOOO')
-
-                        });
-
-                    }
-                });
-
-
-            })
-
-        } catch (err) {
-            console.log('ERRRRO DOS GRANDES.')
-            pool.release();
-
-        }
-
-    }
-
-    insertCliente(req, res, pool, id_login) {
-
-        let nome = req.param("nome");
-        console.log("NOMEEEE ------->>>>>>" + nome);
-        let email = req.param("email");
-        let endereco = req.param("endereco");
-        let sn_ativo = 1;
-        let telefone = req.param("telefone");
-        let celular = req.param("celular");
-
-        var query = 'INSERT INTO CLIENTE VALUES ('
-            + 'NULL,'
-            + "'" + id_login + "'" + ","
-            + "'" + nome + "'" + ','
-            + "'" + email + "'" + ','
-            + "'" + endereco + "'" + ','
-            + sn_ativo + ','
-            + "'" + telefone + "'" + ','
-            + "'" + celular + "'" + ')'
-
-        console.log('QUERRRYYYYYYYY----->' + query);
+            + "'" + path_imagem + "'" + ","
+            + "'" + nome_image + "'" + ')'
 
         return new Promise((resolve, reject) => {
-            pool.query(query, res, function (err, results, fields) {
-                if (!err) {
-                    var resultado_cliente = JSON.parse('{"status":"Cliente Cadastrado com Sucesso","code_status":"01"}');
-                    resolve(resultado_cliente);
 
-
-
-                } else if (err.code === 'ER_DUP_ENTRY') {
-                    var resultado_cliente = JSON.parse('{"status":"Já existe um Cliente com esse E-mail Cadastrado","code_status":"02"}');
-                    pool.rollback(function () {
-                        pool.release();
-                        resolve(resultado_cliente);
-
-                    });
-                } else {
-                    pool.release();
-                    reject(err);
-
+            //Iniciando Transação
+            pool.beginTransaction(function (err) {
+                if (err) {
+                    throw err;
                 }
+                pool.query(query, function (error, results, fields) {
+                    if (!error) {
+                        pool.commit(function (err) {
+                            //Finalização do cadastro.
+                            if (!err) {
+                                var resultado_cliente = JSON.parse('{"status":"Imagem Cadastrada com Sucesso","code_status":"01"}');
+                                resolve(resultado_cliente);
+
+                            } else {
+                                //Caso apresente algua falha no commit irá enviar essa informação.
+                                return pool.rollback(function () {
+                                    var resultado_cliente = JSON.parse('{"status":"Falha ao realizar o cadastro tenta novamente","code_status":"00"}');
+                                    resolve(resultado_cliente);
+                                });
+
+                            }
+                        });
+
+
+                    } else if (error.code === 'ER_DUP_ENTRY') {
+                        return pool.rollback(function () {
+                            var resultado = JSON.parse('{"status":"Já existe um usuário com esse Login","code_status":"04"}');
+                            resolve(resultado);
+                        });
+                    } else {
+                        var resultado = JSON.parse('{"status":"Operação desconhecida, entre em contato com TI","code_status":"00"}');
+                        resolve(resultado);
+
+                    }
+                    pool.release();
+                });
+
             });
 
-
-        })
+        });
 
 
 
 
 
     }
+
+
+
 
 
 }

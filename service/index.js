@@ -6,10 +6,13 @@ const cors = require('cors');
 
 
 
+
 //APP INICIANDO O EXPRESS
 const app = express();
 //CONEXÃO COM O BANCO - IMPORTAÇÃO DA CLASSE DE CONEXÃO
 var pool = require(__dirname + '/database.js');
+//BIBLIOTECA PARA TRABALHAR COM UPLOAD DE IMAGENS
+var upload = require(__dirname+ '/config_multer')
 //CLASSE QUE REALIZA AS TRANSAÇÕES COM O BANCO
 var DataAcessLayer = require((__dirname) + "/dal.js");
 var dal = new DataAcessLayer();
@@ -51,127 +54,6 @@ app.post('/addCliente', function (req, res) {
 });
 
 
-
-
-
-/*app.post('/addClienteOLD', function (req, res) {
-    //Abrindo Conexão com o Banco de Dados (Objeto Pool Importado da Classe DataBase)
-    pool.getConnection(function (err, pool) {
-
-        const objeto_dal = new DataAcessLayer();
-
-        try {
-            async function realizarCadastro() {
-                const resultados_login = await objeto_dal.insertLogin(req, res, pool).then(resultado => {
-
-                    console.log('RESULTADO DO RETORNO DO LOGIN - ' + resultado);
-                    return resultado;
-                });
-
-                if (Number(resultados_login.code_status) === 2) {
-                    res.send(resultados_login);
-                    return;
-                } else {
-                    const resultado = await objeto_dal.insertCliente(req, res, pool, resultados_login).then(resultado_cliente => {
-                        if (typeof (resultado_cliente) !== 'number') {
-                            res.send(resultado_cliente);
-                        } else {
-                            res.send(resultado_cliente)
-                        }
-                    });
-                }
-
-            }
-
-            realizarCadastro();
-
-
-        } catch (err) {
-            console.log('ERRRRO DOS GRANDES.')
-
-        }
-
-
-    });
-
-
-
-}); */
-
-
-// -------------SEÇÃO DE API PARA CLIENTE-----------------
-//CONSULTAR TODOS OS CLIENTE
-app.get('/consultaTodosClientes', function (req, res) {
-    // Conectando ao banco para usar na API.
-    pool.getConnection(function (err, pool) {
-
-        // Executando a query MySQL (selecionar todos os dados da tabela usuário).
-        pool.query('SELECT * FROM CLIENTE', function (error, results, fields) {
-            // Caso ocorra algum erro, não irá executar corretamente.if (error) throw error;
-            if (isEmptyObject(results)) {
-
-                res.json({ Status: "Não existe nenhum cliente cadastrado", Code_Status: 00 });
-                pool.destroy();
-            } else {
-                // Pegando a 'resposta' do servidor pra nossa requisição. Ou seja, aqui ele vai mandar nossos dados.
-                res.send(results)
-                console.log('Consulta de todos os clientes Realizada com Sucesso');
-                pool.destroy()
-            }
-
-        });
-    });
-});
-
-//CONSULTANDO CLIENTE POR ID
-app.get('/consultaClienteId/:id', function (req, res) {
-    // Conectando ao banco para usar na API.
-    pool.getConnection(function (err, pool) {
-        //variavel para filtro
-        let filter = '';
-        //validação se o id não está nulo
-        if (req.params.id) filter = parseInt(req.params.id);
-        // Executando a query MySQL (selecionar todos os dados da tabela usuário).
-        pool.query('SELECT * FROM CLIENTE WHERE ID_CLIENTE = ' + filter, function (error, results, fields) {
-            // Pegando a 'resposta' do servidor pra nossa requisição. Ou seja, aqui ele vai mandar nossos dados.
-            if (isEmptyObject(results)) {
-
-                res.json({ Status: "Informar um ID válido", Code_Status: 00 });
-                pool.destroy();
-            } else {
-                res.send(results)
-                console.log('Consulta por id Realizada com Sucesso');
-
-            }
-        });
-    });
-});
-
-
-//EXCLUINDO CLIENTE POR ID
-app.delete('/apagarClienteId/:id', function (req, res) {
-
-    pool.getConnection(function (err, pool) {
-        //variavel para filtro
-        let filter = '';
-        //validação se o id não está nulo
-        if (req.params.id) filter = parseInt(req.params.id);
-        // Executando a query MySQL (selecionar todos os dados da tabela usuário).
-        pool.query('DELETE FROM CLIENTE WHERE ID_CLIENTE = ' + filter, function (error, results, fields) {
-            // Pegando a 'resposta' do servidor pra nossa requisição. Ou seja, aqui ele vai mandar nossos dados.
-            if (results["affectedRows"] < 1) {
-                console.log('Não existe usuário para ser deletado');
-                res.json({ Status: "Informar um ID válido", Code_Status: 00 });
-                pool.destroy();
-            } else {
-                res.json({ Status: "Deleção Realizada com Sucesso", Code_Status: 01 })
-
-            }
-        });
-    });
-
-})
-
 app.get('/realizarLogin/:login&:password', function (req, res) {
 
     pool.getConnection(function (err, pool) {
@@ -205,6 +87,32 @@ app.get('/realizarLogin/:login&:password', function (req, res) {
 })
 
 
+app.post('/addFotoExempo', upload.single('img'), (req,res) => {
+    console.log(req.file)
+    console.log(req.param("nome"))
+    console.log(req.file.originalname)
+    res.send('Sucesso')
+})
+
+app.post('/addFoto', function (req, res) {
+    //Abrindo Conexão com o Banco de Dados (Objeto Pool Importado da Classe DataBase)
+    pool.getConnection(function (err, pool) {
+        const objeto_dal = new DataAcessLayer();
+        try {
+            async function uploadFoto() {
+                await objeto_dal.insertFotoTransaction(req,pool).then(resultado => {
+                    res.send(resultado);
+                });
+            }
+        uploadFoto();
+
+        } catch (err) {
+            var error_status = JSON.parse('{"status":"Não foi possível realizar sua operação, entre em contato com o administrador.","code_status":"00"}');
+            res.send(error_status);
+
+        }
+    });
+});
 
 
 //CONFIGURAÇÃO PARA HTTPS,VÁRIAVIES PARA CERTIFICADO.
