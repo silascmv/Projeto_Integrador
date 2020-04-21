@@ -2,6 +2,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const fs = require("fs");
 
 
 
@@ -12,7 +13,7 @@ const app = express();
 //CONEXÃO COM O BANCO - IMPORTAÇÃO DA CLASSE DE CONEXÃO
 var pool = require(__dirname + '/database.js');
 //BIBLIOTECA PARA TRABALHAR COM UPLOAD DE IMAGENS
-var upload = require(__dirname+ '/config_multer')
+var upload = require(__dirname + '/config_multer')
 //CLASSE QUE REALIZA AS TRANSAÇÕES COM O BANCO
 var DataAcessLayer = require((__dirname) + "/dal.js");
 var dal = new DataAcessLayer();
@@ -39,11 +40,11 @@ app.post('/addCliente', function (req, res) {
         const objeto_dal = new DataAcessLayer();
         try {
             async function realizarCadastro() {
-                await objeto_dal.insertLoginTransaction(req,pool).then(resultado => {
+                await objeto_dal.insertLoginTransaction(req, pool).then(resultado => {
                     res.send(resultado);
                 });
             }
-        realizarCadastro();
+            realizarCadastro();
 
         } catch (err) {
             var error_status = JSON.parse('{"status":"Não foi possível realizar sua operação, entre em contato com o administrador.","code_status":"00"}');
@@ -86,25 +87,38 @@ app.get('/realizarLogin/:login&:password', function (req, res) {
 
 })
 
-
-app.post('/addFotoExempo', upload.single('img'), (req,res) => {
-    console.log(req.file)
-    console.log(req.param("nome"))
-    console.log(req.file.originalname)
-    res.send('Sucesso')
-})
-
-app.post('/addFoto', function (req, res) {
+app.post('/addProduto/', upload.single('IMG'), (req, res) => {
     //Abrindo Conexão com o Banco de Dados (Objeto Pool Importado da Classe DataBase)
     pool.getConnection(function (err, pool) {
+
+        var data = new Date();
+        data = (req.param("VALIDADE"));
+        console.log(data);
+
+        var produto = {
+
+            NOME_PRODUTO: req.param("NOME_PRODUTO"),
+            ID_FORNECEDOR: req.param("ID_FORNECEDOR"),
+            VALOR: req.param("VALOR"),
+            DESCRICAO: req.param("DESCRICAO"),
+            CODIGO_BARRA: req.param("CODIGO_BARRA"),
+            TIPO: req.param("TIPO"),
+            VALIDADE: data,
+            IMAGEM: fs.readFileSync(req.file.path)
+        }
+
+        console.log(typeof(produto.IMAGEM));
+
         const objeto_dal = new DataAcessLayer();
         try {
             async function uploadFoto() {
-                await objeto_dal.insertFotoTransaction(req,pool).then(resultado => {
+
+
+                await objeto_dal.insertProduto(req, pool, produto).then(resultado => {
                     res.send(resultado);
                 });
             }
-        uploadFoto();
+            uploadFoto();
 
         } catch (err) {
             var error_status = JSON.parse('{"status":"Não foi possível realizar sua operação, entre em contato com o administrador.","code_status":"00"}');
@@ -113,6 +127,59 @@ app.post('/addFoto', function (req, res) {
         }
     });
 });
+
+
+app.post('/listarProduto/', (req,res) => {
+
+    pool.getConnection((err,pool) => {
+
+        let id = req.param("id");
+
+        pool.query('SELECT NOME_PRODUTO,VALOR,DESCRICAO,IMAGEM FROM PRODUTOS', (error,results,fields) => {
+
+            if(error){
+
+                console.log(error)
+            }
+
+            //console.log(results);
+
+            res.sendStatus(200);
+
+
+        })
+    })
+
+
+
+
+
+})
+
+app.get('/consultaClienteId/:id', function (req, res) {
+    // Conectando ao banco para usar na API.
+    pool.getConnection(function (err, pool) {
+        //variavel para filtro
+        let filter = '';
+        //validação se o id não está nulo
+        if (req.params.id) filter = parseInt(req.params.id);
+        // Executando a query MySQL (selecionar todos os dados da tabela usuário).
+        pool.query('SELECT * FROM CLIENTE WHERE ID_CLIENTE = ' + filter, function (error, results, fields) {
+            // Pegando a 'resposta' do servidor pra nossa requisição. Ou seja, aqui ele vai mandar nossos dados.
+            if (isEmptyObject(results)) {
+
+                res.json({ Status: "Informar um ID válido", Code_Status: 00 });
+                pool.destroy();
+            } else {
+                res.send(results)
+                console.log('Consulta por id Realizada com Sucesso');
+
+            }
+        });
+    });
+});
+
+
 
 
 //CONFIGURAÇÃO PARA HTTPS,VÁRIAVIES PARA CERTIFICADO.

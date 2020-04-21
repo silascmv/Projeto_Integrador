@@ -115,19 +115,10 @@ class DataAcessLayer {
     }
 
 
-    insertFotoTransaction(req, pool) {
+    insertProduto(req, pool, objeto_produto) {
 
-        let nome_image = req.param("nome_imagem");
-        console.log(nome_image);
-        let path_imagem = req.param("caminho_imagem");
-        console.log(path_imagem);
 
-        var query = '';
-
-        query = 'INSERT INTO IMAGEM_TESTE VALUES ('
-            + 'NULL,'
-            + "'" + path_imagem + "'" + ","
-            + "'" + nome_image + "'" + ')'
+        
 
         return new Promise((resolve, reject) => {
 
@@ -136,12 +127,12 @@ class DataAcessLayer {
                 if (err) {
                     throw err;
                 }
-                pool.query(query, function (error, results, fields) {
+                pool.query('INSERT INTO PRODUTOS SET ?',objeto_produto , function (error, results, fields) {
                     if (!error) {
                         pool.commit(function (err) {
                             //Finalização do cadastro.
                             if (!err) {
-                                var resultado_cliente = JSON.parse('{"status":"Imagem Cadastrada com Sucesso","code_status":"01"}');
+                                var resultado_cliente = JSON.parse('{"status":"Produto Cadastrado com Sucesso","code_status":"01"}');
                                 resolve(resultado_cliente);
 
                             } else {
@@ -161,6 +152,7 @@ class DataAcessLayer {
                             resolve(resultado);
                         });
                     } else {
+                        console.log('ERROOO ????' + error)
                         var resultado = JSON.parse('{"status":"Operação desconhecida, entre em contato com TI","code_status":"00"}');
                         resolve(resultado);
 
