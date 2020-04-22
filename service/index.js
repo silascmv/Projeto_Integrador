@@ -210,7 +210,7 @@ app.post('/listarTodosTeste/', (req, res) => {
 
     pool.getConnection((err, pool) => {
         var id = req.param("id")
-        var query = 'SELECT NOME_PRODUTO,VALOR,DESCRICAO,IMAGEM FROM PRODUTOS';
+        var query = 'SELECT NOME_PRODUTO,VALOR,DESCRICAO FROM PRODUTOS';
         pool.query(query, (error, results, fields) => {
             if (error) {
                 console.log(error)
