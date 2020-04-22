@@ -3,6 +3,9 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const fs = require("fs");
+const http = require('http');
+
+
 
 
 
@@ -13,7 +16,10 @@ const app = express();
 //CONEXÃO COM O BANCO - IMPORTAÇÃO DA CLASSE DE CONEXÃO
 var pool = require(__dirname + '/database.js');
 //BIBLIOTECA PARA TRABALHAR COM UPLOAD DE IMAGENS
-var upload = require(__dirname + '/config_multer')
+var upload = require(__dirname + '/config_multer');
+//CONVERSOR BLOB TO IMAGEM
+const Image_Converter = require(__dirname + '/image_converter');
+
 //CLASSE QUE REALIZA AS TRANSAÇÕES COM O BANCO
 var DataAcessLayer = require((__dirname) + "/dal.js");
 var dal = new DataAcessLayer();
@@ -107,7 +113,7 @@ app.post('/addProduto/', upload.single('IMG'), (req, res) => {
             IMAGEM: fs.readFileSync(req.file.path)
         }
 
-        console.log(typeof(produto.IMAGEM));
+        console.log(typeof (produto.IMAGEM));
 
         const objeto_dal = new DataAcessLayer();
         try {
@@ -129,22 +135,29 @@ app.post('/addProduto/', upload.single('IMG'), (req, res) => {
 });
 
 
-app.post('/listarProduto/', (req,res) => {
+app.post('/listarProdutoId/', (req, res) => {
 
-    pool.getConnection((err,pool) => {
-
-        let id = req.param("id");
-
-        pool.query('SELECT NOME_PRODUTO,VALOR,DESCRICAO,IMAGEM FROM PRODUTOS', (error,results,fields) => {
-
-            if(error){
-
+    pool.getConnection((err, pool) => {
+        var id = req.param("id")
+        var query = 'SELECT NOME_PRODUTO,VALOR,DESCRICAO,IMAGEM FROM PRODUTOS WHERE ID_PRODUTO =' + id;
+        pool.query(query, (error, results, fields) => {
+            if (error) {
                 console.log(error)
             }
+            async function retrieveFoto() {
+                await Image_Converter(results[0].IMAGEM, results[0].NOME_PRODUTO + '.jpg').then(resolve => {
+                    var objeto_json = {
 
-            //console.log(results);
 
-            res.sendStatus(200);
+                    }
+
+                    res.sendFile(__dirname + '/' + results[0].NOME_PRODUTO + '.jpg', 'Sucesso');
+
+                });
+            }
+
+            //Executando função assincrona.
+            retrieveFoto();
 
 
         })
@@ -152,37 +165,86 @@ app.post('/listarProduto/', (req,res) => {
 
 
 
+})
+
+app.post('/listarTodosProdutos/', (req, res) => {
+
+    pool.getConnection((err, pool) => {
+        var id = req.param("id")
+        var query = 'SELECT NOME_PRODUTO,VALOR,DESCRICAO,IMAGEM FROM PRODUTOS WHERE ID_PRODUTO =' + id;
+        pool.query(query, (error, results, fields) => {
+            if (error) {
+                console.log(error)
+            }
+            async function retrieveFoto() {
+                await Image_Converter(results[0].IMAGEM, results[0].NOME_PRODUTO + '.jpg').then(buf => {
+                    console.log(results.length);
+                    
+                    var objeto_json = {
+                        NOME_PRODUTO: results[0].NOME_PRODUTO,
+                        VALOR: results[0].VALOR,
+                        DESCRICAO: results[0].DESCRICAO,
+                        IMAGEM: buf.toString('base64')
+                    }
+
+                    //console.log(buf.toString('base64'));
+                    
+
+                    res.send(objeto_json);
+
+                });
+            }
+
+            //Executando função assincrona.
+            retrieveFoto();
+
+
+        })
+    })
+
 
 
 })
 
-app.get('/consultaClienteId/:id', function (req, res) {
-    // Conectando ao banco para usar na API.
-    pool.getConnection(function (err, pool) {
-        //variavel para filtro
-        let filter = '';
-        //validação se o id não está nulo
-        if (req.params.id) filter = parseInt(req.params.id);
-        // Executando a query MySQL (selecionar todos os dados da tabela usuário).
-        pool.query('SELECT * FROM CLIENTE WHERE ID_CLIENTE = ' + filter, function (error, results, fields) {
-            // Pegando a 'resposta' do servidor pra nossa requisição. Ou seja, aqui ele vai mandar nossos dados.
-            if (isEmptyObject(results)) {
+app.post('/listarTodosTeste/', (req, res) => {
 
-                res.json({ Status: "Informar um ID válido", Code_Status: 00 });
-                pool.destroy();
-            } else {
-                res.send(results)
-                console.log('Consulta por id Realizada com Sucesso');
-
+    pool.getConnection((err, pool) => {
+        var id = req.param("id")
+        var query = 'SELECT NOME_PRODUTO,VALOR,DESCRICAO,IMAGEM FROM PRODUTOS';
+        pool.query(query, (error, results, fields) => {
+            if (error) {
+                console.log(error)
             }
-        });
-    });
-});
+            async function retrieveFoto() {
+                await Image_Converter(results[0].IMAGEM, results[0].NOME_PRODUTO + '.jpg').then(buf => {
+                    console.log(results.length);                    
+                    var objeto_json = {
+                        NOME_PRODUTO: results[0].NOME_PRODUTO,
+                        VALOR: results[0].VALOR,
+                        DESCRICAO: results[0].DESCRICAO,
+                        IMAGEM: buf.toString('base64')
+                    }
+
+                    //console.log(buf.toString('base64'));
+                    
+
+                    res.send(objeto_json);
+
+                });
+            }
+
+            //Executando função assincrona.
+            retrieveFoto();
+
+
+        })
+    })
 
 
 
+})
 
-//CONFIGURAÇÃO PARA HTTPS,VÁRIAVIES PARA CERTIFICADO.
+
 //var key = fs.readFileSync(path.resolve('./service/key.pem'));
 //var cert = fs.readFileSync(path.resolve('./service/cert.pem'));
 /*https.createServer({
