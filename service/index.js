@@ -151,7 +151,7 @@ app.post('/listarProdutoId/', (req, res) => {
 
                     }
 
-                    res.sendFile(__dirname + '/' + results[0].NOME_PRODUTO + '.jpg', 'Sucesso');
+                    res.sendFile(__dirname + '/my-uploads/' + results[0].NOME_PRODUTO + '.jpg', 'Sucesso');
 
                 });
             }
