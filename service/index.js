@@ -5,6 +5,7 @@ const cors = require('cors');
 const fs = require("fs");
 const http = require('http');
 const { promisify } = require('util')
+var session = require('express-session')
 
 //APP INICIANDO O EXPRESS
 const app = express();
@@ -16,6 +17,16 @@ var upload = require(__dirname + '/config_multer');
 const Image_Converter = require(__dirname + '/image_converter');
 //APAGAR ARQUIVOS
 const unlinkAsync = promisify(fs.unlink)
+
+//
+app.use(session({
+    secret: 'secret',
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: true }
+}))
+
+
 
 //CLASSE QUE REALIZA AS TRANSAÇÕES COM O BANCO
 var DataAcessLayer = require((__dirname) + "/dal.js");
@@ -91,52 +102,45 @@ app.get('/realizarLogin/:login&:password', function (req, res) {
 })
 
 app.post('/addProduto/', upload.single('IMG'), (req, res) => {
-    //Abrindo Conexão com o Banco de Dados (Objeto Pool Importado da Classe DataBase)
+
+    var data = new Date()
+    //console.log('Caminho : ' + req.file.path);
+    //variavel pra setar a hora na foto
+    var data_atual = data.getDate();
+    var mes_atual = data.getMonth() + 1;
+    var ano_atual = data.getFullYear() + 1;
+    var segundos = data.getSeconds();
+    var mseg = data.getMilliseconds();
+    let data_final = data_atual + '-' + mes_atual + '-' + ano_atual + '-' + segundos + '-' + mseg;
+    //conversão de data pra armazenar no banco
+    data = (req.param("VALIDADE"));
+    var produto = {
+
+        NOME_PRODUTO: req.param("NOME_PRODUTO"),
+        ID_FORNECEDOR: req.param("ID_FORNECEDOR"),
+        VALOR: req.param("VALOR"),
+        DESCRICAO: req.param("DESCRICAO"),
+        CODIGO_BARRA: req.param("CODIGO_BARRA"),
+        TIPO: req.param("TIPO"),
+        VALIDADE: data,
+        IMAGEM_PATH: '/my-uploads/' + req.file.filename
+    }
+
+    console.log('diretorio a ser salvo ' + produto.IMAGEM_PATH);
+
     pool.getConnection(function (err, pool) {
-
-        var data = new Date()
-
-        console.log('Caminho : ' + req.file.path);
-
-        //variavel pra setar a hora na foto
-        var data_atual = data.getDate();
-        var mes_atual = data.getMonth() + 1;
-        var ano_atual = data.getFullYear() + 1;
-        var segundos = data.getSeconds();
-        var mseg    = data.getMilliseconds(); 
-        let data_final = data_atual + '-' + mes_atual + '-' + ano_atual + '-' + segundos + '-' + mseg;
-        //conversão de data pra armazenar no banco
-        data = (req.param("VALIDADE"));
-
-        var produto = {
-
-            NOME_PRODUTO: req.param("NOME_PRODUTO"),
-            ID_FORNECEDOR: req.param("ID_FORNECEDOR"),
-            VALOR: req.param("VALOR"),
-            DESCRICAO: req.param("DESCRICAO"),
-            CODIGO_BARRA: req.param("CODIGO_BARRA"),
-            TIPO: req.param("TIPO"),
-            VALIDADE: data,
-            IMAGEM_PATH: req.file.path
-        }
-
-        console.log('diretorio a ser salvo ' + produto.IMAGEM_PATH);
-
         const objeto_dal = new DataAcessLayer();
         try {
             async function uploadFoto() {
                 await objeto_dal.insertProduto(req, pool, produto).then(resultado => {
                     if (resultado.code_status === '01') {
-                        res.send(resultado);
-                        req.pause();                        
+                        req.session.destroy(function (err) {
+                            res.send(resultado).end();
+                        })
                     } else if (resultado.code_status === '04') {
-                        //Remover Arquivo
-                        console.log('FINALLLLL' + req.file.destination + '/' + req.file.filename)
-                        unlinkAsync(req.file.path)
-                        req.pause();                        
-                        res.send(resultado);
-                        res.end();
-
+                        //Remover arquivo caso não vá cadastrar
+                        unlinkAsync(req.file.destination + '/' + req.file.filename);
+                        res.send(resultado).end();
                     }
 
                 });
@@ -153,35 +157,6 @@ app.post('/addProduto/', upload.single('IMG'), (req, res) => {
 
 
 app.post('/listarProdutoId/', (req, res) => {
-
-    pool.getConnection((err, pool) => {
-        var id = req.param("id")
-        var query = 'SELECT NOME_PRODUTO,VALOR,DESCRICAO,IMAGEM FROM PRODUTOS WHERE ID_PRODUTO =' + id;
-        pool.query(query, (error, results, fields) => {
-            if (error) {
-                console.log(error)
-            }
-            async function retrieveFoto() {
-                await Image_Converter(results[0].IMAGEM, results[0].NOME_PRODUTO + '.jpg').then(resolve => {
-                    res.sendFile();
-
-                });
-            }
-
-            //Executando função assincrona.
-            retrieveFoto();
-
-
-        })
-    })
-
-
-
-})
-
-
-app.post('/listarProdutoTeste/', (req, res) => {
-
     pool.getConnection((err, pool) => {
         var id = req.param("id")
         var query = 'SELECT NOME_PRODUTO,VALOR,DESCRICAO,IMAGEM_PATH FROM PRODUTOS WHERE ID_PRODUTO =' + id;
@@ -189,11 +164,8 @@ app.post('/listarProdutoTeste/', (req, res) => {
             if (error) {
                 console.log(error)
             }
+            res.sendFile(__dirname + results[0].IMAGEM_PATH)
 
-            res.sendFile(results[0].IMAGEM_PATH);
-            
-
-            
         })
     })
 
@@ -225,11 +197,11 @@ app.post('/listarProdutonNovo/', (req, res) => {
 
 })
 
-app.post('/listarTodosProdutos/', (req, res) => {
+/*app.post('/listarTodosProdutos/', (req, res) => {
 
     pool.getConnection((err, pool) => {
         var id = req.param("id")
-        var query = 'SELECT NOME_PRODUTO,VALOR,DESCRICAO,IMAGEM FROM PRODUTOS WHERE ID_PRODUTO =' + id;
+        var query = 'SELECT NOME_PRODUTO,VALOR,DESCRICAO,IMAGEM_PATH FROM PRODUTOS WHERE ID_PRODUTO =' + id;
         pool.query(query, (error, results, fields) => {
             if (error) {
                 console.log(error)
@@ -262,9 +234,9 @@ app.post('/listarTodosProdutos/', (req, res) => {
 
 
 
-})
+})*/
 
-app.post('/listarTodosTeste/', (req, res) => {
+/*app.post('/listarTodosTeste/', (req, res) => {
 
     pool.getConnection((err, pool) => {
         var id = req.param("id")
@@ -300,7 +272,7 @@ app.post('/listarTodosTeste/', (req, res) => {
 
 
 
-})
+}) */
 
 
 //var key = fs.readFileSync(path.resolve('./service/key.pem'));
