@@ -1,35 +1,26 @@
 var multer = require('multer');
 
+
+//Variaveis para salvar no servidor
+let data = new Date()
+let data_atual = data.getDate();
+let mes_atual = data.getMonth() + 1;
+let ano_atual = data.getFullYear();
+let segundos = data.getSeconds();
+var mseg    = data.getMilliseconds(); 
+let data_final = data_atual + '-' + mes_atual + '-' + ano_atual + '-' + segundos + '-' + mseg;
+
 var storage = multer.diskStorage({
-<<<<<<< HEAD
-<<<<<<< HEAD
-    destination: function (req, file, cb) {
-      cb(null, __dirname + '/my-uploads')
-=======
-    destination: function (req, file, cb) {
-      cb(null, __dirname + '/tmp/my-uploads')
->>>>>>> parent of dcb0235... 🌺🐪 Checkpoint
-    },
-    filename: function (req, file, cb) {
-      cb(null,  Date.now()+ '-' + file.originalname)
-    }
-  });
-
-
-  const upload = multer({storage: storage});
-
-  module.exports = upload;
-<<<<<<< HEAD
-=======
-  destination: function(req, file, cb) {
-    cb(null, __dirname + "/my-uploads");
+  destination: function (req, file, cb) {
+    cb(null, __dirname + '/my-uploads')
   },
-  filename: function(req, file, cb) {
-    cb(null, Date.now() + "-" + file.originalname);
+  filename: function (req, file, cb) {
+    cb(null, data_final + '-' + req.param("NOME_PRODUTO") + '.jpg')
+            
   }
 });
->>>>>>> f653ef9738211481a72c7f99af5689e4e631bc3a
-=======
->>>>>>> parent of dcb0235... 🌺🐪 Checkpoint
 
 
+const upload = multer({ storage: storage });
+
+module.exports = upload;

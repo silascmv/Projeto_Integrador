@@ -116,9 +116,63 @@ class DataAcessLayer {
 
 
     insertProduto(req, pool, objeto_produto) {
+        return new Promise((resolve, reject) => {
+
+            //Iniciando Transação
+            pool.beginTransaction(function (err) {
+                if (err) {
+                    throw err;
+                }
+                pool.query('INSERT INTO PRODUTOS SET ?',objeto_produto , function (error, results, fields) {
+                    if (!error) {
+                        pool.commit(function (err) {
+                            //Finalização do cadastro.
+                            if (!err) {
+                                var resultado_cliente = JSON.parse('{"status":"Produto Cadastrado com Sucesso","code_status":"01"}');
+                                resolve(resultado_cliente);
+
+                            } else if (err=='ER_DUP_ENTRY'){
+                                var resultado = JSON.parse('{"status":"Já existe um produto cadastro com esse nome","code_status":"04"}');
+                                resolve(resultado);
+
+                            }else {
+                                //Caso apresente algua falha no commit irá enviar essa informação.
+                                return pool.rollback(function () {
+                                    var resultado_cliente = JSON.parse('{"status":"Falha ao realizar o cadastro tenta novamente","code_status":"00"}');
+                                    resolve(resultado_cliente);
+                                });
+
+                            }
+                        });
 
 
-        
+                    } else if (error.code === 'ER_DUP_ENTRY') {
+                        return pool.rollback(function () {
+                            var resultado = JSON.parse('{"status":"Já existe um produto cadastrado com esse nome","code_status":"04"}');
+                            resolve(resultado);
+                        });
+                    } else {
+                        console.log('ERROOO ????' + error)
+                        var resultado = JSON.parse('{"status":"Operação desconhecida, entre em contato com TI","code_status":"00"}');
+                        resolve(resultado);
+
+                    }
+                    pool.release();
+                });
+
+            });
+
+        });
+
+
+
+
+
+    }
+
+    insertProdutoLocal(req, pool, objeto_produto) {
+
+        console.log(objeto_produto.IMAGEM)
 
         return new Promise((resolve, reject) => {
 
