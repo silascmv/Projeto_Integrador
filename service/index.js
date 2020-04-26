@@ -117,7 +117,7 @@ app.post('/addProduto/', upload.single('IMG'), (req, res) => {
             CODIGO_BARRA: req.param("CODIGO_BARRA"),
             TIPO: req.param("TIPO"),
             VALIDADE: data,
-            IMAGEM_PATH: '/my-uploads/' + req.file.path
+            IMAGEM_PATH: req.file.path
         }
 
         console.log('diretorio a ser salvo ' + produto.IMAGEM_PATH);
