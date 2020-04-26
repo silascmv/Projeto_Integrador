@@ -110,17 +110,16 @@ app.post('/addProduto/', upload.single('IMG'), (req, res) => {
             CODIGO_BARRA: req.param("CODIGO_BARRA"),
             TIPO: req.param("TIPO"),
             VALIDADE: data,
-            IMAGEM: fs.readFileSync(req.file.path)
+            IMAGEM_PATH: './' + req.param("NOME_PRODUTO") + '.jpg'
+
+
         }
-
-        console.log(typeof (produto.IMAGEM));
-
+        
         const objeto_dal = new DataAcessLayer();
         try {
             async function uploadFoto() {
-
-
                 await objeto_dal.insertProduto(req, pool, produto).then(resultado => {
+                    fs.readFileSync(req.file.path)
                     res.send(resultado);
                 });
             }
