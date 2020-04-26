@@ -4,12 +4,7 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const fs = require("fs");
 const http = require('http');
-
-
-
-
-
-
+const { promisify } = require('util')
 
 //APP INICIANDO O EXPRESS
 const app = express();
@@ -19,6 +14,8 @@ var pool = require(__dirname + '/database.js');
 var upload = require(__dirname + '/config_multer');
 //CONVERSOR BLOB TO IMAGEM
 const Image_Converter = require(__dirname + '/image_converter');
+//APAGAR ARQUIVOS
+const unlinkAsync = promisify(fs.unlink)
 
 //CLASSE QUE REALIZA AS TRANSAÇÕES COM O BANCO
 var DataAcessLayer = require((__dirname) + "/dal.js");
@@ -97,9 +94,19 @@ app.post('/addProduto/', upload.single('IMG'), (req, res) => {
     //Abrindo Conexão com o Banco de Dados (Objeto Pool Importado da Classe DataBase)
     pool.getConnection(function (err, pool) {
 
-        var data = new Date();
+        var data = new Date()
+
+        console.log('Caminho : ' + req.file.path);
+
+        //variavel pra setar a hora na foto
+        var data_atual = data.getDate();
+        var mes_atual = data.getMonth() + 1;
+        var ano_atual = data.getFullYear() + 1;
+        var segundos = data.getSeconds();
+        var mseg    = data.getMilliseconds(); 
+        let data_final = data_atual + '-' + mes_atual + '-' + ano_atual + '-' + segundos + '-' + mseg;
+        //conversão de data pra armazenar no banco
         data = (req.param("VALIDADE"));
-        console.log(data);
 
         var produto = {
 
@@ -110,17 +117,28 @@ app.post('/addProduto/', upload.single('IMG'), (req, res) => {
             CODIGO_BARRA: req.param("CODIGO_BARRA"),
             TIPO: req.param("TIPO"),
             VALIDADE: data,
-            IMAGEM_PATH: './' + req.param("NOME_PRODUTO") + '.jpg'
-
-
+            IMAGEM_PATH: '/my-uploads/' + req.file.path
         }
-        
+
+        console.log('diretorio a ser salvo ' + produto.IMAGEM_PATH);
+
         const objeto_dal = new DataAcessLayer();
         try {
             async function uploadFoto() {
                 await objeto_dal.insertProduto(req, pool, produto).then(resultado => {
-                    fs.readFileSync(req.file.path)
-                    res.send(resultado);
+                    if (resultado.code_status === '01') {
+                        res.send(resultado);
+                        req.pause();                        
+                    } else if (resultado.code_status === '04') {
+                        //Remover Arquivo
+                        console.log('FINALLLLL' + req.file.destination + '/' + req.file.filename)
+                        unlinkAsync(req.file.path)
+                        req.pause();                        
+                        res.send(resultado);
+                        res.end();
+
+                    }
+
                 });
             }
             uploadFoto();
@@ -145,16 +163,34 @@ app.post('/listarProdutoId/', (req, res) => {
             }
             async function retrieveFoto() {
                 await Image_Converter(results[0].IMAGEM, results[0].NOME_PRODUTO + '.jpg').then(resolve => {
-                    var objeto_json = {
-
-
-                    }
-
-                    res.sendFile(__dirname + '/my-uploads/' + results[0].NOME_PRODUTO + '.jpg', 'Sucesso');
+                    res.sendFile();
 
                 });
             }
 
+            //Executando função assincrona.
+            retrieveFoto();
+
+
+        })
+    })
+
+
+
+})
+
+app.post('/listarProdutonNovo/', (req, res) => {
+
+    pool.getConnection((err, pool) => {
+        var id = req.param("id")
+        var query = 'SELECT NOME_PRODUTO,VALOR,DESCRICAO,IMAGEM_PATH FROM PRODUTOS WHERE ID_PRODUTO =' + id;
+        pool.query(query, (error, results, fields) => {
+            if (error) {
+                console.log(error)
+            }
+            async function retrieveFoto() {
+                res.sendFile(__dirname + results[0].IMAGEM_PATH);
+            }
             //Executando função assincrona.
             retrieveFoto();
 
@@ -178,7 +214,7 @@ app.post('/listarTodosProdutos/', (req, res) => {
             async function retrieveFoto() {
                 await Image_Converter(results[0].IMAGEM, results[0].NOME_PRODUTO + '.jpg').then(buf => {
                     console.log(results.length);
-                    
+
                     var objeto_json = {
                         NOME_PRODUTO: results[0].NOME_PRODUTO,
                         VALOR: results[0].VALOR,
@@ -187,7 +223,7 @@ app.post('/listarTodosProdutos/', (req, res) => {
                     }
 
                     //console.log(buf.toString('base64'));
-                    
+
 
                     res.send(objeto_json);
 
@@ -216,7 +252,7 @@ app.post('/listarTodosTeste/', (req, res) => {
             }
             async function retrieveFoto() {
                 await Image_Converter(results[0].IMAGEM, results[0].NOME_PRODUTO + '.jpg').then(buf => {
-                    console.log(results.length);                    
+                    console.log(results.length);
                     var objeto_json = {
                         NOME_PRODUTO: results[0].NOME_PRODUTO,
                         VALOR: results[0].VALOR,
@@ -225,7 +261,7 @@ app.post('/listarTodosTeste/', (req, res) => {
                     }
 
                     //console.log(buf.toString('base64'));
-                    
+
 
                     res.send(objeto_json);
 
