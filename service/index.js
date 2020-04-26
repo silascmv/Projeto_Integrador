@@ -179,6 +179,29 @@ app.post('/listarProdutoId/', (req, res) => {
 
 })
 
+
+app.post('/listarProdutoTeste/', (req, res) => {
+
+    pool.getConnection((err, pool) => {
+        var id = req.param("id")
+        var query = 'SELECT NOME_PRODUTO,VALOR,DESCRICAO,IMAGEM_PATH FROM PRODUTOS WHERE ID_PRODUTO =' + id;
+        pool.query(query, (error, results, fields) => {
+            if (error) {
+                console.log(error)
+            }
+
+            res.sendFile(results[0].IMAGEM_PATH);
+            
+
+            
+        })
+    })
+
+
+
+})
+
+
 app.post('/listarProdutonNovo/', (req, res) => {
 
     pool.getConnection((err, pool) => {
