@@ -7,5 +7,5 @@ function login() {
       'Accept': 'application/json',
       'Content-Type': 'application/json'
     },
-}).then(response => response.json()).then(data => alert(data.status));
+}).then(response => response.json()).then(data => {if(data.code_status === 1){ localStorage.setItem('cardapio', true), window.location.href = "http://localhost/faul/web/WEB/_projeto-meu-cardapio/";}else{   alert(data.status) } });
 }
