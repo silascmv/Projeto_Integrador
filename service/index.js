@@ -83,7 +83,7 @@ app.get('/realizarLogin/:login&:password', function (req, res) {
         pool.query('SELECT CD_LOGIN,CD_SENHA FROM LOGIN WHERE CD_LOGIN = ' + filter_login + filter_password, function (error, results, fields) {
             // Pegando a 'resposta' do servidor pra nossa requisição. Ou seja, aqui ele vai mandar nossos dados.
 
-            console.log(results);
+            console.log(results[0]);
             if (isEmptyObject(results)) {
 
                 res.json({ status: "Usuario ou Senha Invalido", code_status: 00 });
