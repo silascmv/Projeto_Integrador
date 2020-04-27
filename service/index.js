@@ -114,9 +114,9 @@ app.post('/addProduto/', upload.single('IMG'), (req, res) => {
     let data_final = data_atual + '-' + mes_atual + '-' + ano_atual + '-' + segundos + '-' + mseg;
     //conversão de data pra armazenar no banco
     data = (req.param("VALIDADE"));
-    if(req.file.filename === 'undefined'){
+    if(req.file.filename === undefined){
 
-        req.file.filename = 'Sem Foto'
+        req.file.filename = 'SemFoto'
     }
 
     var produto = {
