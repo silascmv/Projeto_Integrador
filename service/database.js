@@ -5,10 +5,10 @@ var util = require('util');
 
 var pool = mysql.createPool({
     connectionLimit: 10,
-    host: 'remotemysql.com',
-    user: 'wIp1MpiKOt',
+    host: 'db4free.net',
+    user: 'dbaservice',
     password: 'pyiEqBNdgy',
-    database: 'wIp1MpiKOt',
+    database: 'databaseservice',
     connectionLimit: 10,
     multipleStatements: true
 });
