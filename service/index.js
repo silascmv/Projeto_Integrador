@@ -126,8 +126,6 @@ app.post('/addProduto/', upload.single('IMG'), (req, res) => {
         IMAGEM_PATH: '/my-uploads/' + req.file.filename
     }
 
-    console.log('diretorio a ser salvo ' + produto.IMAGEM_PATH);
-
     pool.getConnection(function (err, pool) {
         const objeto_dal = new DataAcessLayer();
         try {
@@ -164,7 +162,17 @@ app.post('/listarProdutoId/', (req, res) => {
             if (error) {
                 console.log(error)
             }
-            res.sendFile(__dirname + results[0].IMAGEM_PATH)
+            
+            
+            var objeto_retorno = {                               
+                    'imagem': (__dirname + results[0].IMAGEM_PATH),
+                    'NOME': results[0].NOME_PRODUTO                 
+            }
+            res.json(objeto_retorno);
+            
+
+            //res.sendFile(__dirname + results[0].IMAGEM_PATH, objeto_retorno);
+        
 
         })
     })
@@ -184,7 +192,10 @@ app.post('/listarProdutonNovo/', (req, res) => {
                 console.log(error)
             }
             async function retrieveFoto() {
-                res.sendFile(__dirname + results[0].IMAGEM_PATH);
+                //res.sendFile(__dirname + results[0].IMAGEM_PATH);
+                
+                
+
             }
             //Executando função assincrona.
             retrieveFoto();
