@@ -115,7 +115,8 @@ app.post('/addProduto/', upload.single('IMG'), (req, res) => {
     //conversão de data pra armazenar no banco
     data = (req.param("VALIDADE"));
     if(req.file.filename === undefined){
-
+		
+		console.log("ENTROU NO IF")
         req.file.filename = 'SemFoto'
     }
 
