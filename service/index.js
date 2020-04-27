@@ -116,7 +116,7 @@ app.post('/addProduto/', upload.single('IMG'), (req, res) => {
     data = (req.param("VALIDADE"));
     if(req.file.fieldname === 'undefined'){
 
-        req.file.fieldname = 'Sem Foto'
+        req.file.filename = 'Sem Foto'
     }
 
     var produto = {
