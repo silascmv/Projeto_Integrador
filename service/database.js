@@ -5,10 +5,10 @@ var util = require('util');
 
 var pool = mysql.createPool({
     connectionLimit: 10,
-    host: 'db4free.net',
-    user: 'dbaservice',
-    password: 'pyiEqBNdgy',
-    database: 'databaseservice',
+    host: 'bpcffodtfs6iyvw0xsjz-mysql.services.clever-cloud.com',
+    user: 'ujm5jxiiqupargyp',
+    password: 'GE4dCxqekEjtbyoZZMa6',
+    database: 'bpcffodtfs6iyvw0xsjz',
     connectionLimit: 10,
     multipleStatements: true
 });

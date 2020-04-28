@@ -76,14 +76,14 @@ app.get('/realizarLogin/:login&:password', function (req, res) {
         let filter_login = '';
         let filter_password = '';
         //validação se o id não está nulo
-        if (req.params.login) filter_login = "'" + (req.param("login")) + "'";
+        if (req.params.login) filter_login = "'" + (req.params.login) + "'";
         console.log(filter_login);
-        if (req.params.password) filter_password = 'AND CD_SENHA =' + "'" + (req.param("password")) + "'";
+        if (req.params.password) filter_password = 'AND CD_SENHA =' + "'" + (req.params.password) + "'";
         // Executando a query MySQL (selecionar todos os dados da tabela usuário).
         pool.query('SELECT CD_LOGIN,CD_SENHA FROM LOGIN WHERE CD_LOGIN = ' + filter_login + filter_password, function (error, results, fields) {
             // Pegando a 'resposta' do servidor pra nossa requisição. Ou seja, aqui ele vai mandar nossos dados.
 
-            console.log(results[0]);
+            console.log(results);
             if (isEmptyObject(results)) {
 
                 res.json({ status: "Usuario ou Senha Invalido", code_status: 00 });
