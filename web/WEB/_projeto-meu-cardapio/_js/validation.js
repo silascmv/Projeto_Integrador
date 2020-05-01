@@ -1,6 +1,6 @@
   
 window.onload = function() {
-if(localStorage.getItem('cardapio') != "true" ){window.location.href ="http://localhost/faul/web/WEB/_projeto-meu-cardapio/pagina_de_login.html"}
+if(localStorage.getItem('cardapio') != "true" ){window.location.href ="../pagina_de_login.html"}
 };
 
 
@@ -12,6 +12,6 @@ function exitUm(){
 
 function exitDois(){
 
-    window.location.href ="http://localhost/faul/web/WEB/_projeto-meu-cardapio/pagina_de_login.html"
+    window.location.href ="../pagina_de_login.html"s
 
 };
