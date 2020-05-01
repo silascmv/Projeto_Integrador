@@ -16,12 +16,22 @@ public class MainActivityPrincipal extends AppCompatActivity {
         setContentView(R.layout.activity_main_principal);
 
         final TextView abrirComanda = findViewById(R.id.abrirComanda);
+        final TextView abrirCardapio = findViewById(R.id.abrirCardapio);
 
         abrirComanda.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intentTelaCadastro = new Intent(getApplicationContext(), MainActivityPrincipalUsuario.class );
                 startActivity(intentTelaCadastro);
+
+            }
+        });
+
+        abrirCardapio.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intentTelaCardapio = new Intent(getApplicationContext(), MainActivityCardapio.class );
+                startActivity(intentTelaCardapio);
 
             }
         });

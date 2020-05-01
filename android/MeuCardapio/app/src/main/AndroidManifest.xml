@@ -14,6 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:targetApi="n">
+        <activity android:name=".MainActivityCardapio"></activity>
         <activity android:name=".MainActivityPrincipal" />
         <activity android:name=".MainActivityCadastro" />
         <activity android:name=".MainActivityPrincipalUsuario" />
