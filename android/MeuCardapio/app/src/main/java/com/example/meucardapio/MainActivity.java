@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(),"Usuário ou Senha Inválido", Toast.LENGTH_SHORT).show();
 
                     }else{
-                        Intent intent_tela_princiapl = new Intent(getApplicationContext(), MainActivityPrincipalUsuario.class );
+                        Intent intent_tela_princiapl = new Intent(getApplicationContext(), MainActivityPrincipal.class );
                         startActivity(intent_tela_princiapl);
                     }
 
