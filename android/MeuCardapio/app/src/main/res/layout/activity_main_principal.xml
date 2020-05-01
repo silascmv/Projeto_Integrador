@@ -146,17 +146,18 @@
                     android:layout_width="match_parent"
                     >
                     <ImageView
-                        android:src="@drawable/bookmark"
+                        android:src="@drawable/cupom"
                         android:layout_width="80dp"
                         android:layout_height="80dp"/>
 
                     <TextView
-                        android:layout_marginTop="12dp"
-                        android:textColor="#6f6f6f"
-                        android:textSize="18sp"
-                        android:text="Abrir comanda"
+                        android:id="@+id/abrirCupom"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:text="Cupom"
+                        android:textColor="#6f6f6f"
+                        android:textSize="18sp" />
 
                 </LinearLayout>
 
@@ -180,17 +181,18 @@
                     android:layout_width="match_parent"
                     >
                     <ImageView
-                        android:src="@drawable/bookmark"
+                        android:src="@drawable/carteira"
                         android:layout_width="80dp"
                         android:layout_height="80dp"/>
 
                     <TextView
-                        android:layout_marginTop="12dp"
-                        android:textColor="#6f6f6f"
-                        android:textSize="18sp"
-                        android:text="Abrir comanda"
+                        android:id="@+id/abrirCarteira"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:text="Carteira"
+                        android:textColor="#6f6f6f"
+                        android:textSize="18sp" />
 
                 </LinearLayout>
 
@@ -207,24 +209,26 @@
                 >
 
                 <LinearLayout
-                    android:orientation="vertical"
-                    android:padding="16dp"
-                    android:gravity="center"
-                    android:layout_height="match_parent"
                     android:layout_width="match_parent"
-                    >
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
                     <ImageView
-                        android:src="@drawable/bookmark"
+                        android:id="@+id/abrirHelp"
                         android:layout_width="80dp"
-                        android:layout_height="80dp"/>
+                        android:layout_height="80dp"
+                        android:src="@drawable/ajuda" />
 
                     <TextView
-                        android:layout_marginTop="12dp"
-                        android:textColor="#6f6f6f"
-                        android:textSize="18sp"
-                        android:text="Abrir comanda"
+                        android:id="@+id/abrirAjuda"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:text="Ajuda"
+                        android:textColor="#6f6f6f"
+                        android:textSize="18sp" />
 
                 </LinearLayout>
 

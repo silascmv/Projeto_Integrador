@@ -14,7 +14,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:targetApi="n">
-        <activity android:name=".MainActivityCardapio"></activity>
+        <activity android:name=".MainActivityAjuda"></activity>
+        <activity android:name=".MainActivityCarteira" />
+        <activity android:name=".MainActivityCupom" />
+        <activity android:name=".MainActivityCardapio" />
         <activity android:name=".MainActivityPrincipal" />
         <activity android:name=".MainActivityCadastro" />
         <activity android:name=".MainActivityPrincipalUsuario" />
