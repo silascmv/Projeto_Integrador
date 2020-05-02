@@ -14,7 +14,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:targetApi="n">
-        <activity android:name=".MainActivityAjuda"></activity>
+        <activity android:name=".MainActivityLocalizar"></activity>
+        <activity android:name=".MainActivityAjuda" />
         <activity android:name=".MainActivityCarteira" />
         <activity android:name=".MainActivityCupom" />
         <activity android:name=".MainActivityCardapio" />
