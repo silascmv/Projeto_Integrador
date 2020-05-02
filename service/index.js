@@ -171,7 +171,7 @@ app.post('/listarProdutoId/', (req, res) => {
             
             
             var objeto_retorno = {                               
-                    'imagem': (__dirname + results[0].IMAGEM_PATH),
+                    'imagem': (results[0].IMAGEM_PATH),
                     'NOME': results[0].NOME_PRODUTO                 
             }
             res.json(objeto_retorno);
