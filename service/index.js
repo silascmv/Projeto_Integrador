@@ -165,21 +165,6 @@ app.post('/addProduto/', upload.single('IMG'), (req, res) => {
 });
 
 
-app.get('/my-uploads/', (req, res) => {
-
-
-
-
-
-
-
-
-
-
-
-
-})
-
 app.post('/listarProdutoId/', (req, res) => {
     pool.getConnection((err, pool) => {
         var id = req.param("id")
@@ -231,7 +216,7 @@ app.get('/listarTodosProdutos/', (req, res) => {
                 for (var i = 0; i < results.length; i++) {
 
                     var objeto_retorno = {
-                        'IMAGEM': (results[i].IMAGEM_PATH),
+                        'IMAGEM': 'http://app-63e8a389-b098-4421-abd4-cc50f39f4df1.cleverapps.io/' + (results[i].IMAGEM_PATH),
                         'NOME': results[i].NOME_PRODUTO,
                         'VALOR': results[i].VALOR,
                         'DESCRICAO': results[i].DESCRICAO,
