@@ -17,6 +17,8 @@ var upload = require(__dirname + '/config_multer');
 const Image_Converter = require(__dirname + '/image_converter');
 //APAGAR ARQUIVOS
 const unlinkAsync = promisify(fs.unlink)
+//Serving Static Files
+app.use('/my-uploads', express.static(__dirname + '/my-uploads'));
 
 //
 app.use(session({
@@ -159,6 +161,21 @@ app.post('/addProduto/', upload.single('IMG'), (req, res) => {
     });
 });
 
+
+app.get('/my-uploads/', (req,res) => {
+
+
+
+
+
+
+
+
+
+
+
+
+})
 
 app.post('/listarProdutoId/', (req, res) => {
     pool.getConnection((err, pool) => {
