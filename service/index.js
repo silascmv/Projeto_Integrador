@@ -7,6 +7,9 @@ const http = require('http');
 const { promisify } = require('util')
 var session = require('express-session')
 
+//NOME_HOST_API
+
+
 //APP INICIANDO O EXPRESS
 const app = express();
 //CONEXÃO COM O BANCO - IMPORTAÇÃO DA CLASSE DE CONEXÃO
@@ -116,9 +119,9 @@ app.post('/addProduto/', upload.single('IMG'), (req, res) => {
     let data_final = data_atual + '-' + mes_atual + '-' + ano_atual + '-' + segundos + '-' + mseg;
     //conversão de data pra armazenar no banco
     data = (req.param("VALIDADE"));
-    if(req.file.filename === undefined){
-		
-		console.log("ENTROU NO IF")
+    if (req.file.filename === undefined) {
+
+        console.log("ENTROU NO IF")
         req.file.filename = 'SemFoto'
     }
 
@@ -162,7 +165,7 @@ app.post('/addProduto/', upload.single('IMG'), (req, res) => {
 });
 
 
-app.get('/my-uploads/', (req,res) => {
+app.get('/my-uploads/', (req, res) => {
 
 
 
@@ -185,17 +188,24 @@ app.post('/listarProdutoId/', (req, res) => {
             if (error) {
                 console.log(error)
             }
-            
-            
-            var objeto_retorno = {                               
-                    'imagem': (results[0].IMAGEM_PATH),
-                    'NOME': results[0].NOME_PRODUTO                 
+
+            var objeto_array = new Array();
+            for (var i = 0; i < results.length; i++) {
+
+                var objeto_retorno = {
+                    'imagem': (results[i].IMAGEM_PATH),
+                    'NOME': results[i].NOME_PRODUTO
+                }
+
+            objeto_array.push(objeto_retorno);
+
             }
-            res.json(objeto_retorno);
-            
+
+            res.json(objeto_array);
+
 
             //res.sendFile(__dirname + results[0].IMAGEM_PATH, objeto_retorno);
-        
+
 
         })
     })
@@ -203,6 +213,48 @@ app.post('/listarProdutoId/', (req, res) => {
 
 
 })
+
+app.get('/listarTodosProdutos/', (req, res) => {
+    pool.getConnection((err, pool) => {
+        var id = req.param("id")
+        var query = 'SELECT NOME_PRODUTO,VALOR,DESCRICAO,IMAGEM_PATH,CODIGO_BARRA,TIPO FROM PRODUTOS';
+        pool.query(query, (error, results, fields) => {
+            if (error) {
+                console.log(error)
+            }
+
+            var objeto_array = new Array();
+            for (var i = 0; i < results.length; i++) {
+
+                var objeto_retorno = {
+                    'imagem': (results[i].IMAGEM_PATH),
+                    'NOME': results[i].NOME_PRODUTO,
+                    'VALOR': results[i].VALOR,
+                    'DESCRICAO': results[i].DESCRICAO,
+                    'CODIGO_BARRA': results[i].CODIGO_BARRA,
+                    'TIPO':results[i].TIPO
+                    
+                }
+
+            objeto_array.push(objeto_retorno);
+
+            }
+
+            res.json(objeto_array);
+
+
+            //res.sendFile(__dirname + results[0].IMAGEM_PATH, objeto_retorno);
+
+
+        })
+    })
+
+
+
+})
+
+
+
 
 
 app.post('/listarProdutonNovo/', (req, res) => {
@@ -216,8 +268,8 @@ app.post('/listarProdutonNovo/', (req, res) => {
             }
             async function retrieveFoto() {
                 //res.sendFile(__dirname + results[0].IMAGEM_PATH);
-                
-                
+
+
 
             }
             //Executando função assincrona.
