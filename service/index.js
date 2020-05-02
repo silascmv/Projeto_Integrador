@@ -197,7 +197,7 @@ app.post('/listarProdutoId/', (req, res) => {
                     'NOME': results[i].NOME_PRODUTO
                 }
 
-            objeto_array.push(objeto_retorno);
+                objeto_array.push(objeto_retorno);
 
             }
 
@@ -223,154 +223,36 @@ app.get('/listarTodosProdutos/', (req, res) => {
                 console.log(error)
             }
 
-            var objeto_array = new Array();
-            for (var i = 0; i < results.length; i++) {
+            if (results.length == 0) {
+                res.json({ status: "Não existem produtos cadastrados", code_status: 00 });
+            } else {
 
-                var objeto_retorno = {
-                    'imagem': (results[i].IMAGEM_PATH),
-                    'NOME': results[i].NOME_PRODUTO,
-                    'VALOR': results[i].VALOR,
-                    'DESCRICAO': results[i].DESCRICAO,
-                    'CODIGO_BARRA': results[i].CODIGO_BARRA,
-                    'TIPO':results[i].TIPO
-                    
+                var objeto_array = new Array();
+                for (var i = 0; i < results.length; i++) {
+
+                    var objeto_retorno = {
+                        'IMAGEM': (results[i].IMAGEM_PATH),
+                        'NOME': results[i].NOME_PRODUTO,
+                        'VALOR': results[i].VALOR,
+                        'DESCRICAO': results[i].DESCRICAO,
+                        'CODIGO_BARRA': results[i].CODIGO_BARRA,
+                        'TIPO': results[i].TIPO
+
+                    }
+
+                    objeto_array.push(objeto_retorno);
+
                 }
-
-            objeto_array.push(objeto_retorno);
-
             }
-
             res.json(objeto_array);
 
-
-            //res.sendFile(__dirname + results[0].IMAGEM_PATH, objeto_retorno);
-
-
         })
     })
-
-
 
 })
 
 
 
-
-
-app.post('/listarProdutonNovo/', (req, res) => {
-
-    pool.getConnection((err, pool) => {
-        var id = req.param("id")
-        var query = 'SELECT NOME_PRODUTO,VALOR,DESCRICAO,IMAGEM_PATH FROM PRODUTOS WHERE ID_PRODUTO =' + id;
-        pool.query(query, (error, results, fields) => {
-            if (error) {
-                console.log(error)
-            }
-            async function retrieveFoto() {
-                //res.sendFile(__dirname + results[0].IMAGEM_PATH);
-
-
-
-            }
-            //Executando função assincrona.
-            retrieveFoto();
-
-
-        })
-    })
-
-
-
-})
-
-/*app.post('/listarTodosProdutos/', (req, res) => {
-
-    pool.getConnection((err, pool) => {
-        var id = req.param("id")
-        var query = 'SELECT NOME_PRODUTO,VALOR,DESCRICAO,IMAGEM_PATH FROM PRODUTOS WHERE ID_PRODUTO =' + id;
-        pool.query(query, (error, results, fields) => {
-            if (error) {
-                console.log(error)
-            }
-            async function retrieveFoto() {
-                await Image_Converter(results[0].IMAGEM, results[0].NOME_PRODUTO + '.jpg').then(buf => {
-                    console.log(results.length);
-
-                    var objeto_json = {
-                        NOME_PRODUTO: results[0].NOME_PRODUTO,
-                        VALOR: results[0].VALOR,
-                        DESCRICAO: results[0].DESCRICAO,
-                        IMAGEM: buf.toString('base64')
-                    }
-
-                    //console.log(buf.toString('base64'));
-
-
-                    res.send(objeto_json);
-
-                });
-            }
-
-            //Executando função assincrona.
-            retrieveFoto();
-
-
-        })
-    })
-
-
-
-})*/
-
-/*app.post('/listarTodosTeste/', (req, res) => {
-
-    pool.getConnection((err, pool) => {
-        var id = req.param("id")
-        var query = 'SELECT NOME_PRODUTO,VALOR,DESCRICAO,IMAGEM FROM PRODUTOS';
-        pool.query(query, (error, results, fields) => {
-            if (error) {
-                console.log(error)
-            }
-            async function retrieveFoto() {
-                await Image_Converter(results[0].IMAGEM, results[0].NOME_PRODUTO + '.jpg').then(buf => {
-                    console.log(results.length);
-                    var objeto_json = {
-                        NOME_PRODUTO: results[0].NOME_PRODUTO,
-                        VALOR: results[0].VALOR,
-                        DESCRICAO: results[0].DESCRICAO,
-                        IMAGEM: buf.toString('base64')
-                    }
-
-                    //console.log(buf.toString('base64'));
-
-
-                    res.send(objeto_json);
-
-                });
-            }
-
-            //Executando função assincrona.
-            retrieveFoto();
-
-
-        })
-    })
-
-
-
-}) */
-
-
-//var key = fs.readFileSync(path.resolve('./service/key.pem'));
-//var cert = fs.readFileSync(path.resolve('./service/cert.pem'));
-/*https.createServer({
-    key: fs.readFileSync(__dirname + '/key.pem'),
-    cert: fs.readFileSync(__dirname + '/cert.pem'),
-    passphrase: 'keypem'
-  }, app)
-  .listen(8080, function () {
-    console.log('Example app listening on port 8080! Go to https://localhost:8080/')
-  }) */
 
 app.listen(8080, () => {
     console.log('Service is UP - LocalHost:8080');
