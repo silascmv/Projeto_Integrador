@@ -73,39 +73,6 @@ app.post('/addCliente', function (req, res) {
     });
 });
 
-
-app.get('/realizarLogin/:login&:password', function (req, res) {
-
-    pool.getConnection(function (err, pool) {
-        //variavel para filtro
-        let filter_login = '';
-        let filter_password = '';
-        //validação se o id não está nulo
-        if (req.params.login) filter_login = "'" + (req.params.login) + "'";
-        console.log(filter_login);
-        if (req.params.password) filter_password = 'AND CD_SENHA =' + "'" + (req.params.password) + "'";
-        // Executando a query MySQL (selecionar todos os dados da tabela usuário).
-        pool.query('SELECT CD_LOGIN,CD_SENHA FROM LOGIN WHERE CD_LOGIN = ' + filter_login + filter_password, function (error, results, fields) {
-            // Pegando a 'resposta' do servidor pra nossa requisição. Ou seja, aqui ele vai mandar nossos dados.
-
-            console.log(results);
-            if (isEmptyObject(results)) {
-
-                res.json({ status: "Usuario ou Senha Invalido", code_status: 00 });
-                pool.release();
-                pool.destroy();
-            } else {
-                res.json({ status: "Login Realizado com Sucesso", code_status: 01 });
-                pool.release();
-                pool.destroy();
-            }
-
-
-        });
-    });
-
-})
-
 app.post('/addProduto/', upload.single('IMG'), (req, res) => {
 
     var data = new Date()
@@ -150,6 +117,14 @@ app.post('/addProduto/', upload.single('IMG'), (req, res) => {
                         //Remover arquivo caso não vá cadastrar
                         unlinkAsync(req.file.destination + '/' + req.file.filename);
                         res.send(resultado).end();
+                    } else if (resultado.code_status === '00') {
+
+                        res.send(resultado).end();
+
+                    } else {
+
+
+
                     }
 
                 });
@@ -165,43 +140,40 @@ app.post('/addProduto/', upload.single('IMG'), (req, res) => {
 });
 
 
-app.post('/listarProdutoId/', (req, res) => {
-    pool.getConnection((err, pool) => {
-        var id = req.param("id")
-        var query = 'SELECT NOME_PRODUTO,VALOR,DESCRICAO,IMAGEM_PATH FROM PRODUTOS WHERE ID_PRODUTO =' + id;
-        pool.query(query, (error, results, fields) => {
-            if (error) {
-                console.log(error)
+app.get('/realizarLogin/:login&:password', function (req, res) {
+
+    pool.getConnection(function (err, pool) {
+        //variavel para filtro
+        let filter_login = '';
+        let filter_password = '';
+        //validação se o id não está nulo
+        if (req.params.login) filter_login = "'" + (req.params.login) + "'";
+        console.log(filter_login);
+        if (req.params.password) filter_password = 'AND CD_SENHA =' + "'" + (req.params.password) + "'";
+        // Executando a query MySQL (selecionar todos os dados da tabela usuário).
+        pool.query('SELECT CD_LOGIN,CD_SENHA FROM LOGIN WHERE CD_LOGIN = ' + filter_login + filter_password, function (error, results, fields) {
+            // Pegando a 'resposta' do servidor pra nossa requisição. Ou seja, aqui ele vai mandar nossos dados.
+
+            console.log(results);
+            if (isEmptyObject(results)) {
+
+                res.json({ status: "Usuario ou Senha Invalido", code_status: 00 });
+                pool.release();
+                pool.destroy();
+            } else {
+                res.json({ status: "Login Realizado com Sucesso", code_status: 01 });
+                pool.release();
+                pool.destroy();
             }
 
-            var objeto_array = new Array();
-            for (var i = 0; i < results.length; i++) {
 
-                var objeto_retorno = {
-                    'imagem': (results[i].IMAGEM_PATH),
-                    'NOME': results[i].NOME_PRODUTO
-                }
-
-                objeto_array.push(objeto_retorno);
-
-            }
-
-            res.json(objeto_array);
-
-
-            //res.sendFile(__dirname + results[0].IMAGEM_PATH, objeto_retorno);
-
-
-        })
-    })
-
-
+        });
+    });
 
 })
 
 app.get('/listarTodosProdutos/', (req, res) => {
     pool.getConnection((err, pool) => {
-        var id = req.param("id")
         var query = 'SELECT NOME_PRODUTO,VALOR,DESCRICAO,IMAGEM_PATH,CODIGO_BARRA,TIPO FROM PRODUTOS';
         pool.query(query, (error, results, fields) => {
             if (error) {
@@ -235,8 +207,6 @@ app.get('/listarTodosProdutos/', (req, res) => {
     })
 
 })
-
-
 
 
 app.listen(8080, () => {

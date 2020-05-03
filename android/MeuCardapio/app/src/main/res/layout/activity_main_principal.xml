@@ -25,14 +25,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/alfa_slab_one"
-                android:text="Meu Cardápio"
+                android:text="@string/meu_card_pio"
                 android:textColor="#FFFFFF"
                 android:textSize="12sp" />
 
             <TextView
                 android:layout_marginTop="6dp"
                 android:layout_below="@id/Nome_App"
-                android:text="Bem-Vindo $User"
+                android:text="@string/bem_vindo_user"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/alfa_slab_one"
@@ -48,8 +48,9 @@
 
         </RelativeLayout>
 
-        
+
         <GridLayout
+            android:paddingTop="40dp"
             android:columnCount="2"
             android:rowCount="3"
             android:alignmentMode="alignMargins"
@@ -69,22 +70,22 @@
 
                 <LinearLayout
                     android:id="@+id/abrirComanda"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
                     android:orientation="vertical"
-                    android:padding="16dp">
-
+                    android:padding="16dp"
+                    android:gravity="center"
+                    android:layout_height="match_parent"
+                    android:layout_width="match_parent"
+                    >
                     <ImageView
+                        android:src="@drawable/comanda"
                         android:layout_width="80dp"
-                        android:layout_height="80dp"
-                        android:src="@drawable/comanda" />
+                        android:layout_height="80dp"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="12dp"
-                        android:text="Iniciar Pedidos"
+                        android:text="@string/abrir_comanda"
                         android:textColor="#6f6f6f"
                         android:textSize="18sp" />
 
@@ -104,24 +105,24 @@
 
                 <LinearLayout
                     android:id="@+id/abrirCardapio"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
                     android:orientation="vertical"
-                    android:padding="16dp">
-
+                    android:padding="16dp"
+                    android:gravity="center"
+                    android:layout_height="match_parent"
+                    android:layout_width="match_parent"
+                    >
                     <ImageView
-                        android:layout_width="82dp"
-                        android:layout_height="78dp"
-                        android:src="@drawable/pedido" />
+                        android:src="@drawable/pedido"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"/>
 
                     <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
                         android:layout_marginTop="12dp"
-                        android:text="Cardápio"
                         android:textColor="#6f6f6f"
-                        android:textSize="18sp" />
+                        android:textSize="18sp"
+                        android:text="Cardápio"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
 
                 </LinearLayout>
 
@@ -139,24 +140,24 @@
 
                 <LinearLayout
                     android:id="@+id/abrirCupom"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
                     android:orientation="vertical"
-                    android:padding="16dp">
-
+                    android:padding="16dp"
+                    android:gravity="center"
+                    android:layout_height="match_parent"
+                    android:layout_width="match_parent"
+                    >
                     <ImageView
+                        android:src="@drawable/cupom"
                         android:layout_width="80dp"
-                        android:layout_height="80dp"
-                        android:src="@drawable/cupom" />
+                        android:layout_height="80dp"/>
 
                     <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
                         android:layout_marginTop="12dp"
-                        android:text="Cupom"
                         android:textColor="#6f6f6f"
-                        android:textSize="18sp" />
+                        android:textSize="18sp"
+                        android:text="Cupons"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
 
                 </LinearLayout>
 
@@ -174,24 +175,24 @@
 
                 <LinearLayout
                     android:id="@+id/abrirCarteira"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
                     android:orientation="vertical"
-                    android:padding="16dp">
-
+                    android:padding="16dp"
+                    android:gravity="center"
+                    android:layout_height="match_parent"
+                    android:layout_width="match_parent"
+                    >
                     <ImageView
+                        android:src="@drawable/carteira"
                         android:layout_width="80dp"
-                        android:layout_height="80dp"
-                        android:src="@drawable/carteira" />
+                        android:layout_height="80dp"/>
 
                     <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
                         android:layout_marginTop="12dp"
-                        android:text="Carteira"
                         android:textColor="#6f6f6f"
-                        android:textSize="18sp" />
+                        android:textSize="18sp"
+                        android:text="Carteira"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
 
                 </LinearLayout>
 
@@ -209,24 +210,24 @@
 
                 <LinearLayout
                     android:id="@+id/abrirAjuda"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
                     android:orientation="vertical"
-                    android:padding="16dp">
-
+                    android:padding="16dp"
+                    android:gravity="center"
+                    android:layout_height="match_parent"
+                    android:layout_width="match_parent"
+                    >
                     <ImageView
+                        android:src="@drawable/ajuda"
                         android:layout_width="80dp"
-                        android:layout_height="80dp"
-                        android:src="@drawable/ajuda" />
+                        android:layout_height="80dp"/>
 
                     <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
                         android:layout_marginTop="12dp"
-                        android:text="Ajuda"
                         android:textColor="#6f6f6f"
-                        android:textSize="18sp" />
+                        android:textSize="18sp"
+                        android:text="Ajuda"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
 
                 </LinearLayout>
 
@@ -244,40 +245,6 @@
 
                 <LinearLayout
                     android:id="@+id/abrirLocalizar"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    android:padding="16dp">
-
-                    <ImageView
-                        android:layout_width="80dp"
-                        android:layout_height="80dp"
-                        android:src="@drawable/localizar" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="12dp"
-                        android:text="Localizar Restaurante"
-                        android:textColor="#6f6f6f"
-                        android:textSize="18sp" />
-
-                </LinearLayout>
-
-            </androidx.cardview.widget.CardView>
-
-            <androidx.cardview.widget.CardView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_columnWeight="1"
-                android:layout_rowWeight="1"
-                app:cardElevation="6dp"
-                app:cardCornerRadius="12dp"
-                android:layout_margin="12dp"
-                >
-
-                <LinearLayout
                     android:orientation="vertical"
                     android:padding="16dp"
                     android:gravity="center"
@@ -285,42 +252,7 @@
                     android:layout_width="match_parent"
                     >
                     <ImageView
-                        android:src="@drawable/bookmark"
-                        android:layout_width="80dp"
-                        android:layout_height="80dp"/>
-
-                    <TextView
-                        android:layout_marginTop="12dp"
-                        android:textColor="#6f6f6f
-"
-                        android:textSize="18sp"
-                        android:text="Abrir comanda"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
-
-                </LinearLayout>
-
-            </androidx.cardview.widget.CardView>
-
-            <androidx.cardview.widget.CardView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_columnWeight="1"
-                android:layout_rowWeight="1"
-                app:cardElevation="6dp"
-                app:cardCornerRadius="12dp"
-                android:layout_margin="12dp"
-                >
-
-                <LinearLayout
-                    android:orientation="vertical"
-                    android:padding="16dp"
-                    android:gravity="center"
-                    android:layout_height="match_parent"
-                    android:layout_width="match_parent"
-                    >
-                    <ImageView
-                        android:src="@drawable/bookmark"
+                        android:src="@drawable/localizar"
                         android:layout_width="80dp"
                         android:layout_height="80dp"/>
 
@@ -328,7 +260,7 @@
                         android:layout_marginTop="12dp"
                         android:textColor="#6f6f6f"
                         android:textSize="18sp"
-                        android:text="Abrir comanda"
+                        android:text="Restaurantes"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
 
@@ -336,73 +268,7 @@
 
             </androidx.cardview.widget.CardView>
 
-            <androidx.cardview.widget.CardView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_columnWeight="1"
-                android:layout_rowWeight="1"
-                app:cardElevation="6dp"
-                app:cardCornerRadius="12dp"
-                android:layout_margin="12dp"
-                >
 
-                <LinearLayout
-                    android:orientation="vertical"
-                    android:padding="16dp"
-                    android:gravity="center"
-                    android:layout_height="match_parent"
-                    android:layout_width="match_parent"
-                    >
-                    <ImageView
-                        android:src="@drawable/bookmark"
-                        android:layout_width="80dp"
-                        android:layout_height="80dp"/>
-
-                    <TextView
-                        android:layout_marginTop="12dp"
-                        android:textColor="#6f6f6f"
-                        android:textSize="18sp"
-                        android:text="Abrir comanda"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
-
-                </LinearLayout>
-
-            </androidx.cardview.widget.CardView>
-
-            <androidx.cardview.widget.CardView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_columnWeight="1"
-                android:layout_rowWeight="1"
-                app:cardElevation="6dp"
-                app:cardCornerRadius="12dp"
-                android:layout_margin="12dp"
-                >
-
-                <LinearLayout
-                    android:orientation="vertical"
-                    android:padding="16dp"
-                    android:gravity="center"
-                    android:layout_height="match_parent"
-                    android:layout_width="match_parent"
-                    >
-                    <ImageView
-                        android:src="@drawable/bookmark"
-                        android:layout_width="80dp"
-                        android:layout_height="80dp"/>
-
-                    <TextView
-                        android:layout_marginTop="12dp"
-                        android:textColor="#6f6f6f"
-                        android:textSize="18sp"
-                        android:text="Abrir comanda"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
-
-                </LinearLayout>
-
-            </androidx.cardview.widget.CardView>
 
 
         </GridLayout>

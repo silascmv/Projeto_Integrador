@@ -14,9 +14,17 @@
     <string name="inputCelular">Celular*</string>
     <string name="txtCheckBox">Eu li e concordo com os termos de uso *</string>
     <string name="btnCadastrar">Cadastrar</string>
-
-
     <string name="tlPrincipalTextCadastro">Cadastre-se</string>
     <string name="action_sign_in">Login</string>
+
+    <!-- Tela Principal - Componentes -->
+    <string name="localizar_restaurante">Localizar Restaurante</string>
+    <string name="abrir_comanda">Iniciar Mesa</string>
+    <string name="card_pio">Cardápio</string>
+    <string name="cupom">Cupons</string>
+    <string name="carteira">Carteira</string>
+    <string name="ajuda">Ajuda</string>
+    <string name="bem_vindo_user">Bem-Vindo $User</string>
+    <string name="meu_card_pio">Meu Cardápio</string>
 
 </resources>

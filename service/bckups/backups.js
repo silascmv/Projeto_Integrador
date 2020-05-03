@@ -113,3 +113,39 @@
 
 
 })
+
+
+
+app.post('/listarProdutoId/', (req, res) => {
+    pool.getConnection((err, pool) => {
+        var id = req.param("id")
+        var query = 'SELECT NOME_PRODUTO,VALOR,DESCRICAO,IMAGEM_PATH FROM PRODUTOS WHERE ID_PRODUTO =' + id;
+        pool.query(query, (error, results, fields) => {
+            if (error) {
+                console.log(error)
+            }
+
+            var objeto_array = new Array();
+            for (var i = 0; i < results.length; i++) {
+
+                var objeto_retorno = {
+                    'imagem': (results[i].IMAGEM_PATH),
+                    'NOME': results[i].NOME_PRODUTO
+                }
+
+                objeto_array.push(objeto_retorno);
+
+            }
+
+            res.json(objeto_array);
+
+
+            //res.sendFile(__dirname + results[0].IMAGEM_PATH, objeto_retorno);
+
+
+        })
+    })
+
+
+
+})
