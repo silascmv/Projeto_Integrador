@@ -26,5 +26,6 @@
     <string name="ajuda">Ajuda</string>
     <string name="bem_vindo_user">Bem-Vindo $User</string>
     <string name="meu_card_pio">Meu Cardápio</string>
+    <string name="iniciar_pedidos">Iniciar Pedidos</string>
 
 </resources>
