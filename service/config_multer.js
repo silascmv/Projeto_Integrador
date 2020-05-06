@@ -11,7 +11,7 @@ var storage = multer.diskStorage({
     let segundos = data.getSeconds();
     var mseg    = data.getMilliseconds(); 
     let data_final = data_atual + '-' + mes_atual + '-' + ano_atual + '-' + segundos + '-' + mseg;    
-    return cb(null, data_final + '-' + req.param("NOME_PRODUTO") + '.jpg')
+    return cb(null, data_final + '-' + '.jpg')
     
                 
   }

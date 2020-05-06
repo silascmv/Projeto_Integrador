@@ -259,22 +259,7 @@ app.post('/abrirMesa', (req, res) => {
 
 app.post('/addMesa', upload.single('IMG'), (req, res) => {
 
-    var data = new Date()
-    //console.log('Caminho : ' + req.file.path);
-    //variavel pra setar a hora na foto
-    var data_atual = data.getDate();
-    var mes_atual = data.getMonth() + 1;
-    var ano_atual = data.getFullYear() + 1;
-    var segundos = data.getSeconds();
-    var mseg = data.getMilliseconds();
-    let data_final = data_atual + '-' + mes_atual + '-' + ano_atual + '-' + segundos + '-' + mseg;
-    //conversão de data pra armazenar no banco
-    data = (req.param("VALIDADE"));
-    if (req.file.filename === undefined) {
-
-        console.log("ENTROU NO IF")
-        req.file.filename = 'SemFoto'
-    }
+    
 
     var produto = {
 
