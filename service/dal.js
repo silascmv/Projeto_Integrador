@@ -225,6 +225,137 @@ class DataAcessLayer {
     }
 
 
+    abrirMesa(req,pool){
+
+                //Baseado no resultado da promessa irá mandar uma mensagem de retorno e será enviado como retorno da aplicação(Resolve).
+                return new Promise((resolve, reject) => {
+
+                    //Iniciando Transação
+                    pool.beginTransaction(function (err) {
+                        if (err) {
+                            throw err;
+                        }
+                        //variaveis request
+                        let qr_code =  req.param("QR_CODE");
+                        let id_usuario = req.param("ID_CLIENTE");
+                        let id_funcionario = req.param("ID_FUNCIONARIO");
+                        let tipo_pagamento = req.param("TP_PAGAMENTO");
+                        let valor_inicial  = 0.0;
+                        let porcentagem_garcom_inicial = 0.0;
+                        let sn_pago_inicial = 0 ;
+                        let observacao = 'MESA INICIADA'
+
+                        //Query para verificar se a mesa está ocupada.
+                        var query = 'SELECT ID_MESA FROM MESAS WHERE SN_ATIVO = 1 AND SN_DISPONIVEL = 1 AND QR_CODE =' + "'" + qr_code + "'";
+                        console.log('QUERY 01 = ' + query)
+                        pool.query(query, function (error, results, fields) {
+                            if (!error) {                                                              
+                                
+                                console.log('Resultado do primeiro SELECT ' + results[0].ID_MESA);
+                                var id_mesa = results[0].ID_MESA;
+
+                                var data = 'NOW()'
+
+                                var query_insert_comanda = 'INSERT INTO COMANDA VALUES ('
+                                + 'NULL,' 
+                                + id_usuario + ","
+                                + id_funcionario +','
+                                + tipo_pagamento + ','
+                                + id_mesa + ','
+                                + valor_inicial + ','
+                                + porcentagem_garcom_inicial + ','
+                                + sn_pago_inicial + ','
+                                + "'" + observacao+ "'" + ','
+                                + data + ','
+                                + 'NULL)'
+
+                                console.log(query_insert_comanda);
+
+
+                                pool.query(query_insert_comanda, function (error, results, fields) {
+                                    //Se a query de inserção não falhar irá realizar o commit da operação
+                                    if (!error) {
+                                        pool.commit(function (err) {
+        
+                                            //Finalização do cadastro.
+                                            if (!err) {
+                                                var resultado_cliente = JSON.parse('{"status":"Mesa Aberta com Sucesso","code_status":"01"}');
+                                                resolve(resultado_cliente);
+        
+                                            } else {
+                                                //Caso apresente algua falha no commit irá enviar essa informação.
+                                                return pool.rollback(function () {
+                                                    var resultado_cliente = JSON.parse('{"status":"Falha ao realizar o cadastro tenta novamente","code_status":"00"}');
+                                                    resolve(resultado_cliente);
+                                                });
+        
+                                            }
+                                        });
+        
+                                    } else if (error.code === 'ER_DUP_ENTRY') {
+                                        //Captura de erros e retornos para api
+                                        return pool.rollback(function () {
+                                            var resultado_cliente = JSON.parse('{"status":"Já existe um Cliente com esse E-mail Cadastrado","code_status":"02"}');
+                                            resolve(resultado_cliente);
+                                        });
+                                    } else if (error.code === 'ER_DATA_TOO_LONG') {
+                                        //Captura de erros e retornos para api
+                                        var resultado = JSON.parse('{"status":"Coluna com o valor maior do que o permitido","code_status":"03"}');
+                                        resolve(resultado);
+                                    } else {
+                                        var resultado = JSON.parse('{"status":"Operação desconhecida, entre em contato com TI","code_status":"00"}');
+                                        resolve(resultado);
+        
+                                    }
+        
+                                });
+        
+        
+        
+        
+                            } else if (error.code === 'ER_DUP_ENTRY') {
+                                return pool.rollback(function () {
+                                    var resultado = JSON.parse('{"status":"Já existe um usuário com esse Login","code_status":"04"}');
+                                    resolve(resultado);
+                                });
+                            } else {
+                                var resultado = JSON.parse('{"status":"Operação desconhecida, entre em contato com TI","code_status":"00"}');
+                                resolve(resultado);
+        
+                            }
+        
+                            pool.release();
+                        });
+        
+        
+        
+                    });
+
+
+
+
+
+
+
+
+    })
+
+
+}
+
+    cadastrarMesa(req,pool){
+
+
+
+
+
+
+
+
+
+
+        
+    }
 
 
 

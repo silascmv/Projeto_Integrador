@@ -1,16 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/gradient"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:background="@drawable/gradient">
+    android:paddingBottom="@dimen/activity_vertical_margin">
 
     <EditText
         android:id="@+id/username"
@@ -57,16 +56,16 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="48dp"
         android:layout_marginBottom="64dp"
+        android:background="@drawable/edit_round"
         android:enabled="true"
         android:fontFamily="@font/alfa_slab_one"
         android:text="@string/action_sign_in"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/password"
-        app:layout_constraintVertical_bias="0.467"
-        android:background="@drawable/edit_round"
-        />
+        app:layout_constraintVertical_bias="0.467" />
 
 
     <ImageView
@@ -78,45 +77,59 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/meucardapio" />
 
+
     <TextView
         android:id="@+id/lblCadastrar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="612dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="42dp"
         android:drawableTint="#FFF7F7"
         android:fontFamily="@font/alfa_slab_one"
         android:text="@string/tlPrincipalTextCadastro"
         android:textColor="#F6F6F6"
         android:textSize="10pt"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.503"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/esqueciSenha" />
 
     <Switch
         android:id="@+id/switch1"
         android:layout_width="wrap_content"
         android:layout_height="46dp"
-        android:layout_marginEnd="1dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="32dp"
         android:fontFamily="@font/alfa_slab_one"
-        android:text="salvar meu usuário"
+        android:text="@string/salvar_login"
         android:textAlignment="viewStart"
         android:textColor="@android:color/background_dark"
         app:layout_constraintBottom_toTopOf="@+id/login"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.06"
+        app:layout_constraintHorizontal_bias="0.086"
+
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/password"
-        app:layout_constraintVertical_bias="0.464" />
+        app:layout_constraintVertical_bias="0.328" />
 
     <TextView
         android:id="@+id/esqueciSenha"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="49dp"
         android:fontFamily="@font/alfa_slab_one"
-        android:text="esqueci minha senha"
+        android:paddingTop="30dp"
+        android:text="@string/esqueceu_a_senha"
         android:textAllCaps="false"
+        app:layout_constraintBottom_toTopOf="@+id/lblCadastrar"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/password" />
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/login" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

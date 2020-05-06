@@ -1,4 +1,4 @@
-package com.example.meucardapio.service;
+package com.example.meucardapio;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //setContentView(R.layout.activity_main);
+
         setContentView(R.layout.activity_main);
         //Pegar os Valores da Tela
         final EditText login = findViewById(R.id.username);

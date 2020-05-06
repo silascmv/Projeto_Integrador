@@ -27,5 +27,7 @@
     <string name="bem_vindo_user">Bem-Vindo $User</string>
     <string name="meu_card_pio">Meu Cardápio</string>
     <string name="iniciar_pedidos">Iniciar Pedidos</string>
+    <string name="salvar_login">Salvar Login</string>
+    <string name="esqueceu_a_senha">Esqueceu a senha ?</string>
 
 </resources>

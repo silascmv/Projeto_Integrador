@@ -17,9 +17,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:targetApi="n">
-        <activity
-            android:name=".service.SplashActivity"
-            android:screenOrientation="sensor" />
         <activity android:name=".MainActivityLocalizar" />
         <activity android:name=".MainActivityAjuda" />
         <activity android:name=".MainActivityCarteira" />
@@ -40,7 +37,7 @@
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
 
-        <activity android:name=".service.MainActivity">
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
