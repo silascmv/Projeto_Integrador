@@ -360,6 +360,10 @@ class DataAcessLayer {
                                 var resultado_cliente = JSON.parse('{"status":"Mesa Cadastrada com Sucesso","code_status":"01"}');
                                 resolve(resultado_cliente);
 
+                            } else if (err == 'ER_DUP_ENTRY') {
+                                var resultado = JSON.parse('{"status":"Já existe um produto cadastro com esse nome","code_status":"04"}');
+                                resolve(resultado);
+
                             }else {
                                 //Caso apresente algua falha no commit irá enviar essa informação.
                                 return pool.rollback(function () {
@@ -382,7 +386,7 @@ class DataAcessLayer {
                         resolve(resultado);
 
                     }
-                    pool.release();
+                    
                 });
 
             });

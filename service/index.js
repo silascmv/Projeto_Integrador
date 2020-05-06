@@ -114,11 +114,12 @@ app.post('/addProduto/', upload.single('IMG'), (req, res) => {
                             res.send(resultado).end();
                         })
                     } else if (resultado.code_status === '04') {
-                        //Remover arquivo caso não vá cadastrar
+                        //Remover arquivo caso não seja cadastrado
                         unlinkAsync(req.file.destination + '/' + req.file.filename);
                         res.send(resultado).end();
                     } else if (resultado.code_status === '00') {
-
+                        //Remover arquivo caso não seja cadastrado
+                        unlinkAsync(req.file.destination + '/' + req.file.filename);
                         res.send(resultado).end();
 
                     } else {
@@ -259,35 +260,39 @@ app.post('/abrirMesa', (req, res) => {
 
 app.post('/addMesa', upload.single('IMG'), (req, res) => {
 
-    
+    var controle_disponibilidade = parseInt(req.param("SN_ATIVO"));
 
-    var produto = {
 
-        NOME_PRODUTO: req.param("NOME_PRODUTO"),
-        ID_FORNECEDOR: req.param("ID_FORNECEDOR"),
-        VALOR: req.param("VALOR"),
+    if (!controle_disponibilidade === 1) {
+
+        controle_disponibilidade = 0
+    }
+
+    var mesa = {
+
         DESCRICAO: req.param("DESCRICAO"),
-        CODIGO_BARRA: req.param("CODIGO_BARRA"),
-        TIPO: req.param("TIPO"),
-        VALIDADE: data,
-        IMAGEM_PATH: '/my-uploads/' + req.file.filename
+        SN_ATIVO: req.param("SN_ATIVO"),
+        QR_CODE: req.param("QR_CODE"),
+        PATH_QR_CODE: '/my-uploads/' + req.file.filename,
+        SN_DISPONIVEL: controle_disponibilidade
     }
 
     pool.getConnection(function (err, pool) {
         const objeto_dal = new DataAcessLayer();
         try {
-            async function uploadFoto() {
-                await objeto_dal.insertProduto(req, pool, produto).then(resultado => {
+            async function cadMesa() {
+                await objeto_dal.cadastrarMesa(req, pool, mesa).then(resultado => {
                     if (resultado.code_status === '01') {
                         req.session.destroy(function (err) {
                             res.send(resultado).end();
                         })
                     } else if (resultado.code_status === '04') {
-                        //Remover arquivo caso não vá cadastrar
+                        //Remover arquivo caso não seja cadastrado
                         unlinkAsync(req.file.destination + '/' + req.file.filename);
                         res.send(resultado).end();
                     } else if (resultado.code_status === '00') {
-
+                        //Remover arquivo caso não seja cadastrado
+                        unlinkAsync(req.file.destination + '/' + req.file.filename);
                         res.send(resultado).end();
 
                     } else {
@@ -298,7 +303,7 @@ app.post('/addMesa', upload.single('IMG'), (req, res) => {
 
                 });
             }
-            uploadFoto();
+            cadMesa();
 
         } catch (err) {
             var error_status = JSON.parse('{"status":"Não foi possível realizar sua operação, entre em contato com o administrador.","code_status":"00"}');
@@ -308,7 +313,41 @@ app.post('/addMesa', upload.single('IMG'), (req, res) => {
     });
 });
 
+app.get('/listarTodasMesas/', (req, res) => {
+    pool.getConnection((err, pool) => {
+        var query = 'SELECT ID_MESA,DESCRICAO,SN_ATIVO,QR_CODE,PATH_QR_CODE,SN_DISPONIVEL FROM MESAS';
+        pool.query(query, (error, results, fields) => {
+            if (error) {
+                console.log(error)
+            }
 
+            if (results.length == 0) {
+                res.json({ status: "Não existem mesas cadastrados", code_status: 00 });
+            } else {
+
+                var objeto_array = new Array();
+                for (var i = 0; i < results.length; i++) {
+
+                    var objeto_retorno = {
+                        'ID_MESA': results[i].ID_MESA,
+                        'DESCRICAO': results[i].DESCRICAO,
+                        'SN_ATIVO': results[i].SN_ATIVO,
+                        'QR_CODE': results[i].QR_CODE,
+                        'IMAGEM_MESA': 'http://app-63e8a389-b098-4421-abd4-cc50f39f4df1.cleverapps.io' + results[i].PATH_QR_CODE,
+                        'SN_DISPONIVEL': results[i].SN_DISPONIVEL
+
+                    }
+
+                    objeto_array.push(objeto_retorno);
+
+                }
+            }
+            res.json(objeto_array);
+
+        })
+    })
+
+});
 
 app.listen(8080, () => {
     console.log('Service is UP - LocalHost:8080');
