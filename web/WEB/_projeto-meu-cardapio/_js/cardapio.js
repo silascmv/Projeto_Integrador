@@ -6,21 +6,21 @@ function cadastro() {
     const codigo_barra = document.getElementsByName('CODIGO_BARRA')[0].value;
     const tipo = document.getElementsByName('TIPO')[0].value;
     const validade = document.getElementsByName('VALIDADE')[0].value;
-    const img = document.querySelector("IMG"[type='file'])
+    const img = document.getElementById('IMG')
 
     const formData = new FormData();
-    formData.append('NOME_PRODUTO',nome_produto)
-    formData.append('ID_FORNECEDOR',id_fornecedor)
-    formData.append('VALOR',valor)
-    formData.append('DESCRICAO',descricao)
-    formData.append('CODIGO_BARRA',codigo_barra)
-    formData.append('TIPO',tipo)
-    formData.append('VALIDADE',validade)
-    formData.append('IMG',img)
+    formData.append('NOME_PRODUTO', nome_produto)
+    formData.append('ID_FORNECEDOR', id_fornecedor)
+    formData.append('VALOR', valor)
+    formData.append('DESCRICAO', descricao)
+    formData.append('CODIGO_BARRA', codigo_barra)
+    formData.append('TIPO', tipo)
+    formData.append('VALIDADE', validade)
+    formData.append('IMG', img.files[0])
 
-    fetch('http://app-63e8a389-b098-4421-abd4-cc50f39f4df1.cleverapps.io/addProduto/',{
-    method: 'POST',
-    body: formData,
-    
-}).then(response => response.json()).then(data => alert(data.status));
+    fetch('http://app-63e8a389-b098-4421-abd4-cc50f39f4df1.cleverapps.io/addProduto/', {
+        method: 'POST',
+        body: formData
+
+    }).then(response => response.json()).then(data => alert(data.status));
 }
