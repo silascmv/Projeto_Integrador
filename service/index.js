@@ -152,9 +152,10 @@ app.get('/realizarLogin/:login&:password', function (req, res) {
         console.log(filter_login);
         if (req.params.password) filter_password = 'AND CD_SENHA =' + "'" + (req.params.password) + "'";
         // Executando a query MySQL (selecionar todos os dados da tabela usuário).
-        pool.query('SELECT CD_LOGIN,CD_SENHA FROM LOGIN WHERE CD_LOGIN = ' + filter_login + filter_password, function (error, results, fields) {
+        var query = 'SELECT CLIENTE.ID_CLIENTE,LOGIN.CD_LOGIN,LOGIN.CD_SENHA FROM LOGIN JOIN CLIENTE ON CLIENTE.ID_LOGIN = LOGIN.ID_LOGIN WHERE CD_LOGIN = ' + filter_login + filter_password 
+        pool.query(query, function (error, results, fields) {
             // Pegando a 'resposta' do servidor pra nossa requisição. Ou seja, aqui ele vai mandar nossos dados.
-
+            console.log(query);
             console.log(results);
             if (isEmptyObject(results)) {
 
@@ -162,10 +163,12 @@ app.get('/realizarLogin/:login&:password', function (req, res) {
                 pool.release();
                 pool.destroy();
             } else {
-                res.json({ status: "Login Realizado com Sucesso", code_status: 01, usuario: results[0].CD_LOGIN});
+                res.json({ status: "Login Realizado com Sucesso", code_status: 01, usuario: results[0].ID_CLIENTE});
                 pool.release();
                 pool.destroy();
             }
+
+            
 
 
         });
