@@ -162,7 +162,7 @@ app.get('/realizarLogin/:login&:password', function (req, res) {
                 pool.release();
                 pool.destroy();
             } else {
-                res.json({ status: "Login Realizado com Sucesso", code_status: 01 });
+                res.json({ status: "Login Realizado com Sucesso", code_status: 01, usuario: results[0].CD_LOGIN});
                 pool.release();
                 pool.destroy();
             }
@@ -314,8 +314,14 @@ app.post('/addMesa', upload.single('IMG'), (req, res) => {
 });
 
 app.get('/listarTodasMesas/', (req, res) => {
+
+
     pool.getConnection((err, pool) => {
-        var query = 'SELECT ID_MESA,DESCRICAO,SN_ATIVO,QR_CODE,PATH_QR_CODE,SN_DISPONIVEL FROM MESAS';
+        
+        let query = 'SELECT ID_MESA,DESCRICAO,SN_ATIVO,QR_CODE,PATH_QR_CODE,SN_DISPONIVEL FROM MESAS';
+
+        
+
         pool.query(query, (error, results, fields) => {
             if (error) {
                 console.log(error)

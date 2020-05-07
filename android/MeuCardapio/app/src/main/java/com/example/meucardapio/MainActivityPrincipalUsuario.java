@@ -12,8 +12,10 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.meucardapio.model.UsuarioLogado;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
@@ -27,14 +29,12 @@ public class MainActivityPrincipalUsuario extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_principal_usuario);
-
-
-
-
-
-
-
-
+        //VARIAVEL PRA SETAR VALOR NO CAMPO DE TEXTO NO USUÁRIO LOGADO.
+        UsuarioLogado usuarioLogado = getIntent().getExtras().getParcelable("usuarioLogado");
+        final TextView txtUsuarioLogado = findViewById(R.id.usuarioLogado);
+        txtUsuarioLogado.setText(usuarioLogado.getNomeUsuarioLogado());
+        final TextView idUsuarioLogado = findViewById(R.id.usuarioId);
+        idUsuarioLogado.setText(String.valueOf(usuarioLogado.getIdUsuarioLogado()));
         btnIniciarPedidos = findViewById(R.id.btnIniciarPedidos);
         final Activity activity = this;
 

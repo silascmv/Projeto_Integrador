@@ -281,6 +281,7 @@ class DataAcessLayer {
                                     if (!err) {
                                         var resultado_cliente = JSON.parse('{"status":"Mesa Aberta com Sucesso","code_status":"01"}');
                                         resolve(resultado_cliente);
+                                        console.log("teste");
 
                                     } else {
                                         //Caso apresente algua falha no commit irá enviar essa informação.
@@ -343,7 +344,7 @@ class DataAcessLayer {
 
     }
 
-    cadastrarMesa(req, pool,objeto_mesa) {
+    cadastrarMesa(req, pool, objeto_mesa) {
 
         return new Promise((resolve, reject) => {
 
@@ -352,7 +353,7 @@ class DataAcessLayer {
                 if (err) {
                     throw err;
                 }
-                pool.query('INSERT INTO MESAS SET ?',objeto_mesa , function (error, results, fields) {
+                pool.query('INSERT INTO MESAS SET ?', objeto_mesa, function (error, results, fields) {
                     if (!error) {
                         pool.commit(function (err) {
                             //Finalização do cadastro.
@@ -364,7 +365,7 @@ class DataAcessLayer {
                                 var resultado = JSON.parse('{"status":"Já existe um produto cadastro com esse nome","code_status":"04"}');
                                 resolve(resultado);
 
-                            }else {
+                            } else {
                                 //Caso apresente algua falha no commit irá enviar essa informação.
                                 return pool.rollback(function () {
                                     var resultado_cliente = JSON.parse('{"status":"Falha ao realizar o cadastro tenta novamente","code_status":"00"}');
@@ -386,14 +387,14 @@ class DataAcessLayer {
                         resolve(resultado);
 
                     }
-                    
+
                 });
 
             });
 
         });
 
-      
+
 
     }
 

@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -16,6 +17,7 @@ import android.widget.Toast;
 import com.example.meucardapio.MainActivityCadastro;
 import com.example.meucardapio.MainActivityPrincipal;
 import com.example.meucardapio.R;
+import com.example.meucardapio.model.UsuarioLogado;
 import com.example.meucardapio.service.CodeStatus;
 import com.example.meucardapio.service.HttpServiceLogin;
 import com.example.meucardapio.model.Login;
@@ -23,6 +25,7 @@ import com.example.meucardapio.model.Login;
 import java.util.concurrent.ExecutionException;
 
 public class MainActivity extends AppCompatActivity {
+
 
     private static final String TAG = "MyActivity";
 
@@ -36,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
         final EditText senha = findViewById(R.id.password);
         Log.i(TAG, getClasseName() + "CHEGOU AQUI " + senha);
         final TextView cadastrarUsuario = findViewById(R.id.lblCadastrar);
+
 
         //Criação de Objeto btnLogin para caputar clique da tela:
         Button btnLogin = findViewById(R.id.login);
@@ -59,6 +63,8 @@ public class MainActivity extends AppCompatActivity {
 
                     }else{
                         Intent intent_tela_princiapl = new Intent(getApplicationContext(), MainActivityPrincipal.class );
+                        UsuarioLogado usuarioLogado = new UsuarioLogado(login.getText().toString(),"Sem Mesa",retorno.getUsuarioLogado());
+                        intent_tela_princiapl.putExtra("usuarioLogado", (Parcelable) usuarioLogado);
                         startActivity(intent_tela_princiapl);
                     }
 

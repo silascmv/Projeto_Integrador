@@ -3,6 +3,9 @@ package com.example.meucardapio;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.widget.TextView;
+
+import com.example.meucardapio.model.UsuarioLogado;
 
 public class MainActivityCupom extends AppCompatActivity {
 
@@ -10,6 +13,9 @@ public class MainActivityCupom extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_cupom);
-
+        //VARIAVEL PRA SETAR VALOR NO CAMPO DE TEXTO NO USUÁRIO LOGADO.
+        UsuarioLogado usuarioLogado = getIntent().getExtras().getParcelable("usuarioLogado");
+        final TextView txtUsuarioLogado = findViewById(R.id.usuarioLogado);
+        txtUsuarioLogado.setText(usuarioLogado.getNomeUsuarioLogado());
     }
 }
