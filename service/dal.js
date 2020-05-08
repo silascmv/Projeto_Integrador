@@ -251,9 +251,10 @@ class DataAcessLayer {
                 pool.query(query, function (error, results, fields) {
                     if (!error) {
 
+                        console.log('Resultado : ' + results.length)
                         if(results.length == 0){
 
-                            var resultado_mesa_ocupada = JSON.parse('{"status":"Mesa Aberta com Sucesso","code_status":"01"}');
+                            var resultado_mesa_ocupada = JSON.parse('{"status":"A mesa está ocupada/reservada no momento.","code_status":"01"}');
                             resolve(resultado_mesa_ocupada);
 
 
