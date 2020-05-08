@@ -358,6 +358,16 @@ app.get('/listarTodasMesas/', (req, res) => {
 
 });
 
+
+app.get('/listarIP',(req,res) => {
+
+    externalip(function (err, ip) {
+        console.log(ip); // => 8.8.8.8
+      });
+
+
+})
+
 app.listen(8080, () => {
     console.log('Service is UP - LocalHost:8080');
 });
