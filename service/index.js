@@ -4,8 +4,11 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const fs = require("fs");
 const http = require('http');
-const { promisify } = require('util')
-var session = require('express-session')
+const { promisify } = require('util');
+var session = require('express-session');
+const publicIp = require('public-ip');
+
+var externalip = require('externalip');
 
 //NOME_HOST_API
 
@@ -361,10 +364,17 @@ app.get('/listarTodasMesas/', (req, res) => {
 
 app.get('/listarIP',(req,res) => {
 
-    externalip(function (err, ip) {
-        console.log(ip); // => 8.8.8.8
-      });
+    (async () => {
+        console.log(await publicIp.v4());
 
+        res.send(await publicIp.v4())
+        //=> '46.5.21.123'
+    
+        console.log(await publicIp.v6());
+        //=> 'fe80::200:f8ff:fe21:67cf'
+    })();
+
+    
 
 })
 
