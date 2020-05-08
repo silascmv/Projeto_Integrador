@@ -20,13 +20,14 @@ public class UsuarioLogado implements Parcelable {
     public UsuarioLogado(String nomeUsuarioLogado, String mesaUsuarioLogado, int idUsuarioLogado){
         this.nomeUsuarioLogado=nomeUsuarioLogado;
         this.mesaUsuarioLogado=mesaUsuarioLogado;
-        this.idUsuarioLogado = idUsuarioLogado;
+        this.idUsuarioLogado= idUsuarioLogado;
 
     }
 
     protected UsuarioLogado(Parcel in) {
         nomeUsuarioLogado = in.readString();
         mesaUsuarioLogado = in.readString();
+        idUsuarioLogado= in.readInt();
     }
 
     public static final Creator<UsuarioLogado> CREATOR = new Creator<UsuarioLogado>() {
@@ -62,6 +63,7 @@ public class UsuarioLogado implements Parcelable {
         return "UsuarioLogado{" +
                 "nomeUsuarioLogado='" + nomeUsuarioLogado + '\'' +
                 ", mesaUsuarioLogado='" + mesaUsuarioLogado + '\'' +
+                ", idUsuarioLogado=" + idUsuarioLogado +
                 '}';
     }
 
@@ -74,5 +76,6 @@ public class UsuarioLogado implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(nomeUsuarioLogado);
         dest.writeString(mesaUsuarioLogado);
+        dest.writeInt(idUsuarioLogado);
     }
 }
