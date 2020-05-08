@@ -259,7 +259,7 @@ class DataAcessLayer {
                             resolve(resultado_mesa_ocupada);
 
 
-                        }
+                        }else{
 
                         console.log('Resultado do primeiro SELECT ' + results[0].ID_MESA);
                         var id_mesa = results[0].ID_MESA;
@@ -319,7 +319,7 @@ class DataAcessLayer {
 
                             }
 
-                        });
+                        }); }
 
 
 
