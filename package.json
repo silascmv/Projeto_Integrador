@@ -24,9 +24,13 @@
     "ejs": "^3.0.2",
     "express": "^4.17.1",
     "express-session": "^1.17.1",
+    "external": "^1.0.0",
+    "externalip": "^1.0.2",
     "fs": "0.0.1-security",
     "https": "^1.0.0",
+    "ip": "^1.1.5",
     "multer": "^1.4.2",
-    "mysql": "^2.18.1"
+    "mysql": "^2.18.1",
+    "public-ip": "^4.0.1"
   }
 }
