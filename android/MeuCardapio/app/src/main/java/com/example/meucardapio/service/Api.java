@@ -15,8 +15,8 @@ import com.example.meucardapio.service.CodeStatus;
 public interface Api {
 
 
-@FormUrlEncoded
-@POST("addCliente")
+    @FormUrlEncoded
+    @POST("addCliente")
     Call<CodeStatus> addCliente(
             @Field("cd_login") String cd_login,
             @Field("nome") String nome,
@@ -26,7 +26,16 @@ public interface Api {
             @Field("telefone") String telefone,
             @Field("celular") String celular
 
-);
+    );
+    @FormUrlEncoded
+    @POST("abrirMesa")
+    Call<CodeStatus> addMesa(
+            @Field("QR_CODE") String qr_cde,
+            @Field("ID_CLIENTE") Integer id_cliente,
+            @Field("ID_FUNCIONARIO") Integer id_funcionario,
+            @Field("TP_PAGAMENTO") Integer tp_pagamento
+
+    );
 
 
 }
