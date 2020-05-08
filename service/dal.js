@@ -254,6 +254,7 @@ class DataAcessLayer {
                         console.log('Resultado : ' + results.length)
                         if(results.length == 0){
 
+                            console.log("Entrou no IF")
                             var resultado_mesa_ocupada = JSON.parse('{"status":"A mesa está ocupada/reservada no momento.","code_status":"01"}');
                             resolve(resultado_mesa_ocupada);
 
