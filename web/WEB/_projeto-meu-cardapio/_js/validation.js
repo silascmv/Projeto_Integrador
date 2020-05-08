@@ -1,17 +1,18 @@
-  
-window.onload = function() {
-if(localStorage.getItem('cardapio') != "true" ){window.location.href ="../pagina_de_login.html"}
-};
+  window.onload = function () {
+      if (localStorage.getItem('cardapio') != "true") {
+          window.location.href = "../pagina_de_login.html"
+      }
+  };
 
 
-function exitUm(){
+  function exitUm() {
 
-    localStorage.setItem('cardapio', false)
+      localStorage.setItem('cardapio', false)
 
-};
+  };
 
-function exitDois(){
+  function exitDois() {
 
-    window.location.href ="../pagina_de_login.html"s
+      window.location.href = "../pagina_de_login.html";
 
-};
+  };
