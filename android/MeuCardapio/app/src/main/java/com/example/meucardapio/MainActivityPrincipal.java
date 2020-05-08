@@ -33,9 +33,6 @@ public class MainActivityPrincipal extends AppCompatActivity {
         final LinearLayout abrirAjuda = findViewById(R.id.abrirAjuda);
         final LinearLayout abrirLocalizar = findViewById(R.id.abrirLocalizar);
 
-
-        Log.i(TAG, getClasseName() + "ID : ----->" + usuarioLogado.getIdUsuarioLogado());
-
         abrirComanda.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

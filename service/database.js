@@ -5,10 +5,11 @@ var util = require('util');
 
 var pool = mysql.createPool({
     connectionLimit: 10,
-    host: '130.211.207.111',
-    user: 'root',
-    password: '2wsxZAQ!@WSX',
-    database: 'meucardapio',
+    host: 'bpcffodtfs6iyvw0xsjz-mysql.services.clever-cloud.com',
+    user: 'ujm5jxiiqupargyp',
+    password: 'GE4dCxqekEjtbyoZZMa6',
+    database: 'bpcffodtfs6iyvw0xsjz',
+    connectionLimit: 10,
     multipleStatements: true
 });
 

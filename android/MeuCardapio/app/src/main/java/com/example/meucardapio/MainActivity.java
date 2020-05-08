@@ -64,7 +64,6 @@ public class MainActivity extends AppCompatActivity {
                     }else{
                         Intent intent_tela_princiapl = new Intent(getApplicationContext(), MainActivityPrincipal.class );
                         UsuarioLogado usuarioLogado = new UsuarioLogado(login.getText().toString(),"Sem Mesa",retorno.getUsuarioLogado());
-                        Log.i(TAG, getClasseName() + "ID USUÁRIOOOOOOOOO " + retorno.getUsuarioLogado());
                         intent_tela_princiapl.putExtra("usuarioLogado", (Parcelable) usuarioLogado);
                         startActivity(intent_tela_princiapl);
                     }
