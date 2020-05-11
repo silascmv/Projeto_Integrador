@@ -4,7 +4,28 @@
     
     <meta charset="utf-8">
     <!-- This file has been downloaded from Bootsnipp.com. Enjoy! -->
-    <title>Meu Cardápio</title><script src="./_js/validation.js"></script>
+    <title>Meu Cardápio</title>
+    
+    <script>
+          window.onload = function () {
+      if (localStorage.getItem('cardapio') != "true") {
+          window.location.href = "./pagina_de_login.html"
+      }
+  };
+
+
+  function exitUm() {
+
+      localStorage.setItem('cardapio', false)
+
+  };
+
+  function exitDois() {
+
+      window.location.href = "../pagina_de_login.html";
+
+  };
+    </script>
     
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="_js/bootstrap.min.js"></script>
