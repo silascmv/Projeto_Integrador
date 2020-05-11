@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.os.Parcelable;
 import android.util.Log;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -39,7 +38,7 @@ public class MainActivityPrincipal extends AppCompatActivity {
         abrirComanda.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intentTelaCadastro = new Intent(getApplicationContext(), MainActivityPrincipalUsuario.class );
+                Intent intentTelaCadastro = new Intent(getApplicationContext(), MainActivityAbrirMesa.class );
                 intentTelaCadastro.putExtra("usuarioLogado", (Parcelable) usuarioLogado);
                 startActivity(intentTelaCadastro);
 

@@ -6,6 +6,7 @@
     <uses-sdk tools:overrideLibrary="com.google.zxing.client.android" />
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <application
         android:allowBackup="true"
@@ -17,6 +18,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:targetApi="n">
+        <activity android:name=".MainActivityAbrirMesa" />
         <activity android:name=".MainActivityLocalizar" />
         <activity android:name=".MainActivityAjuda" />
         <activity android:name=".MainActivityCarteira" />
@@ -24,7 +26,6 @@
         <activity android:name=".MainActivityCardapio" />
         <activity android:name=".MainActivityPrincipal" />
         <activity android:name=".MainActivityCadastro" />
-        <activity android:name=".MainActivityPrincipalUsuario" />
         <activity
             android:name="com.journeyapps.barcodescanner.CaptureActivity"
             android:screenOrientation="fullSensor"

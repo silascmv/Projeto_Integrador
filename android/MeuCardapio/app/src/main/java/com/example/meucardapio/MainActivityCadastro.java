@@ -114,7 +114,7 @@ public class MainActivityCadastro extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(), "Falha ao Realizar a Operação,entre em contato com o Suporte. CodeStatus = 0", Toast.LENGTH_LONG).show();
                     } else if (cadastro.getCode_status() == 1) {
                         Toast.makeText(getApplicationContext(), "Cadastro Realizado com Sucesso!", Toast.LENGTH_LONG).show();
-                        Intent intentTelaPrincipal = new Intent(getApplicationContext(), MainActivityPrincipalUsuario.class);
+                        Intent intentTelaPrincipal = new Intent(getApplicationContext(), MainActivity.class);
                         startActivity(intentTelaPrincipal);
                     } else if (cadastro.getCode_status() == 2) {
                         Toast.makeText(getApplicationContext(), "Já existe um Cliente com esse E-mail Cadastrado!", Toast.LENGTH_LONG).show();
