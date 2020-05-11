@@ -24,7 +24,7 @@
 
     <script>
 
-      //$('#tabela').empty(); //Limpando a tabela
+      //$('#myform').empty(); //Limpando a tabela
     
     
     </script>
@@ -312,10 +312,10 @@
 
                                                     <div class="form-group">
                                                         <label for="recipient-name" class="control-label">Identificação
-                                                            do Produto:</label>
+                                                            do Fornecedor:</label>
                                                         <input class="form-control" type="text" name="ID_FORNECEDOR"
                                                             id="ID_FORNECEDOR" maxlength="80"
-                                                            placeholder="Identificação do Fornecedor" required>
+                                                            placeholder="Identificação do Fornecedor" required value="1" disabled>
                                                     </div>
 
                                                     <div class="form-group">
@@ -335,7 +335,7 @@
                                                         <label for="recipient-name" class="control-label">Código de
                                                             Barra:</label>
                                                         <input class="form-control" type="text" name="CODIGO_BARRA"
-                                                            id="CODIGO_BARRA" placeholder="000000000000000000" required>
+                                                            id="CODIGO_BARRA" placeholder="000000000000" maxlength="12" required>
                                                     </div>
 
                                                     <div class="form-group">
@@ -387,7 +387,7 @@
                                         </tr>
                                     </thead>
 
-                                    <tbody id="bodyTable">
+                                    <tbody id="bodyTable" style="transition: 0.5s;">
 
 
                                     </tbody>
@@ -431,6 +431,38 @@
             }
         });
 
+        function reload(){
+            
+            $('#bodyTable').css('opacity', '0.5');
+
+            setTimeout(function(){ 
+            
+            $('#bodyTable').empty()
+
+            $.ajax({
+            type: 'get',		//Definimos o método HTTP usado
+            dataType: 'json',	//Definimos o tipo de retorno
+            url: 'http://app-63e8a389-b098-4421-abd4-cc50f39f4df1.cleverapps.io/listarTodosProdutos/',//Definindo o arquivo onde serão buscados os dados
+            success: function (dados) {
+                console.log(dados);
+                for (var i = 0; dados.length > i; i++) {
+                    //Adicionando registros retornados na tabela
+                    $('#bodyTable').append('<tr><td style="text-aling:center;"><img class="image_body_table" src="' + dados[i].IMAGEM + '"></td><td>' + dados[i].NOME + '</td><td>R$' + dados[i].VALOR + '</td><td>' + dados[i].DESCRICAO + '</td><td>' + dados[i].CODIGO_BARRA + '</td><td>' + dados[i].TIPO + '</td></tr>');
+                }
+            }
+        });
+
+        $('#bodyTable').css('opacity', '1');
+
+        }, 3000);
+        };
+
+        function clearModal(){
+
+            $(":input").val("");
+
+        };
+
         function moeda(z){
           v = z.value;
           v=v.replace(/\D/g,"") // permite digitar apenas numero
@@ -440,7 +472,7 @@
           v=v.replace(/(\d{1})(\d{5})$/,"$1.$2") // coloca ponto antes dos ultimos 5 digitos
           v=v.replace(/(\d{1})(\d{1,2})$/,"$1.$2") // coloca virgula antes dos ultimos 2 digitos
           z.value = v;
-        }
+        };
     </script>
 </body>
 

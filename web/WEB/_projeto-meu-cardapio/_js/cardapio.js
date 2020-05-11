@@ -1,6 +1,6 @@
 function cadastro() {
     const nome_produto = document.getElementsByName('NOME_PRODUTO')[0].value;
-    const id_fornecedor = document.getElementsByName('ID_FORNECEDOR')[0].value;
+    const id_fornecedor = '1';
     const valor = document.getElementsByName('VALOR')[0].value;
     const descricao = document.getElementsByName('DESCRICAO')[0].value;
     const codigo_barra = document.getElementsByName('CODIGO_BARRA')[0].value;
@@ -22,5 +22,5 @@ function cadastro() {
         method: 'POST',
         body: formData
 
-    }).then(response => response.json()).then(data => alert(data.status));
+    }).then(response => response.json()).then(data => alert(data.status)).then(clearModal()).then(reload());
 }
