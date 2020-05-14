@@ -6,4 +6,5 @@
     <color name="viewfinder_mask">#00FFFFFF</color>
     <color name="viewfinder_laser">#00FFFFFF</color>
     <color name="viewfinder_border">#00FFFFFF</color>
+    <color name="backgroundbranco">#FFFFFF</color>
 </resources>

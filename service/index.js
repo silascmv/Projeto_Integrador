@@ -361,6 +361,43 @@ app.get('/listarTodasMesas/', (req, res) => {
 
 });
 
+app.post('/apagarProduto/', (req,res) => {
+
+    
+
+    pool.getConnection((err, pool) => {
+        
+        var id_produto = req.param("ID_PRODUTO")
+
+        let query = 'DELETE FROM PRODUTOS WHERE ID_PRODUTO = ' + id_produto;
+
+        
+
+        pool.query(query, (error, results, fields) => {
+            if (error) {
+                console.log(error)
+            }
+
+            if (results.length == 0) {
+                res.json({ status: "Não existe produto com esse ID", code_status: 00 });
+            } else {
+
+                res.json({ status: "Produto deletado com Sucesso", code_status: 00 })
+                
+            }
+            
+
+        })
+    })
+
+
+
+
+
+
+})
+
+
 
 app.get('/listarIP',(req,res) => {
 

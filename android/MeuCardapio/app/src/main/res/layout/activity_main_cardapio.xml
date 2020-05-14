@@ -10,54 +10,50 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-
-
-        <RelativeLayout
-            android:layout_marginTop="32dp"
-            android:layout_marginRight="32dp"
-            android:layout_marginLeft="20dp"
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="100dp"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+            android:layout_margin="12dp"
+            android:visibility="visible"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="6dp">
 
             <TextView
-
-                android:id="@+id/Nome_App"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="6dp"
+                android:layout_marginTop="6dp"
                 android:fontFamily="@font/alfa_slab_one"
-                android:text="Meu Cardápio"
-                android:textColor="#FFFFFF"
-                android:textSize="12sp" />
+                android:text="@string/bem_vindo_user"
+                android:textColor="#000000"
+                android:layout_gravity="center"
+                android:textSize="10sp" />
 
             <TextView
-                android:layout_marginTop="6dp"
-                android:layout_below="@id/Nome_App"
-                android:text="Bem-Vindo"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/alfa_slab_one"
-                android:textColor="#FFFFFF"
-                android:textSize="7sp"/>
-            <TextView
-                android:layout_marginTop="6dp"
                 android:id="@+id/usuarioLogado"
-                android:layout_marginLeft="43dp"
-                android:layout_below="@id/Nome_App"
-                android:text=""
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="47dp"
+                android:layout_marginTop="6dp"
+                android:layout_gravity="center"
                 android:fontFamily="@font/alfa_slab_one"
-                android:textColor="#FFFFFF"
-                android:textSize="7sp"/>
+                android:text=""
+                android:textColor="#000000"
+                android:textSize="10sp" />
 
             <ImageView
-                android:layout_alignParentRight="true"
-                android:src="@drawable/robo"
                 android:layout_width="42dp"
-                android:layout_height="42dp" />
+                android:layout_height="42dp"
+                android:layout_marginLeft="140dp"
+                android:layout_marginTop="6dp"
+                android:layout_gravity="center"
+                android:src="@drawable/robo" />
+
+        </androidx.cardview.widget.CardView>
 
 
-        </RelativeLayout>
     </LinearLayout>
 
 
