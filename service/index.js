@@ -376,13 +376,13 @@ app.post('/apagarProduto/', (req,res) => {
         pool.query(query, (error, results, fields) => {
             if (error) {
                 console.log(error)
-            }
+            }            
 
-            if (results.length == 0) {
+            if (results.affectedRows == 0) {
                 res.json({ status: "Não existe produto com esse ID", code_status: 00 });
             } else {
 
-                res.json({ status: "Produto deletado com Sucesso", code_status: 00 })
+                res.json({ status: "Produto deletado com Sucesso", code_status: 01 })
                 
             }
             
