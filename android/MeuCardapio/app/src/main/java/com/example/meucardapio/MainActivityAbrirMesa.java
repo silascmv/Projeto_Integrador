@@ -28,6 +28,7 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.example.meucardapio.model.AddMesa;
+import com.example.meucardapio.model.UsuarioLogado;
 import com.example.meucardapio.service.CodeStatus;
 import com.example.meucardapio.service.HtppServiceAddMesa;
 import com.google.zxing.Result;
@@ -55,11 +56,12 @@ public class MainActivityAbrirMesa extends AppCompatActivity implements ZXingSca
     //VARIAVEL GLOBAL
     RelativeLayout rl;
     private Object activity;
-
+    UsuarioLogado usuarioLogado;
 
     @RequiresApi(api = Build.VERSION_CODES.Q)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        usuarioLogado = getIntent().getExtras().getParcelable("usuarioLogado");
         super.onCreate( savedInstanceState );
         setContentView( layout.activity_main_abrir_mesa );
         Log.i( TAG, getClasseName() + "------> ON CREATE <--------- " );
@@ -179,6 +181,10 @@ public class MainActivityAbrirMesa extends AppCompatActivity implements ZXingSca
         if (result.getText() != null) {
 
             abrirMesa.setQr_code( result.getText() );
+            abrirMesa.setId_cliente(usuarioLogado.getIdUsuarioLogado());
+            abrirMesa.setId_funcionario(1);
+            abrirMesa.setTp_pagamento(1);
+
 
             try {
                 CodeStatus retornoAbrirMesa = new HtppServiceAddMesa( abrirMesa ).execute().get();
