@@ -6,77 +6,56 @@ import com.google.gson.annotations.SerializedName;
 
 public class Cardapio {
 
-    @SerializedName("IMAGEM")
-    private String IMAGEM;
-    @SerializedName("NOME")
-    private String NOME;
-    @SerializedName("VALOR")
-    private Double VALOR;
-    @SerializedName("DESCRICAO")
-    private String DESCRICAO;
-    @SerializedName("CODIGO_BARRA")
-    private String CODIGO_BARRA;
-    @SerializedName("TIPO")
-    private String TIPO;
+    @SerializedName("imagem")
+    private String imagem;
+    @SerializedName("nome")
+    private String nome;
+    @SerializedName("valor")
+    private Double valor;
+    @SerializedName("descricao")
+    private String descricao;
 
-    public Cardapio(String IMAGEM, String NOME, Double VALOR, String DESCRICAO, String CODIGO_BARRA, String TIPO) {
-        this.IMAGEM = IMAGEM;
-        this.NOME = NOME;
-        this.VALOR = VALOR;
-        this.DESCRICAO = DESCRICAO;
-        this.CODIGO_BARRA = CODIGO_BARRA;
-        this.TIPO = TIPO;
+
+    public Cardapio(String imagem, String nome, Double valor, String descricao) {
+        this.imagem = imagem;
+        this.nome = nome;
+        this.valor = valor;
+        this.descricao = descricao;
     }
 
     public Cardapio() {
 
     }
 
-    public String getIMAGEM() {
-        return IMAGEM;
+    public String getImagem() {
+        return imagem;
     }
 
-    public void setIMAGEM(String IMAGEM) {
-        this.IMAGEM = IMAGEM;
+    public void setImagem(String imagem) {
+        this.imagem = imagem;
     }
 
-    public String getNOME() {
-        return NOME;
+    public String getNome() {
+        return nome;
     }
 
-    public void setNOME(String NOME) {
-        this.NOME = NOME;
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
-    public Double getVALOR() {
-        return VALOR;
+    public Double getValor() {
+        return valor;
     }
 
-    public void setVALOR(Double VALOR) {
-        this.VALOR = VALOR;
+    public void setValor(Double valor) {
+        this.valor = valor;
     }
 
-    public String getDESCRICAO() {
-        return DESCRICAO;
+    public String getDescricao() {
+        return descricao;
     }
 
-    public void setDESCRICAO(String DESCRICAO) {
-        this.DESCRICAO = DESCRICAO;
-    }
-
-    public String getCODIGO_BARRA() {
-        return CODIGO_BARRA;
-    }
-
-    public void setCODIGO_BARRA(String CODIGO_BARRA) {
-        this.CODIGO_BARRA = CODIGO_BARRA;
-    }
-
-    public String getTIPO() {
-        return TIPO;
-    }
-
-    public void setTIPO(String TIPO) {
-        this.TIPO = TIPO;
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
     }
 }
