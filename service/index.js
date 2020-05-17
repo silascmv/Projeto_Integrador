@@ -215,6 +215,40 @@ app.get('/listarTodosProdutos/', (req, res) => {
 
 });
 
+app.get('/listarCardapioAndroid/', (req, res) => {
+    pool.getConnection((err, pool) => {
+        var query = 'SELECT NOME_PRODUTO,VALOR,DESCRICAO,IMAGEM_PATH FROM PRODUTOS';
+        pool.query(query, (error, results, fields) => {
+            if (error) {
+                console.log(error)
+            }
+
+            if (results.length == 0) {
+                res.json({ status: "Não existem produtos cadastrados", code_status: 00 });
+            } else {
+
+                var objeto_array = new Array();
+                for (var i = 0; i < results.length; i++) {
+
+                    var objeto_retorno = {
+                        'imagem': 'http://app-63e8a389-b098-4421-abd4-cc50f39f4df1.cleverapps.io' + (results[i].IMAGEM_PATH),
+                        'nome': results[i].NOME_PRODUTO,
+                        'valor': results[i].VALOR,
+                        'DESCRICAO': results[i].DESCRICAO                       
+
+                    }
+
+                    objeto_array.push(objeto_retorno);
+
+                }
+            }
+            res.json(objeto_array);
+
+        })
+    })
+
+});
+
 app.post('/abrirMesa', (req, res) => {
 
 
@@ -396,7 +430,6 @@ app.post('/apagarProduto/', (req,res) => {
 
 
 })
-
 
 
 app.get('/listarIP',(req,res) => {
