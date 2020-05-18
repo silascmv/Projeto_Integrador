@@ -9,7 +9,10 @@ import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 
+import com.example.meucardapio.model.Cardapio;
 import com.example.meucardapio.service.CodeStatus;
+
+import java.util.List;
 
 
 public interface Api {
@@ -36,6 +39,11 @@ public interface Api {
             @Field("TP_PAGAMENTO") Integer tp_pagamento
 
     );
+
+
+    @GET("listarTodosProdutos")
+    Call<List<Cardapio>> getCardapio();
+
 
 
 }

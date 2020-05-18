@@ -40,7 +40,7 @@ public class HttpServiceLogin extends  AsyncTask<Void, Void, CodeStatus>{
         if(this.login != null && this.cd_senha !=null){
             try{
 
-                URL url = new URL("https://app-63e8a389-b098-4421-abd4-cc50f39f4df1.cleverapps.io/realizarLogin/" + this.login + "&" + this.cd_senha);
+                URL url = new URL("http://app-84c469d6-9c06-4181-9a74-5d84696798cf.cleverapps.io/realizarLogin/" + this.login + "&" + this.cd_senha);
                 Log.i(TAG, getClasseName() + "Criou a URL");
                 Log.i(TAG, getClasseName() + "URL ::::::::::::" + url);
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();

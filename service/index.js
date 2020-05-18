@@ -193,14 +193,48 @@ app.get('/listarTodosProdutos/', (req, res) => {
 
                 var objeto_array = new Array();
                 for (var i = 0; i < results.length; i++) {
-
+                    
                     var objeto_retorno = {
-                        'IMAGEM': 'http://app-63e8a389-b098-4421-abd4-cc50f39f4df1.cleverapps.io' + (results[i].IMAGEM_PATH),
+                        'IMAGEM': 'http://app-84c469d6-9c06-4181-9a74-5d84696798cf.cleverapps.io' + (results[i].IMAGEM_PATH),
                         'NOME': results[i].NOME_PRODUTO,
                         'VALOR': results[i].VALOR,
                         'DESCRICAO': results[i].DESCRICAO,
                         'CODIGO_BARRA': results[i].CODIGO_BARRA,
                         'TIPO': results[i].TIPO
+
+                    }
+
+                    objeto_array.push(objeto_retorno);
+
+                }
+            }
+            res.json(objeto_array);
+
+        })
+    })
+
+});
+
+app.get('/listarCardapioAndroid/', (req, res) => {
+    pool.getConnection((err, pool) => {
+        var query = 'SELECT NOME_PRODUTO,VALOR,DESCRICAO,IMAGEM_PATH FROM PRODUTOS';
+        pool.query(query, (error, results, fields) => {
+            if (error) {
+                console.log(error)
+            }
+
+            if (results.length == 0) {
+                res.json({ status: "Não existem produtos cadastrados", code_status: 00 });
+            } else {
+
+                var objeto_array = new Array();
+                for (var i = 0; i < results.length; i++) {
+
+                    var objeto_retorno = {
+                        'imagem': 'http://app-84c469d6-9c06-4181-9a74-5d84696798cf.cleverapps.io' + (results[i].IMAGEM_PATH),
+                        'nome': results[i].NOME_PRODUTO,
+                        'valor': results[i].VALOR,
+                        'descricao': results[i].DESCRICAO                       
 
                     }
 
@@ -360,6 +394,42 @@ app.get('/listarTodasMesas/', (req, res) => {
     })
 
 });
+
+app.post('/apagarProduto/', (req,res) => {
+
+    
+
+    pool.getConnection((err, pool) => {
+        
+        var id_produto = req.param("ID_PRODUTO")
+
+        let query = 'DELETE FROM PRODUTOS WHERE ID_PRODUTO = ' + id_produto;
+
+        
+
+        pool.query(query, (error, results, fields) => {
+            if (error) {
+                console.log(error)
+            }            
+
+            if (results.affectedRows == 0) {
+                res.json({ status: "Não existe produto com esse ID", code_status: 00 });
+            } else {
+
+                res.json({ status: "Produto deletado com Sucesso", code_status: 01 })
+                
+            }
+            
+
+        })
+    })
+
+
+
+
+
+
+})
 
 
 app.get('/listarIP',(req,res) => {

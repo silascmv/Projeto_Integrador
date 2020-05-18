@@ -245,6 +245,38 @@ class DataAcessLayer {
                 let sn_pago_inicial = 0;
                 let observacao = 'MESA INICIADA'
 
+
+                var query_verifica_mesa = 'SELECT ID_MESA FROM MESAS WHERE QR_CODE = ' + "'" + qr_code + "'"
+                console.log(query_verifica_mesa);
+                pool.query(query_verifica_mesa, function(error,results,fields) {
+
+                    if(!error){
+
+                        if(results.length == 0 ){
+                            
+                            console.log('NÃO EXISTE MESA CADASTRADA')
+
+                            var resultado_mesa_ocupada = JSON.parse('{"status":"Não existe mesas cadastradas com esse QR_CODE","code_status":"01"}');
+                            resolve(resultado_mesa_ocupada);
+                            return;
+
+                        }
+                       
+
+
+
+                    }else{
+
+
+                        console.log(error);
+                        console.log('ERRO SEGUNDA ELSE')
+
+                    }
+
+                    
+                })
+
+
                 //Query para verificar se a mesa está ocupada.
                 var query = 'SELECT ID_MESA FROM MESAS WHERE SN_ATIVO = 1 AND SN_DISPONIVEL = 1 AND QR_CODE =' + "'" + qr_code + "'";
                 console.log('QUERY 01 = ' + query)
