@@ -6,7 +6,7 @@ import android.os.Parcelable;
 public class UsuarioLogado implements Parcelable {
 
     public String nomeUsuarioLogado;
-    public String mesaUsuarioLogado;
+    public int mesaUsuarioLogado;
     public int idUsuarioLogado;
 
     public int getIdUsuarioLogado() {
@@ -17,7 +17,7 @@ public class UsuarioLogado implements Parcelable {
         this.idUsuarioLogado = idUsuarioLogado;
     }
 
-    public UsuarioLogado(String nomeUsuarioLogado, String mesaUsuarioLogado, int idUsuarioLogado){
+    public UsuarioLogado(String nomeUsuarioLogado, int mesaUsuarioLogado, int idUsuarioLogado){
         this.nomeUsuarioLogado=nomeUsuarioLogado;
         this.mesaUsuarioLogado=mesaUsuarioLogado;
         this.idUsuarioLogado= idUsuarioLogado;
@@ -26,7 +26,7 @@ public class UsuarioLogado implements Parcelable {
 
     protected UsuarioLogado(Parcel in) {
         nomeUsuarioLogado = in.readString();
-        mesaUsuarioLogado = in.readString();
+        mesaUsuarioLogado = in.readInt();
         idUsuarioLogado= in.readInt();
     }
 
@@ -50,11 +50,11 @@ public class UsuarioLogado implements Parcelable {
         this.nomeUsuarioLogado = nomeUsuarioLogado;
     }
 
-    public String getMesaUsuarioLogado() {
+    public int getMesaUsuarioLogado() {
         return mesaUsuarioLogado;
     }
 
-    public void setMesaUsuarioLogado(String mesaUsuarioLogado) {
+    public void setMesaUsuarioLogado(int mesaUsuarioLogado) {
         this.mesaUsuarioLogado = mesaUsuarioLogado;
     }
 
@@ -75,7 +75,7 @@ public class UsuarioLogado implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(nomeUsuarioLogado);
-        dest.writeString(mesaUsuarioLogado);
+        dest.writeInt(mesaUsuarioLogado);
         dest.writeInt(idUsuarioLogado);
     }
 }
