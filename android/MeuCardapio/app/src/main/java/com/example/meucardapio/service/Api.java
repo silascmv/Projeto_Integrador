@@ -41,7 +41,7 @@ public interface Api {
     );
 
 
-    @GET("listarTodosProdutos")
+    @GET("listarCardapioAndroid")
     Call<List<Cardapio>> getCardapio();
 
 

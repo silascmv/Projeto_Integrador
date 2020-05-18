@@ -1,11 +1,10 @@
 package com.example.meucardapio.model;
 
-import android.graphics.Bitmap;
-
 import com.google.gson.annotations.SerializedName;
 
 public class Cardapio {
-
+    @SerializedName("id_produto")
+    private int id_produto;
     @SerializedName("imagem")
     private String imagem;
     @SerializedName("nome")
@@ -16,7 +15,8 @@ public class Cardapio {
     private String descricao;
 
 
-    public Cardapio(String imagem, String nome, Double valor, String descricao) {
+    public Cardapio(int id_produto,String imagem, String nome, Double valor, String descricao) {
+        this.id_produto = id_produto;
         this.imagem = imagem;
         this.nome = nome;
         this.valor = valor;
@@ -25,6 +25,14 @@ public class Cardapio {
 
     public Cardapio() {
 
+    }
+
+    public int getId_produto() {
+        return id_produto;
+    }
+
+    public void setId_produto(int id_produto) {
+        this.id_produto = id_produto;
     }
 
     public String getImagem() {

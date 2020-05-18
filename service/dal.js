@@ -256,7 +256,7 @@ class DataAcessLayer {
                             
                             console.log('NÃO EXISTE MESA CADASTRADA')
 
-                            var resultado_mesa_ocupada = JSON.parse('{"status":"Não existe mesas cadastradas com esse QR_CODE","code_status":"01"}');
+                            var resultado_mesa_ocupada = JSON.parse('{"status":"Não existe mesas cadastradas com esse QR_CODE","code_status":"03"}');
                             resolve(resultado_mesa_ocupada);
                             return;
 
@@ -286,7 +286,7 @@ class DataAcessLayer {
                         
                         if(results.length == 0){
                            
-                            var resultado_mesa_ocupada = JSON.parse('{"status":"A mesa está ocupada/reservada no momento.","code_status":"01"}');
+                            var resultado_mesa_ocupada = JSON.parse('{"status":"A mesa está ocupada/reservada no momento.","code_status":"02"}');
                             resolve(resultado_mesa_ocupada);
 
 

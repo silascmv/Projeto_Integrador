@@ -189,6 +189,8 @@ public class MainActivityAbrirMesa extends AppCompatActivity implements ZXingSca
             try {
                 CodeStatus retornoAbrirMesa = new HtppServiceAddMesa( abrirMesa ).execute().get();
                 Toast toast = Toast.makeText( getApplicationContext(), retornoAbrirMesa.status, Toast.LENGTH_LONG );
+                Log.i( TAG, getClasseName() + "------> ON DESTROY <--------- " + retornoAbrirMesa.code_status );
+
                 toast.setGravity( Gravity.CENTER, 0, 0 );
                 toast.show();
                 mScannerView.startCamera();
