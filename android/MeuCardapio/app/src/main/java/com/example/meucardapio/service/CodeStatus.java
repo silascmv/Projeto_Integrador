@@ -5,6 +5,23 @@ public class CodeStatus {
         public String status ;
         public int code_status;
         public int usuario;
+        public int mesa_cliente;
+
+    public int getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(int usuario) {
+        this.usuario = usuario;
+    }
+
+    public int getMesa_cliente() {
+        return mesa_cliente;
+    }
+
+    public void setMesa_cliente(int mesa_cliente) {
+        this.mesa_cliente = mesa_cliente;
+    }
 
     public int getUsuarioLogado() {
         return usuario;
