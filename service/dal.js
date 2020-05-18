@@ -325,11 +325,10 @@ class DataAcessLayer {
                                             'code_status': '01',
                                             'mesa_cliente': id_mesa
 
-                                        }
-
-
-                                        var resultado_cliente = JSON.parse(resposta);
-                                        resolve(resultado_cliente);
+                                        }                                        
+                                        
+                                        console.log(resposta);
+                                        resolve(resposta);
                                         console.log("teste");
 
                                     } else {
