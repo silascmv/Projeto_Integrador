@@ -217,7 +217,7 @@ app.get('/listarTodosProdutos/', (req, res) => {
 
 app.get('/listarCardapioAndroid/', (req, res) => {
     pool.getConnection((err, pool) => {
-        var query = 'SELECT NOME_PRODUTO,VALOR,DESCRICAO,IMAGEM_PATH FROM PRODUTOS';
+        var query = 'SELECT ID_PRODUTO,NOME_PRODUTO,VALOR,DESCRICAO,IMAGEM_PATH FROM PRODUTOS';
         pool.query(query, (error, results, fields) => {
             if (error) {
                 console.log(error)
@@ -231,6 +231,7 @@ app.get('/listarCardapioAndroid/', (req, res) => {
                 for (var i = 0; i < results.length; i++) {
 
                     var objeto_retorno = {
+                        'id_produto': results[i].ID_PRODUTO,
                         'imagem': 'http://app-84c469d6-9c06-4181-9a74-5d84696798cf.cleverapps.io' + (results[i].IMAGEM_PATH),
                         'nome': results[i].NOME_PRODUTO,
                         'valor': results[i].VALOR,
