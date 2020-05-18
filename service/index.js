@@ -234,7 +234,7 @@ app.get('/listarCardapioAndroid/', (req, res) => {
                         'imagem': 'http://app-84c469d6-9c06-4181-9a74-5d84696798cf.cleverapps.io' + (results[i].IMAGEM_PATH),
                         'nome': results[i].NOME_PRODUTO,
                         'valor': results[i].VALOR,
-                        'DESCRICAO': results[i].DESCRICAO                       
+                        'descricao': results[i].DESCRICAO                       
 
                     }
 
