@@ -49,14 +49,6 @@ public class MainActivityCardapio extends AppCompatActivity {
             cardapio_recycleview.setAdapter(cardapioAdapter);
             Log.i(TAG, getClasseName() + "JSON CONVERTION DO OBJETO DENTRO DA CLASSE x " + listarCardapioCompleto.toArray());
 
-            int contador = listarCardapioCompleto.size();
-            int i ;            for (i = 0; i < contador; i++){
-                Log.i(TAG, getClasseName() + "DENTRO DO LAÇO" + listarCardapioCompleto.get(i));
-                cardapio_teste = listarCardapioCompleto.get(i);
-                Log.i(TAG, getClasseName() + "DENTRO DO LAÇO" + cardapio_teste.getImagem());
-
-            }
-
 
         } catch (ExecutionException e) {
             e.printStackTrace();
