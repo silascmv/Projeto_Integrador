@@ -4,7 +4,9 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const fs = require("fs");
 const http = require('http');
-const { promisify } = require('util');
+const {
+    promisify
+} = require('util');
 var session = require('express-session');
 const publicIp = require('public-ip');
 
@@ -31,7 +33,9 @@ app.use(session({
     secret: 'secret',
     resave: false,
     saveUninitialized: true,
-    cookie: { secure: true }
+    cookie: {
+        secure: true
+    }
 }))
 
 
@@ -46,14 +50,18 @@ function isEmptyObject(obj) {
 }
 
 //configurando o body parser para pegar POSTS mais tarde
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({
+    extended: true
+}));
 app.use(bodyParser.json());
 app.use(cors());
 //Definindo Rotas
 const router = express.Router();
 //Criação de API'S
 //Acessando HOME e Informando que o serviço está ON
-router.get('/', (req, res) => res.json({ message: 'API Funcionando!' }));
+router.get('/', (req, res) => res.json({
+    message: 'API Funcionando!'
+}));
 app.use('/', router);
 
 app.post('/addCliente', function (req, res) {
@@ -155,23 +163,30 @@ app.get('/realizarLogin/:login&:password', function (req, res) {
         console.log(filter_login);
         if (req.params.password) filter_password = 'AND CD_SENHA =' + "'" + (req.params.password) + "'";
         // Executando a query MySQL (selecionar todos os dados da tabela usuário).
-        var query = 'SELECT CLIENTE.ID_CLIENTE,LOGIN.CD_LOGIN,LOGIN.CD_SENHA FROM LOGIN JOIN CLIENTE ON CLIENTE.ID_LOGIN = LOGIN.ID_LOGIN WHERE CD_LOGIN = ' + filter_login + filter_password 
+        var query = 'SELECT CLIENTE.ID_CLIENTE,LOGIN.CD_LOGIN,LOGIN.CD_SENHA FROM LOGIN JOIN CLIENTE ON CLIENTE.ID_LOGIN = LOGIN.ID_LOGIN WHERE CD_LOGIN = ' + filter_login + filter_password
         pool.query(query, function (error, results, fields) {
             // Pegando a 'resposta' do servidor pra nossa requisição. Ou seja, aqui ele vai mandar nossos dados.
             console.log(query);
             console.log(results);
             if (isEmptyObject(results)) {
 
-                res.json({ status: "Usuario ou Senha Invalido", code_status: 00 });
+                res.json({
+                    status: "Usuario ou Senha Invalido",
+                    code_status: 00
+                });
                 pool.release();
                 pool.destroy();
             } else {
-                res.json({ status: "Login Realizado com Sucesso", code_status: 01, usuario: results[0].ID_CLIENTE});
+                res.json({
+                    status: "Login Realizado com Sucesso",
+                    code_status: 01,
+                    usuario: results[0].ID_CLIENTE
+                });
                 pool.release();
                 pool.destroy();
             }
 
-            
+
 
 
         });
@@ -188,12 +203,15 @@ app.get('/listarTodosProdutos/', (req, res) => {
             }
 
             if (results.length == 0) {
-                res.json({ status: "Não existem produtos cadastrados", code_status: 00 });
+                res.json({
+                    status: "Não existem produtos cadastrados",
+                    code_status: 00
+                });
             } else {
 
                 var objeto_array = new Array();
                 for (var i = 0; i < results.length; i++) {
-                    
+
                     var objeto_retorno = {
                         'IMAGEM': 'http://app-84c469d6-9c06-4181-9a74-5d84696798cf.cleverapps.io' + (results[i].IMAGEM_PATH),
                         'NOME': results[i].NOME_PRODUTO,
@@ -224,7 +242,10 @@ app.get('/listarCardapioAndroid/', (req, res) => {
             }
 
             if (results.length == 0) {
-                res.json({ status: "Não existem produtos cadastrados", code_status: 00 });
+                res.json({
+                    status: "Não existem produtos cadastrados",
+                    code_status: 00
+                });
             } else {
 
                 var objeto_array = new Array();
@@ -234,7 +255,7 @@ app.get('/listarCardapioAndroid/', (req, res) => {
                         'imagem': 'http://app-84c469d6-9c06-4181-9a74-5d84696798cf.cleverapps.io' + (results[i].IMAGEM_PATH),
                         'nome': results[i].NOME_PRODUTO,
                         'valor': results[i].VALOR,
-                        'descricao': results[i].DESCRICAO                       
+                        'descricao': results[i].DESCRICAO
 
                     }
 
@@ -357,10 +378,10 @@ app.get('/listarTodasMesas/', (req, res) => {
 
 
     pool.getConnection((err, pool) => {
-        
+
         let query = 'SELECT ID_MESA,DESCRICAO,SN_ATIVO,QR_CODE,PATH_QR_CODE,SN_DISPONIVEL FROM MESAS';
 
-        
+
 
         pool.query(query, (error, results, fields) => {
             if (error) {
@@ -368,7 +389,10 @@ app.get('/listarTodasMesas/', (req, res) => {
             }
 
             if (results.length == 0) {
-                res.json({ status: "Não existem mesas cadastrados", code_status: 00 });
+                res.json({
+                    status: "Não existem mesas cadastrados",
+                    code_status: 00
+                });
             } else {
 
                 var objeto_array = new Array();
@@ -379,7 +403,7 @@ app.get('/listarTodasMesas/', (req, res) => {
                         'DESCRICAO': results[i].DESCRICAO,
                         'SN_ATIVO': results[i].SN_ATIVO,
                         'QR_CODE': results[i].QR_CODE,
-                        'IMAGEM_MESA': 'http://app-63e8a389-b098-4421-abd4-cc50f39f4df1.cleverapps.io' + results[i].PATH_QR_CODE,
+                        'IMAGEM_MESA': 'http://app-84c469d6-9c06-4181-9a74-5d84696798cf.cleverapps.io' + results[i].PATH_QR_CODE,
                         'SN_DISPONIVEL': results[i].SN_DISPONIVEL
 
                     }
@@ -395,31 +419,37 @@ app.get('/listarTodasMesas/', (req, res) => {
 
 });
 
-app.post('/apagarProduto/', (req,res) => {
+app.post('/apagarProduto/', (req, res) => {
 
-    
+
 
     pool.getConnection((err, pool) => {
-        
+
         var id_produto = req.param("ID_PRODUTO")
 
         let query = 'DELETE FROM PRODUTOS WHERE ID_PRODUTO = ' + id_produto;
 
-        
+
 
         pool.query(query, (error, results, fields) => {
             if (error) {
                 console.log(error)
-            }            
+            }
 
             if (results.affectedRows == 0) {
-                res.json({ status: "Não existe produto com esse ID", code_status: 00 });
+                res.json({
+                    status: "Não existe produto com esse ID",
+                    code_status: 00
+                });
             } else {
 
-                res.json({ status: "Produto deletado com Sucesso", code_status: 01 })
-                
+                res.json({
+                    status: "Produto deletado com Sucesso",
+                    code_status: 01
+                })
+
             }
-            
+
 
         })
     })
@@ -432,33 +462,34 @@ app.post('/apagarProduto/', (req,res) => {
 })
 
 
-app.get('/listarIP',(req,res) => {
+app.get('/listarIP', (req, res) => {
 
     var
-    // Local ip address that we're trying to calculate
-    address
-    // Provides a few basic operating-system related utility functions (built-in)
-    ,os = require('os')
-    // Network interfaces
-    ,ifaces = os.networkInterfaces();
+        // Local ip address that we're trying to calculate
+        address
+        // Provides a few basic operating-system related utility functions (built-in)
+        , os = require('os')
+        // Network interfaces
+        ,
+        ifaces = os.networkInterfaces();
 
 
-// Iterate over interfaces ...
-for (var dev in ifaces) {
+    // Iterate over interfaces ...
+    for (var dev in ifaces) {
 
-    // ... and find the one that matches the criteria
-    var iface = ifaces[dev].filter(function(details) {
-        return details.family === 'IPv4' && details.internal === false;
-    });
+        // ... and find the one that matches the criteria
+        var iface = ifaces[dev].filter(function (details) {
+            return details.family === 'IPv4' && details.internal === false;
+        });
 
-    if(iface.length > 0) address = iface[0].address;
-}
+        if (iface.length > 0) address = iface[0].address;
+    }
 
-// Print the result
-console.log(address);
-    
+    // Print the result
+    console.log(address);
 
-res.send(address);
+
+    res.send(address);
 
 })
 
