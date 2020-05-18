@@ -291,9 +291,13 @@ app.post('/abrirMesa', (req, res) => {
 
                         res.send(resultado).end();
 
-                    } else {
+                    } else if (resultado.code_status === '03'){
 
+                        res.send(resultado).end();
 
+                    }else if(resultado.code_status === '02'){
+                        
+                        res.send(resultado).end();
 
                     }
 
