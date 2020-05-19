@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.example.meucardapio">
+
+    <uses-sdk tools:overrideLibrary="com.google.zxing.client.android" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <application
+        android:allowBackup="true"
+        android:hardwareAccelerated="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:networkSecurityConfig="@xml/network_security_config"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme"
+        tools:targetApi="n">
+        <activity android:name=".MainActivityAbrirMesa" />
+        <activity android:name=".MainActivityLocalizar" />
+        <activity android:name=".MainActivityAjuda" />
+        <activity android:name=".MainActivityCarteira" />
+        <activity android:name=".MainActivityCupom" />
+        <activity android:name=".MainActivityCardapio" />
+        <activity android:name=".MainActivityPrincipal" />
+        <activity android:name=".MainActivityCadastro" />
+        <activity
+            android:name="com.journeyapps.barcodescanner.CaptureActivity"
+            android:screenOrientation="fullSensor"
+            tools:replace="screenOrientation" />
+
+        <meta-data
+            android:name="com.google.android.actions"
+            android:resource="@xml/network_security_config" />
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
+
+        <activity android:name=".MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+
+            </activity>
+
+        <activity android:name=".Splash">
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+        </activity>
+    </application>
+
+</manifest>

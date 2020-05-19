@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivityCarteira"
+    android:background="@drawable/gradient">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+
+        <RelativeLayout
+            android:layout_marginTop="32dp"
+            android:layout_marginRight="32dp"
+            android:layout_marginLeft="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+
+                android:id="@+id/Nome_App"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/alfa_slab_one"
+                android:text="Meu Cardápio"
+                android:textColor="#FFFFFF"
+                android:textSize="12sp" />
+
+            <TextView
+                android:layout_marginTop="6dp"
+                android:layout_below="@id/Nome_App"
+                android:text="Bem-Vindo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/alfa_slab_one"
+                android:textColor="#FFFFFF"
+                android:textSize="7sp"/>
+            <TextView
+                android:layout_marginTop="6dp"
+                android:id="@+id/usuarioLogado"
+                android:layout_marginLeft="43dp"
+                android:layout_below="@id/Nome_App"
+                android:text=""
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/alfa_slab_one"
+                android:textColor="#FFFFFF"
+                android:textSize="7sp"/>
+
+            <ImageView
+                android:layout_alignParentRight="true"
+                android:src="@drawable/robo"
+                android:layout_width="42dp"
+                android:layout_height="42dp" />
+
+
+        </RelativeLayout>
+    </LinearLayout>
+
+
+</ScrollView>

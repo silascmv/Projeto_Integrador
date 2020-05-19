@@ -1,0 +1,36 @@
+<resources>
+    <string name="app_name">MeuCardapio</string>
+
+    <!-- Tela de Login -->
+    <string name="inputLogin">Usuário*</string>
+    <string name="inputSenha">Senha*</string>
+
+    <!-- Tela de Cadastro - Usa alguns componentes da tela de login -->
+    <string name="inputSenhaNovamente">Confirmar Senha*</string>
+    <string name="inputNome">Nome*</string>
+    <string name="inputEmail">E-mail*</string>
+    <string name="inputEndereco">Endereço*</string>
+    <string name="inputTelefone">Telefone</string>
+    <string name="inputCelular">Celular*</string>
+    <string name="txtCheckBox">Eu li e concordo com os termos de uso *</string>
+    <string name="btnCadastrar">Cadastrar</string>
+    <string name="tlPrincipalTextCadastro">Cadastre-se</string>
+    <string name="action_sign_in">Login</string>
+
+    <!-- Tela Principal - Componentes -->
+    <string name="localizar_restaurante">Localizar Restaurante</string>
+    <string name="abrir_comanda">Iniciar Mesa</string>
+    <string name="card_pio">Cardápio</string>
+    <string name="cupom">Cupons</string>
+    <string name="carteira">Carteira</string>
+    <string name="ajuda">Ajuda</string>
+    <string name="bem_vindo_user">Bem-Vindo</string>
+    <string name="meu_card_pio">Meu Cardápio</string>
+    <string name="iniciar_pedidos">Iniciar Pedidos</string>
+    <string name="salvar_login">Salvar Login</string>
+    <string name="esqueceu_a_senha">Esqueceu a senha ?</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+</resources>
