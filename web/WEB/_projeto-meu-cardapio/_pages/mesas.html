@@ -358,7 +358,7 @@
                                             <th>   QR Code   </th>
                                             <th>   Nome da Mesa   </th>
                                             <th>   Active Y or N   </th>
-                                            <th>   Excluir   </th>  
+                                           
                                         </tr>
                                     </thead>
 
@@ -372,7 +372,7 @@
                                             <th>   QR Code   </th>
                                             <th>   Nome da Mesa   </th>
                                             <th>   Active Y or N   </th>
-                                            <th>   Excluir   </th>  
+                        
                                         </tr>
                                     </tfoot>
                                 </table>
@@ -391,18 +391,18 @@
             $('#tabela').DataTable();
         });
 
-/*        $.ajax({
+        $.ajax({
             type: 'get',		//Definimos o método HTTP usado
             dataType: 'json',	//Definimos o tipo de retorno
-            url: 'http://app-63e8a389-b098-4421-abd4-cc50f39f4df1.cleverapps.io/listarTodosProdutos/',//Definindo o arquivo onde serão buscados os dados
+            url: 'http://app-84c469d6-9c06-4181-9a74-5d84696798cf.cleverapps.io/listarTodasMesas',//Definindo o arquivo onde serão buscados os dados
             success: function (dados) {
                 console.log(dados);
                 for (var i = 0; dados.length > i; i++) {
                     //Adicionando registros retornados na tabela
-                    $('#bodyTable').append('<tr><td style="text-aling:center;"><img class="image_body_table" src="' + dados[i].IMAGEM + '"></td><td>' + dados[i].NOME + '</td><td>R$' + dados[i].VALOR + '</td><td>' + dados[i].DESCRICAO + '</td><td>' + dados[i].CODIGO_BARRA + '</td><td>' + dados[i].TIPO + '</td></tr>');
+                    $('#bodyTable').append('<tr><td style="text-aling:center;"><img class="image_body_table" src="' + dados[i].file + '"></td><td>' + dados[i].NOME_MESA + '</td><td>' + (dados[i].SN_ATIVO == "1" ? "Ativo" : "Inativo") + '</td></tr>');
                 }
             }
-        });*/
+        });
 
         function reload(){
             
