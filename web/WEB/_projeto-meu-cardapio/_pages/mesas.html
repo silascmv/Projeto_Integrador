@@ -219,7 +219,7 @@
         }
 
         img.image_body_table {
-            max-height: 15%;
+            max-height: 5%;
             height: 100%;
         }
     </style>
@@ -357,7 +357,8 @@
                                         <tr>
                                             <th>   QR Code   </th>
                                             <th>   Nome da Mesa   </th>
-                                            <th>   Active Y or N   </th>
+                                            <th>   Ativo   </th>
+                                            <th>   Disponibilidade   </th>
                                            
                                         </tr>
                                     </thead>
@@ -371,7 +372,8 @@
                                         <tr>
                                             <th>   QR Code   </th>
                                             <th>   Nome da Mesa   </th>
-                                            <th>   Active Y or N   </th>
+                                            <th>   Ativo   </th>
+                                            <th>   Disponibilidade   </th>
                         
                                         </tr>
                                     </tfoot>
@@ -399,7 +401,7 @@
                 console.log(dados);
                 for (var i = 0; dados.length > i; i++) {
                     //Adicionando registros retornados na tabela
-                    $('#bodyTable').append('<tr><td style="text-aling:center;"><img class="image_body_table" src="' + dados[i].file + '"></td><td>' + dados[i].NOME_MESA + '</td><td>' + (dados[i].SN_ATIVO == "1" ? "Ativo" : "Inativo") + '</td></tr>');
+                    $('#bodyTable').append('<tr><td style="text-aling:center;"><img class="image_body_table" src="' + dados[i].IMAGEM_MESA + '"></td><td>' + dados[i].DESCRICAO + '</td><td>' + (dados[i].SN_ATIVO == "1" ? "Ativo" : "Inativo") + '</td><td>' + (dados[i].SN_DISPONIVEL == "1" ? "Disponível" : "Indisponível") + '</td></tr>');
                 }
             }
         });
