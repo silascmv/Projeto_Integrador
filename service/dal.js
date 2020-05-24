@@ -114,6 +114,116 @@ class DataAcessLayer {
 
     }
 
+    
+    insertFuncionarioTransaction(req, pool) {
+        // Parâmetros para TABELA-LOGIN
+        let cd_login_request = req.param("CD_LOGIN");
+        let cd_senha_request = req.param("CD_SENHA");
+        let tp_login = req.param("TIPO_USUARIO");
+        let sn_ativo_login = req.param("SN_ATIVO");
+        
+        //Query para inserir na tabela Login
+        let query = 'INSERT INTO LOGIN VALUES ('
+            + 'NULL,'
+            + "'" + cd_login_request + "'" + ','
+            + "'" + cd_senha_request + "'" + ','
+            + sn_ativo_login + ','
+            + "'" + tp_login + "'" + ')';
+
+        //Baseado no resultado da promessa irá mandar uma mensagem de retorno e será enviado como retorno da aplicação(Resolve).
+        return new Promise((resolve, reject) => {
+
+            //Iniciando Transação
+            pool.beginTransaction(function (err) {
+                if (err) {
+                    throw err;
+                }
+                pool.query(query, function (error, results, fields) {
+                    if (!error) {
+                        //Retorno do MYSQL com o ÚLTIMO ID ADICIONADO NA TABELA LOGIN
+                        var id_login = results.insertId;
+                        // Variavéis do Request
+                        let nome = req.param("NOME_FUNCIONARIO");
+                        let cpf = req.param("CPF")
+                        let telefone = req.param("TELEFONE");
+                        let setor = req.param("SETOR");
+                        let sn_ativo = 1;
+
+                        //Query para inserir na tabela FUNCIONARIO
+                        query = 'INSERT INTO FUNCIONARIO VALUES ('
+                            + 'NULL,'
+                            + "'" + id_login + "'" + ","
+                            + "'" + nome + "'" + ','
+                            + "'" + cpf + "'" + ','
+                            + "'" + telefone + "'" + ','
+                            + "'" + setor + "'" + ')'
+                            
+
+                            console.log("QUERY" + query)
+
+                        pool.query(query, function (error, results, fields) {
+                            //Se a query de inserção não falhar irá realizar o commit da operação
+                            if (!error) {
+                                pool.commit(function (err) {
+
+                                    //Finalização do cadastro.
+                                    if (!err) {
+                                        var resultado_cliente = JSON.parse('{"status":"Funcionário Cadastrado com Sucesso","code_status":"01"}');
+                                        resolve(resultado_cliente);
+
+                                    } else {
+                                        //Caso apresente algua falha no commit irá enviar essa informação.
+                                        return pool.rollback(function () {
+                                            var resultado_cliente = JSON.parse('{"status":"Falha ao realizar o cadastro, tenta novamente","code_status":"00"}');
+                                            resolve(resultado_cliente);
+                                        });
+
+                                    }
+                                });
+
+                            } else if (error.code === 'ER_DUP_ENTRY') {
+                                //Captura de erros e retornos para api
+                                return pool.rollback(function () {
+                                    var resultado_cliente = JSON.parse('{"status":"Já existe um Cliente com esse E-mail Cadastrado","code_status":"02"}');
+                                    resolve(resultado_cliente);
+                                });
+                            } else if (error.code === 'ER_DATA_TOO_LONG') {
+                                //Captura de erros e retornos para api
+                                var resultado = JSON.parse('{"status":"Coluna com o valor maior do que o permitido","code_status":"03"}');
+                                resolve(resultado);
+                            } else {
+                                var resultado = JSON.parse('{"status":"Operação desconhecida, entre em contato com TI","code_status":"00"}');
+                                resolve(resultado);
+
+                            }
+
+                        });
+
+
+
+
+                    } else if (error.code === 'ER_DUP_ENTRY') {
+                        return pool.rollback(function () {
+                            var resultado = JSON.parse('{"status":"Já existe um usuário com esse Login","code_status":"04"}');
+                            resolve(resultado);
+                        });
+                    } else {
+                        console.log('Erro ::' + err)
+                        var resultado = JSON.parse('{"status":"Operação desconhecida, entre em contato com TI","code_status":"00"}');
+                        resolve(resultado);
+
+                    }
+
+                    pool.release();
+                });
+
+
+
+            });
+
+        });
+
+    }
 
     insertProduto(req, pool, objeto_produto) {
         return new Promise((resolve, reject) => {

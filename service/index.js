@@ -84,6 +84,26 @@ app.post('/addCliente', function (req, res) {
     });
 });
 
+app.post('/addFuncionario', function (req, res) {
+    //Abrindo Conexão com o Banco de Dados (Objeto Pool Importado da Classe DataBase)
+    pool.getConnection(function (err, pool) {
+        const objeto_dal = new DataAcessLayer();
+        try {
+            async function realizarCadastro() {
+                await objeto_dal.insertFuncionarioTransaction(req, pool).then(resultado => {
+                    res.send(resultado);
+                });
+            }
+            realizarCadastro();
+
+        } catch (err) {
+            var error_status = JSON.parse('{"status":"Não foi possível realizar sua operação, entre em contato com o administrador.","code_status":"00"}');
+            res.send(error_status);
+
+        }
+    });
+});
+
 app.post('/addProduto/', upload.single('IMG'), (req, res) => {
 
     var data = new Date()
@@ -194,6 +214,84 @@ app.get('/realizarLogin/:login&:password', function (req, res) {
 
 });
 
+app.post('/realizarLoginFuncionario/', (req,res) => {
+
+        let cd_login = req.param("CD_LOGIN")
+        let cd_senha = req.param("CD_SENHA")
+
+        let query = 'SELECT FUNCIONARIO.ID_FUNCIONARIO,LOGIN.CD_LOGIN,LOGIN.CD_SENHA,LOGIN.TP_LOGIN FROM FUNCIONARIO JOIN LOGIN ON  FUNCIONARIO.ID_LOGIN = LOGIN.ID_LOGIN WHERE CD_LOGIN = ' + "'" + cd_login + "'" + ' ' + 'AND CD_SENHA=' + "'"  + cd_senha + "'"
+        console.log(query)
+        pool.getConnection(function(err,pool){
+
+            pool.query(query, function(error,results,fields){
+
+                if(results.length == 0){
+
+                    res.json({
+                        status: "Usuario ou Senha Invalido",
+                        code_status: 00
+                    });
+
+
+                }else{
+
+                    res.json({
+                        status: "Login Realizado com Sucesso",
+                        code_status: 01,
+                        usuario: results[0].ID_FUNCIONARIO,
+                        tp_login: results[0].TP_LOGIN
+                    });
+
+                }
+
+            
+            })
+
+        })
+
+    
+})
+
+
+app.get('/listarCardapioAndroid/', (req, res) => {
+    pool.getConnection((err, pool) => {
+        var query = 'SELECT ID_PRODUTO,NOME_PRODUTO,VALOR,DESCRICAO,IMAGEM_PATH FROM PRODUTOS';
+        pool.query(query, (error, results, fields) => {
+            if (error) {
+                console.log(error)
+            }
+
+            if (results.length == 0) {
+                res.json({
+                    status: "Não existem produtos cadastrados",
+                    code_status: 00
+                });
+            } else {
+
+                var objeto_array = new Array();
+                for (var i = 0; i < results.length; i++) {
+
+                    var objeto_retorno = {
+                        'id_produto': results[i].ID_PRODUTO,
+                        'imagem': 'http://app-84c469d6-9c06-4181-9a74-5d84696798cf.cleverapps.io' + (results[i].IMAGEM_PATH),
+                        'nome': results[i].NOME_PRODUTO,
+                        'valor': results[i].VALOR,
+                        'descricao': results[i].DESCRICAO
+
+                    }
+
+                    objeto_array.push(objeto_retorno);
+
+                }
+            }
+            res.json(objeto_array);
+
+        })
+    })
+
+});
+
+
 app.get('/listarTodosProdutos/', (req, res) => {
     pool.getConnection((err, pool) => {
         var query = 'SELECT NOME_PRODUTO,VALOR,DESCRICAO,IMAGEM_PATH,CODIGO_BARRA,TIPO FROM PRODUTOS';
@@ -233,9 +331,11 @@ app.get('/listarTodosProdutos/', (req, res) => {
 
 });
 
-app.get('/listarCardapioAndroid/', (req, res) => {
+
+
+app.get('/listarTodosFuncionarios/', (req, res) => {
     pool.getConnection((err, pool) => {
-        var query = 'SELECT ID_PRODUTO,NOME_PRODUTO,VALOR,DESCRICAO,IMAGEM_PATH FROM PRODUTOS';
+        var query = 'SELECT ID_FUNCIONARIO,NOME,CPF,TELEFONE,SETOR,SN_ATIVO FROM FUNCIONARIO';
         pool.query(query, (error, results, fields) => {
             if (error) {
                 console.log(error)
@@ -243,7 +343,7 @@ app.get('/listarCardapioAndroid/', (req, res) => {
 
             if (results.length == 0) {
                 res.json({
-                    status: "Não existem produtos cadastrados",
+                    status: "Não existem funcionarios cadastrados",
                     code_status: 00
                 });
             } else {
@@ -252,13 +352,14 @@ app.get('/listarCardapioAndroid/', (req, res) => {
                 for (var i = 0; i < results.length; i++) {
 
                     var objeto_retorno = {
-                        'id_produto': results[i].ID_PRODUTO,
-                        'imagem': 'http://app-84c469d6-9c06-4181-9a74-5d84696798cf.cleverapps.io' + (results[i].IMAGEM_PATH),
-                        'nome': results[i].NOME_PRODUTO,
-                        'valor': results[i].VALOR,
-                        'descricao': results[i].DESCRICAO
-
-                    }
+                        'ID_FUNCIONARIO': (results[i].ID_FUNCIONARIO),
+                        'NOME': results[i].NOME,
+                        'CPF': results[i].CPF,
+                        'TELEFONE': results[i].TELEFONE,
+                        'SETOR': results[i].SETOR,
+                        'SN_ATIVO': results[i].SN_ATIVO
+                        
+                    };
 
                     objeto_array.push(objeto_retorno);
 
@@ -268,6 +369,45 @@ app.get('/listarCardapioAndroid/', (req, res) => {
 
         })
     })
+
+});
+
+
+app.post('/desativarFuncionario', (req, res) => {
+
+
+
+    pool.getConnection(function (err, pool) {
+        const objeto_dal = new DataAcessLayer();
+        try {
+            
+            let id_funcionario = req.param("ID_FUNCIONARIO")
+
+            let query = 'DELETE FROM FUNCIONARIO WHERE ID_FUNCIONARIO = ' + id_funcionario
+            
+
+            pool.query(query,function(error,results,fields){
+                    console.log(error)
+
+
+            })
+
+        } catch (err) {
+            var error_status = JSON.parse('{"status":"Não foi possível realizar sua operação, entre em contato com o administrador.","code_status":"00"}');
+            console.log(err);
+            res.send(error_status);
+
+        }
+    });
+
+
+
+
+
+
+
+
+
 
 });
 
