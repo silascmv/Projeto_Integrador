@@ -20,7 +20,7 @@ public class Splash extends AppCompatActivity {
                 finish();
 
             }
-        },3000);
+        },1500);
 
         /*Thread timerThread = new Thread() {
             @Override

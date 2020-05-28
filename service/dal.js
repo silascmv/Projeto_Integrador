@@ -184,7 +184,7 @@ class DataAcessLayer {
                             } else if (error.code === 'ER_DUP_ENTRY') {
                                 //Captura de erros e retornos para api
                                 return pool.rollback(function () {
-                                    var resultado_cliente = JSON.parse('{"status":"Já existe um Cliente com esse E-mail Cadastrado","code_status":"02"}');
+                                    var resultado_cliente = JSON.parse('{"status":"Já existe um funcionário com esse Nome ou CPF","code_status":"02"}');
                                     resolve(resultado_cliente);
                                 });
                             } else if (error.code === 'ER_DATA_TOO_LONG') {
