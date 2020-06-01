@@ -58,6 +58,12 @@ public class MainActivity extends AppCompatActivity {
 
                     CodeStatus retorno;
                     retorno = new HttpServiceLogin(login.getText().toString(),senha.getText().toString()).execute().get();
+                    if(retorno == null){
+                        Toast.makeText(getApplicationContext(), "Falha ao realizar o login, tente novamente.", Toast.LENGTH_LONG).show();
+
+                    }
+
+
                     if(retorno.getCode_status() == 0){
                         Toast.makeText(getApplicationContext(),"Usuário ou Senha Inválido", Toast.LENGTH_SHORT).show();
 
