@@ -15,13 +15,14 @@ import com.example.meucardapio.model.UsuarioLogado;
 public class MainActivityPrincipal extends AppCompatActivity {
 
     private static final String TAG = "MyActivity";
+    UsuarioLogado usuarioLogado;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_principal);
         //VARIAVEL PRA SETAR VALOR NO CAMPO DE TEXTO NO USUÁRIO LOGADO.
-        UsuarioLogado usuarioLogado = getIntent().getExtras().getParcelable("usuarioLogado");
+        usuarioLogado = getIntent().getExtras().getParcelable("usuarioLogado");
         final TextView txtUsuarioLogado = findViewById(R.id.usuarioLogado);
         txtUsuarioLogado.setText(usuarioLogado.getNomeUsuarioLogado());
         //VARIAVEIS PARA TRABALHAR COM OS ICONES DA TELA.
@@ -34,6 +35,7 @@ public class MainActivityPrincipal extends AppCompatActivity {
 
 
         Log.i(TAG, getClasseName() + "ID : ----->" + usuarioLogado.getIdUsuarioLogado());
+
 
         abrirComanda.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -93,6 +95,14 @@ public class MainActivityPrincipal extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.i(TAG, getClasseName() + "MESA : ----->" + usuarioLogado.getMesaUsuarioLogado());
+
+
+
+    }
 
     private String getClasseName()
     {

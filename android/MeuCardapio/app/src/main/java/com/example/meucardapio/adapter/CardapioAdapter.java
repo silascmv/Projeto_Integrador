@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -34,7 +35,8 @@ public class CardapioAdapter extends RecyclerView.Adapter<CardapioAdapter.ViewHo
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         private ImageView imagemProduto;
-        private TextView nomeProduto, descricaoProduto,valorProduto;
+        private TextView nomeProduto, descricaoProduto,valorProduto,contadorProduto;
+        //private ImageButton somarProduto,subtrairProduto;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -43,6 +45,9 @@ public class CardapioAdapter extends RecyclerView.Adapter<CardapioAdapter.ViewHo
             nomeProduto = (TextView) itemView.findViewById(R.id.nomeProduto);
             descricaoProduto = (TextView) itemView.findViewById(R.id.descricaoProduto);
             valorProduto=(TextView) itemView.findViewById(R.id.valorProduto);
+  //          somarProduto=(ImageButton) itemView.findViewById(R.id.somar);
+    //        subtrairProduto=(ImageButton) itemView.findViewById(R.id.subtrair);
+      //      contadorProduto = (TextView) itemView.findViewById(R.id.contador);
 
         }
     }
@@ -60,6 +65,8 @@ public class CardapioAdapter extends RecyclerView.Adapter<CardapioAdapter.ViewHo
         holder.descricaoProduto.setText(cardapioModel.get(position).getDescricao());
         holder.valorProduto.setText(cardapioModel.get(position).getValor().toString());
         Picasso.get().load(cardapioModel.get(position).getImagem()).into(holder.imagemProduto);
+
+//       holder.contadorProduto.setText(""+ 0);
 
 
     }

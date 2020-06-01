@@ -72,25 +72,7 @@
 
     <ImageView
         android:id="@+id/btnFlash"
-        android:layout_width="80dp"
-        android:layout_height="50dp"
-        android:layout_below="@+id/relative_scan"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="150dp"
-        android:layout_marginLeft="100dp"
-        android:layout_marginTop="60dp"
-        android:layout_marginEnd="150dp"
-        android:layout_marginRight="120dp"
-        android:layout_marginBottom="60dp"
-        android:background="@drawable/edit_round"
-        android:src="@drawable/flashon"
-        android:text="@string/iniciar_pedidos" />
-
-    <ImageView
-        android:id="@+id/btnFlashDesligado"
-        android:layout_width="75dp"
+        android:layout_width="50dp"
         android:layout_height="30dp"
         android:layout_below="@+id/relative_scan"
         android:layout_alignParentStart="true"
@@ -103,7 +85,25 @@
         android:layout_marginRight="120dp"
         android:layout_marginBottom="60dp"
         android:background="@drawable/edit_round"
-        android:src="@drawable/flashoff"
+        android:src="@drawable/flashligado"
+        android:text="@string/iniciar_pedidos" />
+
+    <ImageView
+        android:id="@+id/btnFlashDesligado"
+        android:layout_width="35dp"
+        android:layout_height="15dp"
+        android:layout_below="@+id/relative_scan"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="150dp"
+        android:layout_marginLeft="100dp"
+        android:layout_marginTop="60dp"
+        android:layout_marginEnd="150dp"
+        android:layout_marginRight="120dp"
+        android:layout_marginBottom="60dp"
+        android:background="@drawable/edit_round"
+        android:src="@drawable/flashdesligado"
         android:text="@string/iniciar_pedidos"
         android:visibility="invisible" />
 
