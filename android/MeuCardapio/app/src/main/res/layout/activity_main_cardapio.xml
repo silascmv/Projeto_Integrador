@@ -75,14 +75,13 @@
                 android:id="@+id/quantidade"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Quantidade: 0 "
                 android:layout_marginRight="8dp"
                 />
             <TextView
                 android:id="@+id/valor"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="R$ 0" />
+                />
 
 
         </LinearLayout>
@@ -100,6 +99,10 @@
         android:layout_marginBottom="16dp"
         android:layout_marginRight="16dp"
         android:backgroundTint="@android:color/white"
+        android:src="@drawable/supermercado"
+        app:borderWidth="1dp"
+        app:backgroundTint="@android:color/black"
+
 
         />
 
@@ -107,7 +110,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/linearLayoutCardapio"
-        android:background="@drawable/imagecircle"
         >
 
     <androidx.recyclerview.widget.RecyclerView

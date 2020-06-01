@@ -110,6 +110,11 @@ public class MainActivityCadastro extends AppCompatActivity {
                 //
                 try {
                     CodeStatus cadastro = new HttpServiceCadastro(cadastro_usuario).execute().get();
+                    if(cadastro == null){
+                        Toast.makeText(getApplicationContext(), "Falha oua", Toast.LENGTH_LONG).show();
+
+                    }
+
                     if (cadastro.getCode_status() == 0) {
                         Toast.makeText(getApplicationContext(), "Falha ao Realizar a Operação,entre em contato com o Suporte. CodeStatus = 0", Toast.LENGTH_LONG).show();
                     } else if (cadastro.getCode_status() == 1) {

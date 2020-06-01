@@ -42,6 +42,18 @@ public class ItemPedido {
         public void setPreco(Double preco) {
             this.preco = preco;
         }
+
+
+    public boolean equals(ItemPedido itemPedido) {
+        boolean isEqual=false;
+        if(itemPedido!=null && itemPedido instanceof ItemPedido) {
+            isEqual=(this.idProduto==itemPedido.idProduto);
+        }
+        return isEqual;
     }
+
+
+
+}
 
 
