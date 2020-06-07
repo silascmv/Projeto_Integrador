@@ -35,7 +35,7 @@ public class CardapioAdapter extends RecyclerView.Adapter<CardapioAdapter.ViewHo
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         private ImageView imagemProduto;
-        private TextView nomeProduto, descricaoProduto,valorProduto,contadorProduto;
+        private TextView nomeProduto, descricaoProduto,valorProduto,contadorProduto,somarProduto;
         //private ImageButton somarProduto,subtrairProduto;
 
         public ViewHolder(@NonNull View itemView) {
@@ -45,6 +45,8 @@ public class CardapioAdapter extends RecyclerView.Adapter<CardapioAdapter.ViewHo
             nomeProduto = (TextView) itemView.findViewById(R.id.nomeProduto);
             descricaoProduto = (TextView) itemView.findViewById(R.id.descricaoProduto);
             valorProduto=(TextView) itemView.findViewById(R.id.valorProduto);
+            somarProduto=(TextView) itemView.findViewById((R.id.txtSomar));
+
   //          somarProduto=(ImageButton) itemView.findViewById(R.id.somar);
     //        subtrairProduto=(ImageButton) itemView.findViewById(R.id.subtrair);
       //      contadorProduto = (TextView) itemView.findViewById(R.id.contador);
@@ -64,6 +66,7 @@ public class CardapioAdapter extends RecyclerView.Adapter<CardapioAdapter.ViewHo
         holder.nomeProduto.setText(cardapioModel.get(position).getNome());
         holder.descricaoProduto.setText(cardapioModel.get(position).getDescricao());
         holder.valorProduto.setText(cardapioModel.get(position).getValor().toString());
+        holder.somarProduto.setText(0);
         Picasso.get().load(cardapioModel.get(position).getImagem()).into(holder.imagemProduto);
 
 //       holder.contadorProduto.setText(""+ 0);

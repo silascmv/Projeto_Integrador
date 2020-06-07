@@ -94,8 +94,6 @@ public class MainActivityCardapio extends AppCompatActivity {
                             new RecyclerItemClickListener.OnItemClickListener() {
                                 @Override
                                 public void onItemClick(View view, int position) {
-                                    //
-
                                     Log.i(TAG, getClasseName() + "clicou ");
                                     confirmarQuantidade(position);
                                 }
