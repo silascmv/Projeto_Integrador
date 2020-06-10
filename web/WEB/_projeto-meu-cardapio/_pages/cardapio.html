@@ -464,7 +464,7 @@
 
         function deleteRow(caguei, element) {
             
-            const ID_PRODUTO = caguei[0];
+            let ID_PRODUTO = caguei[0];
 
             fetch('http://app-84c469d6-9c06-4181-9a74-5d84696798cf.cleverapps.io/deletarProduto /', {
                 method: 'POST',
