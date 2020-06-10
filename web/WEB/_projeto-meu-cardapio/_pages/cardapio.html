@@ -21,33 +21,11 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
-
     <script>
 
       //$('#myform').empty(); //Limpando a tabela
-    
-    
+
     </script>
-
-
-    <!-- <script src="../_js/bootstrap.min.js"></script>
-    <script src="../_js/jquery-3.4.1.min.js"></script>
-    <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
-    
-    <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet">
-    
-    <script src="https://code.jquery.com/jquery-3.3.1.js"></script>   
-    <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://jqueryvalidation.org/files/demo/site-demos.css">
-    <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
-    
-    <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
-    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script> -->
-
-
-
 
     <style type="text/css">
         @import url('https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css');
@@ -304,7 +282,8 @@
                                                 </h4>
                                             </div>
                                             <div class="modal-body">
-                                                <form  action="javascript:void(0);" method="POST" onsubmit="cadastro()" id="myform" enctype="multipart/form-data">
+                                                <form action="javascript:void(0);" method="POST" onsubmit="cadastro()"
+                                                    id="myform" enctype="multipart/form-data">
                                                     <div class="form-group">
                                                         <label for="recipient-name" class="control-label">Nome do
                                                             Produto:</label>
@@ -318,7 +297,8 @@
                                                             do Fornecedor:</label>
                                                         <input class="form-control" type="text" name="ID_FORNECEDOR"
                                                             id="ID_FORNECEDOR" maxlength="80"
-                                                            placeholder="Identificação do Fornecedor" required value="1" disabled>
+                                                            placeholder="Identificação do Fornecedor" required value="1"
+                                                            disabled>
                                                     </div>
 
                                                     <div class="form-group">
@@ -338,7 +318,8 @@
                                                         <label for="recipient-name" class="control-label">Código de
                                                             Barra:</label>
                                                         <input class="form-control" type="text" name="CODIGO_BARRA"
-                                                            id="CODIGO_BARRA" placeholder="000000000000" maxlength="12" required>
+                                                            id="CODIGO_BARRA" placeholder="000000000000" maxlength="12"
+                                                            required>
                                                     </div>
 
                                                     <div class="form-group">
@@ -363,13 +344,14 @@
 
                                                 </form>
                                             </div>
-                                             <div class="modal-footer">
+                                            <div class="modal-footer">
                                                 <button type="button" class="btn btn-default"
                                                     data-dismiss="modal">Fechar</button>
                                                 <button type="button" class="btn btn-primary" name="cadastrar"
-                                                    value="Cadastrar" type="submit" onclick="cadastro()">Cadastrar</button>
+                                                    value="Cadastrar" type="submit"
+                                                    onclick="cadastro()">Cadastrar</button>
                                             </div>
-                                          </form>
+                                            </form>
                                         </div>
                                     </div>
 
@@ -387,6 +369,7 @@
                                             <th>Descrição do Produto</th>
                                             <th>Código de Barra</th>
                                             <th>Tipo do Produto</th>
+                                            <th>Excluir</th>
                                         </tr>
                                     </thead>
 
@@ -403,6 +386,7 @@
                                             <th>Descrição do Produto</th>
                                             <th>Código de Barra</th>
                                             <th>Tipo do Produto</th>
+                                            <th>Excluir</th>
                                         </tr>
                                     </tfoot>
                                 </table>
@@ -429,53 +413,72 @@
                 console.log(dados);
                 for (var i = 0; dados.length > i; i++) {
                     //Adicionando registros retornados na tabela
-                    $('#bodyTable').append('<tr><td style="text-aling:center;"><img class="image_body_table" src="' + dados[i].IMAGEM + '"></td><td>' + dados[i].NOME + '</td><td>R$' + dados[i].VALOR + '</td><td>' + dados[i].DESCRICAO + '</td><td>' + dados[i].CODIGO_BARRA + '</td><td>' + dados[i].TIPO + '</td></tr>');
+                    $('#bodyTable').append('<tr><td style="text-aling:center;"><img class="image_body_table" src="' + dados[i].IMAGEM + '"></td><td>' + dados[i].NOME + '</td><td>R$' + dados[i].VALOR + '</td><td>' + dados[i].DESCRICAO + '</td><td>' + dados[i].CODIGO_BARRA + '</td><td>' + dados[i].TIPO + '</td><td><a class="btn btn-primary" href="#" role="button" onclick="deleteRow(' + dados[i].ID_PRODUTO, this + ')">Excluir</a></td></tr>');
                 }
             }
         });
 
-        function reload(){
-            
+        function reload() {
+
             $('#bodyTable').css('opacity', '0.5');
 
-            setTimeout(function(){ 
-            
-            $('#bodyTable').empty()
+            setTimeout(function () {
 
-            $.ajax({
-            type: 'get',		//Definimos o método HTTP usado
-            dataType: 'json',	//Definimos o tipo de retorno
-            url: 'http://app-84c469d6-9c06-4181-9a74-5d84696798cf.cleverapps.io/listarTodosProdutos/',//Definindo o arquivo onde serão buscados os dados
-            success: function (dados) {
-                console.log(dados);
-                for (var i = 0; dados.length > i; i++) {
-                    //Adicionando registros retornados na tabela
-                    $('#bodyTable').append('<tr><td style="text-aling:center;"><img class="image_body_table" src="' + dados[i].IMAGEM + '"></td><td>' + dados[i].NOME + '</td><td>R$' + dados[i].VALOR + '</td><td>' + dados[i].DESCRICAO + '</td><td>' + dados[i].CODIGO_BARRA + '</td><td>' + dados[i].TIPO + '</td></tr>');
-                }
-            }
-        });
+                $('#bodyTable').empty()
 
-        $('#bodyTable').css('opacity', '1');
+                $.ajax({
+                    type: 'get',		//Definimos o método HTTP usado
+                    dataType: 'json',	//Definimos o tipo de retorno
+                    url: 'http://app-84c469d6-9c06-4181-9a74-5d84696798cf.cleverapps.io/listarTodosProdutos/',//Definindo o arquivo onde serão buscados os dados
+                    success: function (dados) {
+                        console.log(dados);
+                        for (var i = 0; dados.length > i; i++) {
+                            //Adicionando registros retornados na tabela
+                            $('#bodyTable').append('<tr><td style="text-aling:center;"><img class="image_body_table" src="' + dados[i].IMAGEM + '"></td><td>' + dados[i].NOME + '</td><td>R$' + dados[i].VALOR + '</td><td>' + dados[i].DESCRICAO + '</td><td>' + dados[i].CODIGO_BARRA + '</td><td>' + dados[i].TIPO + '</td><td><a class="btn btn-primary" href="#" role="button" onclick="deleteRow(' + dados[i].ID_PRODUTO, this + ')">Excluir</a></td></tr>');
+                        }
+                    }
+                });
 
-        }, 3000);
+                $('#bodyTable').css('opacity', '1');
+
+            }, 3000);
         };
 
-        function clearModal(){
+        function clearModal() {
 
             $(":input").val("");
 
         };
 
-        function moeda(z){
-          v = z.value;
-          v=v.replace(/\D/g,"") // permite digitar apenas numero
-          v=v.replace(/(\d{1})(\d{14})$/,"$1.$2") // coloca ponto antes dos ultimos digitos
-          v=v.replace(/(\d{1})(\d{11})$/,"$1.$2") // coloca ponto antes dos ultimos 11 digitos
-          v=v.replace(/(\d{1})(\d{8})$/,"$1.$2") // coloca ponto antes dos ultimos 8 digitos
-          v=v.replace(/(\d{1})(\d{5})$/,"$1.$2") // coloca ponto antes dos ultimos 5 digitos
-          v=v.replace(/(\d{1})(\d{1,2})$/,"$1.$2") // coloca virgula antes dos ultimos 2 digitos
-          z.value = v;
+        function moeda(z) {
+            v = z.value;
+            v = v.replace(/\D/g, "") // permite digitar apenas numero
+            v = v.replace(/(\d{1})(\d{14})$/, "$1.$2") // coloca ponto antes dos ultimos digitos
+            v = v.replace(/(\d{1})(\d{11})$/, "$1.$2") // coloca ponto antes dos ultimos 11 digitos
+            v = v.replace(/(\d{1})(\d{8})$/, "$1.$2") // coloca ponto antes dos ultimos 8 digitos
+            v = v.replace(/(\d{1})(\d{5})$/, "$1.$2") // coloca ponto antes dos ultimos 5 digitos
+            v = v.replace(/(\d{1})(\d{1,2})$/, "$1.$2") // coloca virgula antes dos ultimos 2 digitos
+            z.value = v;
         };
+
+
+        function deleteRow(caguei, element) {
+            
+            const ID_PRODUTO = caguei[0];
+
+            fetch('http://app-84c469d6-9c06-4181-9a74-5d84696798cf.cleverapps.io/deletarProduto /', {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    ID_PRODUTO: ID_PRODUTO
+
+                }),
+            }).then(response => response.json()).then(data => alert(data.status)).then(clearModal()).then(reload());
+
+        }
     </script>
 </body>
 
