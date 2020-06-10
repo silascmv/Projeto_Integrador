@@ -50,6 +50,8 @@ public class MainActivityCardapio extends AppCompatActivity {
     //Variaveis para setar o valor total dos produtos no carrinho.
     private TextView textQuantidade;
     private TextView valorTotal;
+    private TextView txtSomar;
+
     private int contadorTexto;
     private int valorTexto;
     GsonBuilder gsonBuilder = new GsonBuilder();
@@ -68,68 +70,38 @@ public class MainActivityCardapio extends AppCompatActivity {
         textQuantidade = findViewById(R.id.quantidade);
         valorTotal = findViewById(R.id.valor);
         FloatingActionButton btnRealizarPedido = (FloatingActionButton) findViewById(R.id.addCarrinho);
-        //
+        txtSomar = findViewById(R.id.txtSomar);
+
         textQuantidade.setText("Quantidade: 0" + "  |");
         valorTotal.setText("Valor Total - R$00,00");
+
+        buildRecyclerView();
+
+        setButtons();
+
+
+        btnRealizarPedido.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.i(TAG, getClasseName() + "CLICOU FLOATING BUTTON ");
+                String JsonObject = gson.toJson(itensCarrinho);
+                Log.i(TAG, getClasseName() + "JSON CONVERTIODO" + JsonObject);
+                //confirmarPedido(JsonObject, (ArrayList<ItemPedido>) itensCarrinho);
+                confirmarPedido(JsonObject, (ArrayList<ItemPedido>) itensCarrinho);
+
+            }
+        });
+
 
         //VARIAVEL PRA SETAR VALOR NO CAMPO DE TEXTO NO USUÁRIO LOGADO.
         UsuarioLogado usuarioLogado = getIntent().getExtras().getParcelable("usuarioLogado");
         //      final TextView txtUsuarioLogado = findViewById(R.id.usuarioLogado);
 //        txtUsuarioLogado.setText(usuarioLogado.getNomeUsuarioLogado());
 
-        //VARIAVEIS RECYCLEVIEW
-        cardapio_recycleview = (RecyclerView) findViewById(R.id.cardapioRecyclerview);
-        cardapio_recycleview.setLayoutManager(new LinearLayoutManager(this));
 
-        try {
-            listarCardapioCompleto = new HttpServiceListarCardapio().execute().get();
-            cardapioAdapter = new CardapioAdapter(MainActivityCardapio.this, (ArrayList<Cardapio>) listarCardapioCompleto);
-            cardapio_recycleview.setAdapter(cardapioAdapter);
-            Log.i(TAG, getClasseName() + "JSON CONVERTION DO OBJETO DENTRO DA CLASSE x " + listarCardapioCompleto.toArray());
+    }
 
-            cardapio_recycleview.addOnItemTouchListener(
-                    new RecyclerItemClickListener(
-                            this,
-                            cardapio_recycleview,
-                            new RecyclerItemClickListener.OnItemClickListener() {
-                                @Override
-                                public void onItemClick(View view, int position) {
-                                    Log.i(TAG, getClasseName() + "clicou ");
-                                    confirmarQuantidade(position);
-                                }
-
-                                @Override
-                                public void onLongItemClick(View view, int position) {
-
-                                }
-
-                                @Override
-                                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                                }
-                            }
-                    )
-            );
-
-            btnRealizarPedido.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Log.i(TAG, getClasseName() + "CLICOU FLOATING BUTTON ");
-                    String JsonObject = gson.toJson(itensCarrinho);
-                    Log.i(TAG, getClasseName() + "JSON CONVERTIODO" + JsonObject);
-                    //confirmarPedido(JsonObject, (ArrayList<ItemPedido>) itensCarrinho);
-                    confirmarPedido(JsonObject, (ArrayList<ItemPedido>) itensCarrinho);
-
-                }
-            });
-
-
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
+    private void setButtons() {
     }
 
     private void confirmarQuantidade(final int posicao) {
@@ -326,4 +298,53 @@ public class MainActivityCardapio extends AppCompatActivity {
         String s = getClass().getName();
         return s.substring(s.lastIndexOf("."));
     }
+
+    public void buildRecyclerView() {
+        //VARIAVEIS RECYCLEVIEW
+        cardapio_recycleview = (RecyclerView) findViewById(R.id.cardapioRecyclerview);
+        cardapio_recycleview.setLayoutManager(new LinearLayoutManager(this));
+
+        try {
+            listarCardapioCompleto = new HttpServiceListarCardapio().execute().get();
+            cardapioAdapter = new CardapioAdapter(MainActivityCardapio.this, (ArrayList<Cardapio>) listarCardapioCompleto);
+            cardapio_recycleview.setAdapter(cardapioAdapter);
+            Log.i(TAG, getClasseName() + "JSON CONVERTION DO OBJETO DENTRO DA CLASSE x " + listarCardapioCompleto.toArray());
+
+            /*cardapio_recycleview.addOnItemTouchListener(
+                    new RecyclerItemClickListener(
+                            this,
+                            cardapio_recycleview,
+                            new RecyclerItemClickListener.OnItemClickListener() {
+                                @Override
+                                public void onItemClick(View view, int position) {
+                                    Log.i(TAG, getClasseName() + "clicou ");
+                                    //confirmarQuantidade(position);
+
+
+                                }
+
+                                @Override
+                                public void onLongItemClick(View view, int position) {
+
+                                }
+
+                                @Override
+                                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                                }
+                            }
+                    )
+            );
+
+            */
+
+
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+    }
+
 }
