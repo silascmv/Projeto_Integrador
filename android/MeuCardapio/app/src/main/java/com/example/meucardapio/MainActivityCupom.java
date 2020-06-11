@@ -2,6 +2,8 @@ package com.example.meucardapio;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.TextView;
 
@@ -14,8 +16,24 @@ public class MainActivityCupom extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_cupom);
         //VARIAVEL PRA SETAR VALOR NO CAMPO DE TEXTO NO USUÁRIO LOGADO.
-        UsuarioLogado usuarioLogado = getIntent().getExtras().getParcelable("usuarioLogado");
-        final TextView txtUsuarioLogado = findViewById(R.id.usuarioLogado);
-        txtUsuarioLogado.setText(usuarioLogado.getNomeUsuarioLogado());
+        //UsuarioLogado usuarioLogado = getIntent().getExtras().getParcelable("usuarioLogado");
+        //final TextView txtUsuarioLogado = findViewById(R.id.usuarioLogado);
+        //txtUsuarioLogado.setText(usuarioLogado.getNomeUsuarioLogado());
+
+        deslogarUsuario();
+    }
+
+
+
+
+    private void deslogarUsuario(){
+
+
+
+        SharedPreferences sharedPreferences = getSharedPreferences("preferencias", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean("sn_ativo", false );
+        editor.commit();
+
     }
 }

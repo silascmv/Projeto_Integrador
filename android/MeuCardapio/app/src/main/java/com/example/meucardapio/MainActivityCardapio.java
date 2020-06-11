@@ -6,7 +6,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -80,13 +82,15 @@ public class MainActivityCardapio extends AppCompatActivity {
         setButtons();
 
 
+
+
+
         btnRealizarPedido.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.i(TAG, getClasseName() + "CLICOU FLOATING BUTTON ");
                 String JsonObject = gson.toJson(itensCarrinho);
-                Log.i(TAG, getClasseName() + "JSON CONVERTIODO" + JsonObject);
-                //confirmarPedido(JsonObject, (ArrayList<ItemPedido>) itensCarrinho);
+                Log.i(TAG, getClasseName() + "JSON ITENS DO CARRINHO TESTE RETORNO ----->" + cardapioAdapter.retornaCarrinho());
                 confirmarPedido(JsonObject, (ArrayList<ItemPedido>) itensCarrinho);
 
             }
@@ -310,33 +314,6 @@ public class MainActivityCardapio extends AppCompatActivity {
             cardapio_recycleview.setAdapter(cardapioAdapter);
             Log.i(TAG, getClasseName() + "JSON CONVERTION DO OBJETO DENTRO DA CLASSE x " + listarCardapioCompleto.toArray());
 
-            /*cardapio_recycleview.addOnItemTouchListener(
-                    new RecyclerItemClickListener(
-                            this,
-                            cardapio_recycleview,
-                            new RecyclerItemClickListener.OnItemClickListener() {
-                                @Override
-                                public void onItemClick(View view, int position) {
-                                    Log.i(TAG, getClasseName() + "clicou ");
-                                    //confirmarQuantidade(position);
-
-
-                                }
-
-                                @Override
-                                public void onLongItemClick(View view, int position) {
-
-                                }
-
-                                @Override
-                                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                                }
-                            }
-                    )
-            );
-
-            */
 
 
         } catch (ExecutionException e) {

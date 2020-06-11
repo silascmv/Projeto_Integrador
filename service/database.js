@@ -4,7 +4,7 @@ var util = require('util');
 
 
 var pool = mysql.createPool({
-    connectionLimit: 10,
+    connectionLimit: 100,
     host: '130.211.207.111',
     user: 'root',
     password: '2wsxZAQ!@WSX',

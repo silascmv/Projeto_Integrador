@@ -22,9 +22,9 @@ public class MainActivityPrincipal extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_principal);
         //VARIAVEL PRA SETAR VALOR NO CAMPO DE TEXTO NO USUÁRIO LOGADO.
-        usuarioLogado = getIntent().getExtras().getParcelable("usuarioLogado");
-        final TextView txtUsuarioLogado = findViewById(R.id.usuarioLogado);
-        txtUsuarioLogado.setText(usuarioLogado.getNomeUsuarioLogado());
+//        usuarioLogado = getIntent().getExtras().getParcelable("usuarioLogado");
+      //  final TextView txtUsuarioLogado = findViewById(R.id.usuarioLogado);
+       // txtUsuarioLogado.setText(usuarioLogado.getNomeUsuarioLogado());
         //VARIAVEIS PARA TRABALHAR COM OS ICONES DA TELA.
         final LinearLayout abrirComanda = findViewById(R.id.abrirComanda);
         final LinearLayout abrirCardapio = findViewById(R.id.abrirCardapio);
@@ -34,7 +34,7 @@ public class MainActivityPrincipal extends AppCompatActivity {
         final LinearLayout abrirLocalizar = findViewById(R.id.abrirLocalizar);
 
 
-        Log.i(TAG, getClasseName() + "ID : ----->" + usuarioLogado.getIdUsuarioLogado());
+      //  Log.i(TAG, getClasseName() + "ID : ----->" + usuarioLogado.getIdUsuarioLogado());
 
 
         abrirComanda.setOnClickListener(new View.OnClickListener() {
@@ -98,7 +98,7 @@ public class MainActivityPrincipal extends AppCompatActivity {
     @Override
     public void onResume() {
         super.onResume();
-        Log.i(TAG, getClasseName() + "MESA : ----->" + usuarioLogado.getMesaUsuarioLogado());
+        //Log.i(TAG, getClasseName() + "MESA : ----->" + usuarioLogado.getMesaUsuarioLogado());
 
 
 
