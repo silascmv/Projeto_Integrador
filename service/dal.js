@@ -427,13 +427,15 @@ class DataAcessLayer {
                             //Se a query de inserção não falhar irá realizar o commit da operação
                             if (!error) {
                                 pool.commit(function (err) {
+                                
 
                                     //Finalização do cadastro.
                                     if (!err) {
                                         var resposta = {
                                             'status': 'Mesa Aberta com Sucesso',
                                             'code_status': '01',
-                                            'mesa_cliente': id_mesa
+                                            'mesa_cliente': id_mesa,
+                                            'id_comanda': results.insertId
 
                                         }                                        
                                         

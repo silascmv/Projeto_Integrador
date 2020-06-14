@@ -79,19 +79,15 @@ public class MainActivityCardapio extends AppCompatActivity {
 
         buildRecyclerView();
 
-        setButtons();
-
-
-
 
 
         btnRealizarPedido.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.i(TAG, getClasseName() + "CLICOU FLOATING BUTTON ");
-                String JsonObject = gson.toJson(itensCarrinho);
                 Log.i(TAG, getClasseName() + "JSON ITENS DO CARRINHO TESTE RETORNO ----->" + cardapioAdapter.retornaCarrinho());
-                confirmarPedido(JsonObject, (ArrayList<ItemPedido>) itensCarrinho);
+                String JsonObject = gson.toJson(cardapioAdapter.retornaCarrinho());
+                confirmarPedido(JsonObject, (ArrayList<ItemPedido>) cardapioAdapter.retornaCarrinho());
 
             }
         });
@@ -105,101 +101,6 @@ public class MainActivityCardapio extends AppCompatActivity {
 
     }
 
-    private void setButtons() {
-    }
-
-    private void confirmarQuantidade(final int posicao) {
-        //Caixa de Dialogo para pegar quantidade de produtos para adicionar ao carrinho.
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Quantidade");
-        builder.setMessage("Digite a quantidade de produtos para adicionar ao carrinho:");
-        //Variavel pra armazenar a quantidade de produtos adicionado ao carrinho,definindo valores padrões e definindo visualização
-        final EditText editQuantidade = new EditText(this);
-        editQuantidade.setText("1");
-        builder.setView(editQuantidade);
-
-        builder.setPositiveButton("Confirmar", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                //Variavel pra armazenar o valor digitado na caixa de dialogo
-                String quantidade = editQuantidade.getText().toString().trim();
-                //Objetos pra pegar os valores clicado na tela e adicionar a lista de pedidos
-                Cardapio produtoSelecionado = listarCardapioCompleto.get(posicao);
-                ItemPedido itemPedido = new ItemPedido();
-                itemPedido.setIdProduto(produtoSelecionado.getId_produto());
-                itemPedido.setNomeProduto(produtoSelecionado.getNome());
-                itemPedido.setPreco(produtoSelecionado.getValor());
-                itemPedido.setQuantidade(Integer.parseInt(quantidade));
-
-                Log.i(TAG, getClasseName() + "TAMANHO DA LISTA" + itensCarrinho.size());
-
-                if (itensCarrinho.isEmpty() == true) {
-                    Log.i(TAG, getClasseName() + "PRIMEIRO IF");
-                    itensCarrinho.add(itemPedido);
-                    valorTexto += itemPedido.getQuantidade() * itemPedido.getPreco();
-                    contadorTexto += itemPedido.getQuantidade();
-                    textQuantidade.setText("Quantidade: " + String.valueOf(contadorTexto) + "  |");
-                    valorTotal.setText("Valor Total - R$" + String.valueOf(valorTexto));
-                } else {
-                    boolean existeProduto = false;
-                    for (int i = 0; i < itensCarrinho.size(); ++i) {
-
-
-                        Log.i(TAG, getClasseName() + "VALOR DO PEDIDO" + i);
-                        Log.i(TAG, getClasseName() + "VALOR DO PEDIDO" + itemPedido.getIdProduto());
-                        Log.i(TAG, getClasseName() + "VALOR DO carinnho" + itensCarrinho.get(i).getIdProduto());
-                        if (itensCarrinho.get(i).equals(itemPedido)) {
-                            Log.i(TAG, getClasseName() + "JÁ EXISTE ESSE PROUDO NA LISTA");
-                            itensCarrinho.get(i).setQuantidade(itensCarrinho.get(i).getQuantidade() + itemPedido.getQuantidade());
-                            Log.i(TAG, getClasseName() + "TOTAL DO PRODUTO" + itensCarrinho.get(i).getQuantidade());
-                            valorTexto += itemPedido.getQuantidade() * itemPedido.getPreco();
-                            contadorTexto += itemPedido.getQuantidade();
-                            //Definir valores na tela
-                            textQuantidade.setText("Quantidade: " + String.valueOf(contadorTexto) + "  |");
-                            valorTotal.setText("Valor Total - R$" + String.valueOf(valorTexto));
-                            existeProduto = true;
-                            break;
-                        }
-                    }
-
-                    if (existeProduto != true) {
-
-                        Log.i(TAG, getClasseName() + "SE-SENAO");
-                        itensCarrinho.add(itemPedido);
-                        valorTexto += itemPedido.getQuantidade() * itemPedido.getPreco();
-                        contadorTexto += itemPedido.getQuantidade();
-                        textQuantidade.setText("Quantidade: " + String.valueOf(contadorTexto) + "  |");
-                        valorTotal.setText("Valor Total - R$" + String.valueOf(valorTexto));
-                        existeProduto = false;
-
-                    }
-
-                }
-
-            }
-        }).setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-
-            }
-        });
-
-        AlertDialog dialog = builder.create();
-
-
-        dialog.setOnShowListener( new DialogInterface.OnShowListener() {
-            @SuppressLint("ResourceAsColor")
-            @Override
-            public void onShow(DialogInterface arg0) {
-                dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(R.color.colorPrimaryDark);
-                dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(R.color.colorPrimaryDark);
-                 }
-        });
-
-
-        dialog.show();
-
-    }
 
     private void confirmarPedido(String json, ArrayList<ItemPedido> itensCarrinho) {
         AlertDialog.Builder caixaDeDialogo = new AlertDialog.Builder(MainActivityCardapio.this);
@@ -212,17 +113,15 @@ public class MainActivityCardapio extends AppCompatActivity {
             listaPedidos[i] = itensCarrinho.get(i).getNomeProduto() + "|Quantidade: " + itensCarrinho.get(i).getQuantidade();
         }
 
-        if(listaPedidos.length == 0){
+        if (listaPedidos.length == 0) {
             String[] mensagem = {"Adicione produtos ao carrinho para finalizar seu pedido."};
             listaPedidos = new String[]{mensagem[0]};
         }
 
-    caixaDeDialogo.setItems(listaPedidos, new DialogInterface.OnClickListener() {
+        caixaDeDialogo.setItems(listaPedidos, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 Log.i(TAG, getClasseName() + "TOTAL DO PRODUTO" + itensCarrinho.get(which).getNomeProduto());
-
-
 
 
             }
@@ -231,18 +130,18 @@ public class MainActivityCardapio extends AppCompatActivity {
         });
 
 
-
-
-
-       caixaDeDialogo.setPositiveButton("Confirmar", new DialogInterface.OnClickListener() {
+        caixaDeDialogo.setPositiveButton("Confirmar", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
                 textQuantidade.setText("Quantidade: 0 |  ");
                 valorTotal.setText("Valor Total - R$00,00");
                 itensCarrinho.clear();
-                Toasty.custom(MainActivityCardapio.this,"Pedido realizado com sucesso!",null,Toast.LENGTH_SHORT,false).show();
+                cardapioAdapter.limparCarrinho();
+                buildRecyclerView();
+                Log.i(TAG,"LISTA DE OBJETOS NO CARRINHO" + json ) ;
 
+                Toasty.custom(MainActivityCardapio.this, "Pedido realizado com sucesso!", null, Toast.LENGTH_SHORT, false).show();
 
 
             }
@@ -255,7 +154,7 @@ public class MainActivityCardapio extends AppCompatActivity {
 
         AlertDialog dialog = caixaDeDialogo.create();
 
-        dialog.setOnShowListener( new DialogInterface.OnShowListener() {
+        dialog.setOnShowListener(new DialogInterface.OnShowListener() {
             @SuppressLint("ResourceAsColor")
             @Override
             public void onShow(DialogInterface arg0) {
@@ -265,37 +164,11 @@ public class MainActivityCardapio extends AppCompatActivity {
         });
 
 
-        //lp.height = WindowManager.LayoutParams.MATCH_PARENT;
         dialog.show();
-
-
-      //  dialog.getWindow().setAttributes(lp);
-        //dialog.show();
-       // dialog.getWindow().setLayout(700,700);
 
 
     }
 
-
-    public void abrirCarrinho(View v){
-        AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
-        View rowList = getLayoutInflater().inflate(R.layout.row, null);
-        listView = (ListView) findViewById(R.id.listView);
-        String[] listaPedidos = new String[itensCarrinho.size()];
-
-        for (int i = 0; i < itensCarrinho.size(); i++) {
-            listaPedidos[i] = itensCarrinho.get(i).getNomeProduto() + "|Quantidade: " + itensCarrinho.get(i).getQuantidade();
-        }
-
-        ArrayAdapter<String> itemsAdapter =
-                new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, listaPedidos);
-
-        itemsAdapter.notifyDataSetChanged();
-        listView.setAdapter( itemsAdapter);
-        alertDialog.setView(rowList);
-        AlertDialog dialog = alertDialog.create();
-        dialog.show();
-    }
 
     private String getClasseName() {
         //retorna o nome da classe sem o pacote
@@ -313,7 +186,6 @@ public class MainActivityCardapio extends AppCompatActivity {
             cardapioAdapter = new CardapioAdapter(MainActivityCardapio.this, (ArrayList<Cardapio>) listarCardapioCompleto);
             cardapio_recycleview.setAdapter(cardapioAdapter);
             Log.i(TAG, getClasseName() + "JSON CONVERTION DO OBJETO DENTRO DA CLASSE x " + listarCardapioCompleto.toArray());
-
 
 
         } catch (ExecutionException e) {

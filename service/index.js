@@ -270,42 +270,42 @@ app.get('/realizarLogin/:login&:password', function (req, res) {
 
 });
 
-app.post('/realizarLoginFuncionario/', (req,res) => {
+app.post('/realizarLoginFuncionario/', (req, res) => {
 
-        let cd_login = req.param("CD_LOGIN")
-        let cd_senha = req.param("CD_SENHA")
+    let cd_login = req.param("CD_LOGIN")
+    let cd_senha = req.param("CD_SENHA")
 
-        let query = 'SELECT FUNCIONARIO.ID_FUNCIONARIO,LOGIN.CD_LOGIN,LOGIN.CD_SENHA,LOGIN.TP_LOGIN FROM FUNCIONARIO JOIN LOGIN ON  FUNCIONARIO.ID_LOGIN = LOGIN.ID_LOGIN WHERE CD_LOGIN = ' + "'" + cd_login + "'" + ' ' + 'AND CD_SENHA=' + "'"  + cd_senha + "'"
-        console.log(query)
-        pool.getConnection(function(err,pool){
+    let query = 'SELECT FUNCIONARIO.ID_FUNCIONARIO,LOGIN.CD_LOGIN,LOGIN.CD_SENHA,LOGIN.TP_LOGIN FROM FUNCIONARIO JOIN LOGIN ON  FUNCIONARIO.ID_LOGIN = LOGIN.ID_LOGIN WHERE CD_LOGIN = ' + "'" + cd_login + "'" + ' ' + 'AND CD_SENHA=' + "'" + cd_senha + "'"
+    console.log(query)
+    pool.getConnection(function (err, pool) {
 
-            pool.query(query, function(error,results,fields){
+        pool.query(query, function (error, results, fields) {
 
-                if(results.length == 0){
+            if (results.length == 0) {
 
-                    res.json({
-                        status: "Usuario ou Senha Invalido",
-                        code_status: 00
-                    });
+                res.json({
+                    status: "Usuario ou Senha Invalido",
+                    code_status: 00
+                });
 
 
-                }else{
+            } else {
 
-                    res.json({
-                        status: "Login Realizado com Sucesso",
-                        code_status: 01,
-                        usuario: results[0].ID_FUNCIONARIO,
-                        tp_login: results[0].TP_LOGIN
-                    });
+                res.json({
+                    status: "Login Realizado com Sucesso",
+                    code_status: 01,
+                    usuario: results[0].ID_FUNCIONARIO,
+                    tp_login: results[0].TP_LOGIN
+                });
 
-                }
+            }
 
-            
-            })
 
         })
 
-    
+    })
+
+
 })
 
 
@@ -414,7 +414,7 @@ app.get('/listarTodosFuncionarios/', (req, res) => {
                         'TELEFONE': results[i].TELEFONE,
                         'SETOR': results[i].SETOR,
                         'SN_ATIVO': results[i].SN_ATIVO,
-                        
+
                     };
 
                     objeto_array.push(objeto_retorno);
@@ -434,24 +434,24 @@ app.post('/desativarFuncionario/', (req, res) => {
 
 
     pool.getConnection(function (err, pool) {
-       
+
         try {
-            
+
             let id_funcionario = req.param("ID_FUNCIONARIO")
 
             let query = 'UPDATE LOGIN JOIN FUNCIONARIO  ON LOGIN.ID_LOGIN = FUNCIONARIO.ID_LOGIN SET LOGIN.SN_ATIVO = 0 WHERE FUNCIONARIO.ID_FUNCIONARIO =' + id_funcionario
-            
+
             console.log(query)
 
-            pool.query(query,function(error,results,fields){
+            pool.query(query, function (error, results, fields) {
 
-                if(!error){
+                if (!error) {
                     res.json({
                         status: "Funcionário desativado com sucesso",
                         code_status: 01
 
                     })
-                }else {
+                } else {
 
                     console.log(error)
                     res.json({
@@ -459,8 +459,8 @@ app.post('/desativarFuncionario/', (req, res) => {
                         code_status: 00
 
                     })
-                
-                
+
+
                 }
 
 
@@ -505,11 +505,11 @@ app.post('/abrirMesa/', (req, res) => {
 
                         res.send(resultado).end();
 
-                    } else if (resultado.code_status === '03'){
+                    } else if (resultado.code_status === '03') {
 
                         res.send(resultado).end();
 
-                    }else if(resultado.code_status === '02'){
+                    } else if (resultado.code_status === '02') {
 
                         res.send(resultado).end();
 
@@ -620,6 +620,59 @@ app.post('/apagarProduto/', (req, res) => {
     })
 
 
+
+
+
+
+})
+
+app.post('/realizarPedidoAndroid/', (req, res) => {
+
+    var listaObjetos = new Array();
+    var listaProdutosComanda = new Array();
+    listaObjetos = req.body;  
+    
+
+    for (var i = 0; i < listaObjetos.length; i++) {
+
+        for (var j = 0; j < listaObjetos[i].quantidade; j++) {
+
+            var objeto_retorno = {
+                'ID_COMANDA_FK': 22,
+                'ID_PRODUTO_FK': listaObjetos[i].idProduto
+               
+            }            
+            listaProdutosComanda.push(objeto_retorno);
+            
+        }
+
+    }
+
+
+    pool.getConnection((err, pool) => { 
+        
+        var query ='INSERT INTO COMANDA_PRODUTO (ID_COMANDA_FK,ID_PRODUTO_FK) VALUES ?'; 
+
+        pool.query(query, [listaProdutosComanda.map(item => [item.ID_COMANDA_FK, item.ID_PRODUTO_FK])], (error, results, fields) => { 
+
+
+            console.log(results);
+
+            console.log(error);
+
+
+        })
+
+
+      
+
+
+
+
+    })
+
+
+    res.send('OK')
 
 
 

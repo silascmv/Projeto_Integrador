@@ -6,6 +6,15 @@ public class CodeStatus {
         public int code_status;
         public int usuario;
         public int mesa_cliente;
+        public int id_comanda;
+
+    public int getId_comanda() {
+        return id_comanda;
+    }
+
+    public void setId_comanda(int id_comanda) {
+        this.id_comanda = id_comanda;
+    }
 
     public int getUsuario() {
         return usuario;
@@ -51,7 +60,10 @@ public class CodeStatus {
     public String toString() {
         return "CodeStatus{" +
                 "status='" + status + '\'' +
-                ", code_status='" + code_status + '\'' +
+                ", code_status=" + code_status +
+                ", usuario=" + usuario +
+                ", mesa_cliente=" + mesa_cliente +
+                ", id_comanda=" + id_comanda +
                 '}';
     }
 }
