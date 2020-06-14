@@ -628,49 +628,20 @@ app.post('/apagarProduto/', (req, res) => {
 
 app.post('/realizarPedidoAndroid/', (req, res) => {
 
-    var listaObjetos = new Array();
-    var listaProdutosComanda = new Array();
-    listaObjetos = req.body;  
-    
 
-    for (var i = 0; i < listaObjetos.length; i++) {
+    pool.getConnection(function (err, pool) {
+        
+        const objeto_dal = new DataAcessLayer();
 
-        for (var j = 0; j < listaObjetos[i].quantidade; j++) {
-
-            var objeto_retorno = {
-                'ID_COMANDA_FK': 22,
-                'ID_PRODUTO_FK': listaObjetos[i].idProduto
-               
-            }            
-            listaProdutosComanda.push(objeto_retorno);
-            
+        async function realizarPedido() {
+            await objeto_dal.realizadrPedidoAndroid(req, pool).then(resultado => {
+                res.send(resultado);
+            });
         }
 
-    }
+        realizarPedido();
 
-
-    pool.getConnection((err, pool) => { 
-        
-        var query ='INSERT INTO COMANDA_PRODUTO (ID_COMANDA_FK,ID_PRODUTO_FK) VALUES ?'; 
-
-        pool.query(query, [listaProdutosComanda.map(item => [item.ID_COMANDA_FK, item.ID_PRODUTO_FK])], (error, results, fields) => { 
-
-
-            console.log(results);
-
-            console.log(error);
-
-
-        })
-
-
-      
-
-
-
-
-    })
-
+    });
 
     res.send('OK')
 

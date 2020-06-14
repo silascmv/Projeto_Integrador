@@ -80,7 +80,6 @@ public class MainActivityCardapio extends AppCompatActivity {
         buildRecyclerView();
 
 
-
         btnRealizarPedido.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -139,7 +138,9 @@ public class MainActivityCardapio extends AppCompatActivity {
                 itensCarrinho.clear();
                 cardapioAdapter.limparCarrinho();
                 buildRecyclerView();
-                Log.i(TAG,"LISTA DE OBJETOS NO CARRINHO" + json ) ;
+                Log.i(TAG, "LISTA DE OBJETOS NO CARRINHO" + json);
+                Log.i(TAG, "COMANDA USUARIO" + getComandaUsuario());
+
 
                 Toasty.custom(MainActivityCardapio.this, "Pedido realizado com sucesso!", null, Toast.LENGTH_SHORT, false).show();
 
@@ -193,6 +194,14 @@ public class MainActivityCardapio extends AppCompatActivity {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+
+    }
+
+    public int getComandaUsuario() {
+        SharedPreferences sharedPreferences = getSharedPreferences("preferencias", Context.MODE_PRIVATE);
+        int comandaUsuario = sharedPreferences.getInt("idComandaUsuario", 0);
+        return comandaUsuario;
+
 
     }
 
