@@ -54,7 +54,7 @@ public interface Api {
     );
  */
 
-    @FormUrlEncoded
+
     @POST("realizarPedidoAndroid")
     Call<CodeStatus> realizarPedido(@Body List<ItemPedido> itemPedido);
 

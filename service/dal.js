@@ -569,6 +569,11 @@ class DataAcessLayer {
         listaObjetos = req.body;
 
 
+
+
+        console.log('CORPO DA REQUISIÇÃO')
+        console.log(req.body);
+
         for (var i = 0; i < listaObjetos.length; i++) {
 
             for (var j = 0; j < listaObjetos[i].quantidade; j++) {
@@ -596,6 +601,8 @@ class DataAcessLayer {
                     'code_status': '00'         
                     
                 }
+
+                console.log(error);
 
                 resolve(resposta);
 
