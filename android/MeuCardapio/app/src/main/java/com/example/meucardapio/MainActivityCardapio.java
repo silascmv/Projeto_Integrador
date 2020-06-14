@@ -26,8 +26,11 @@ import com.example.meucardapio.adapter.CarrinhoAdapter;
 import com.example.meucardapio.model.Cardapio;
 import com.example.meucardapio.model.ItemPedido;
 import com.example.meucardapio.model.UsuarioLogado;
+import com.example.meucardapio.service.CodeStatus;
+import com.example.meucardapio.service.HtppServiceAddMesa;
 import com.example.meucardapio.service.HttpServiceListarCardapio;
 import com.example.meucardapio.listener.RecyclerItemClickListener;
+import com.example.meucardapio.service.HttpServiceRealizarPedido;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -86,6 +89,7 @@ public class MainActivityCardapio extends AppCompatActivity {
                 Log.i(TAG, getClasseName() + "CLICOU FLOATING BUTTON ");
                 Log.i(TAG, getClasseName() + "JSON ITENS DO CARRINHO TESTE RETORNO ----->" + cardapioAdapter.retornaCarrinho());
                 String JsonObject = gson.toJson(cardapioAdapter.retornaCarrinho());
+                cardapioAdapter.definirIdComandaItensCarrinho(getIdComandaCliente());
                 confirmarPedido(JsonObject, (ArrayList<ItemPedido>) cardapioAdapter.retornaCarrinho());
 
             }
@@ -141,8 +145,20 @@ public class MainActivityCardapio extends AppCompatActivity {
                 Log.i(TAG, "LISTA DE OBJETOS NO CARRINHO" + json);
                 Log.i(TAG, "COMANDA USUARIO" + getComandaUsuario());
 
+                try {
+                    CodeStatus retornoRealizarPedido = new HttpServiceRealizarPedido(itensCarrinho).execute().get();
 
-                Toasty.custom(MainActivityCardapio.this, "Pedido realizado com sucesso!", null, Toast.LENGTH_SHORT, false).show();
+                    Log.i(TAG,"STATUS :::" + retornoRealizarPedido);
+                    Toasty.custom(MainActivityCardapio.this, "Pedido realizado com sucesso!", null, Toast.LENGTH_SHORT, false).show();
+
+
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+
 
 
             }
@@ -198,10 +214,21 @@ public class MainActivityCardapio extends AppCompatActivity {
     }
 
     public int getComandaUsuario() {
+
         SharedPreferences sharedPreferences = getSharedPreferences("preferencias", Context.MODE_PRIVATE);
         int comandaUsuario = sharedPreferences.getInt("idComandaUsuario", 0);
         return comandaUsuario;
 
+
+    }
+
+
+
+    public int getIdComandaCliente(){
+
+        SharedPreferences sharedPreferences = getSharedPreferences("preferencias", Context.MODE_PRIVATE);
+        int comandaUsuario = sharedPreferences.getInt("idComandaUsuario", 0);
+        return comandaUsuario;
 
     }
 

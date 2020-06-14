@@ -1,6 +1,7 @@
 package com.example.meucardapio.adapter;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -240,8 +241,21 @@ public class CardapioAdapter extends RecyclerView.Adapter<CardapioAdapter.ViewHo
 
         itensCarrinho.clear();
 
+    }
+
+    public void definirIdComandaItensCarrinho(int idComanda){
+
+
+        for ( int i = 0 ; i< itensCarrinho.size();i++){
+
+            itensCarrinho.get(i).setIdComanda(idComanda);
+
+        }
+
+
 
     }
+
 
 
 }

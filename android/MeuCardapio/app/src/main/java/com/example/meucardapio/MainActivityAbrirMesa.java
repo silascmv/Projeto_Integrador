@@ -243,6 +243,9 @@ public class MainActivityAbrirMesa extends AppCompatActivity implements ZXingSca
         editor.putInt("idComandaUsuario", idComandaUsuario);
         editor.apply();
     }
+
+
+
     private void salvarMesaUsuario(int idMesaUsuario){
 
         SharedPreferences sharedPreferences = getSharedPreferences("preferencias", Context.MODE_PRIVATE);

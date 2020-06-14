@@ -630,7 +630,7 @@ app.post('/realizarPedidoAndroid/', (req, res) => {
 
 
     pool.getConnection(function (err, pool) {
-        
+
         const objeto_dal = new DataAcessLayer();
 
         async function realizarPedido() {
@@ -642,8 +642,6 @@ app.post('/realizarPedidoAndroid/', (req, res) => {
         realizarPedido();
 
     });
-
-    res.send('OK')
 
 
 

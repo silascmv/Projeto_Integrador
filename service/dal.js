@@ -574,7 +574,7 @@ class DataAcessLayer {
             for (var j = 0; j < listaObjetos[i].quantidade; j++) {
 
                 var objeto_retorno = {
-                    'ID_COMANDA_FK': 22,
+                    'ID_COMANDA_FK': listaObjetos[i].idComanda,
                     'ID_PRODUTO_FK': listaObjetos[i].idProduto
 
                 }
@@ -608,10 +608,8 @@ class DataAcessLayer {
 
                 resolve(resposta);
 
-
-            }
-
-        
+          }
+       
 
         })
 
