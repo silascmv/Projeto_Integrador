@@ -10,6 +10,7 @@ import retrofit2.http.GET;
 import retrofit2.http.POST;
 
 import com.example.meucardapio.model.Cardapio;
+import com.example.meucardapio.model.Conta;
 import com.example.meucardapio.model.ItemPedido;
 import com.example.meucardapio.service.CodeStatus;
 
@@ -31,6 +32,7 @@ public interface Api {
             @Field("celular") String celular
 
     );
+
     @FormUrlEncoded
     @POST("abrirMesa")
     Call<CodeStatus> addMesa(
@@ -40,6 +42,15 @@ public interface Api {
             @Field("TP_PAGAMENTO") Integer tp_pagamento
 
     );
+
+
+    @FormUrlEncoded
+    @POST("consultarConta")
+    Call<List<Conta>> consultarConta(
+            @Field("ID_COMANDA")int idComanda);
+
+
+
 
 
   /*  @FormUrlEncoded
@@ -57,13 +68,7 @@ public interface Api {
     @POST("realizarPedidoAndroid")
     Call<CodeStatus> realizarPedido(@Body List<ItemPedido> itemPedido);
 
-
-
-
-
     @GET("listarCardapioAndroid")
     Call<List<Cardapio>> getCardapio();
-
-
 
 }

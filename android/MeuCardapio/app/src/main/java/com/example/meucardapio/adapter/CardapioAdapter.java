@@ -218,10 +218,10 @@ public class CardapioAdapter extends RecyclerView.Adapter<CardapioAdapter.ViewHo
         holder.nomeProduto.setText(cardapioModel.get(position).getNome());
         holder.descricaoProduto.setText(cardapioModel.get(position).getDescricao());
         holder.valorProduto.setText(cardapioModel.get(position).getValor().toString());
-        holder.somarProduto.setTextSize(40);
+        holder.somarProduto.setTextSize(20);
         holder.somarProduto.setText("+");
-        holder.subtrairProduto.setTextSize(40);
-        holder.txtContador.setTextSize(30);
+        holder.subtrairProduto.setTextSize(20);
+        holder.txtContador.setTextSize(20);
         Picasso.get().load(cardapioModel.get(position).getImagem()).into(holder.imagemProduto);
 
 
@@ -255,6 +255,7 @@ public class CardapioAdapter extends RecyclerView.Adapter<CardapioAdapter.ViewHo
 
 
     }
+
 
 
 
