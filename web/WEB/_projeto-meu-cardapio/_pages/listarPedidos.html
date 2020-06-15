@@ -266,13 +266,15 @@
                 <div class="row form-v7">
                     <div class="page-content">
                         <div>
-                            <!-- <div style="margin: 2% 0;">
+                            <div style="margin: 2% 0;">
 
-                                <button type="button" class="btn btn-primary" data-toggle="modal" style="    color: #000;
+                                <!-- <button type="button" class="btn btn-primary" data-toggle="modal" style="    color: #000;
                                 background-color: #fff;
                                 border-color: #fff;
                                 box-shadow: 0px 0px 10px 5px #0000002e;" data-target="#exampleModal"
-                                    data-whatever="@mdo">Cadastrar Novo Produto</button>
+                                    data-whatever="@mdo">Cadastrar Novo Produto</button> -->
+
+                                    
 
                                 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
                                     aria-labelledby="exampleModalLabel">
@@ -281,118 +283,71 @@
                                             <div class="modal-header">
                                                 <button type="button" class="close" data-dismiss="modal"
                                                     aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                                <h4 class="modal-title" id="exampleModalLabel">Cadastrar Novo Produto
+                                                <h4 class="modal-title" id="exampleModalLabel">Lista de Produtos
                                                 </h4>
                                             </div>
                                             <div class="modal-body">
-                                                <form action="javascript:void(0);" method="POST" onsubmit="cadastro()"
-                                                    id="myform" enctype="multipart/form-data">
-                                                    <div class="form-group">
-                                                        <label for="recipient-name" class="control-label">Nome do
-                                                            Produto:</label>
-                                                        <input class="form-control" type="text" name="NOME_PRODUTO"
-                                                            id="NOME_PRODUTO" maxlength="30"
-                                                            placeholder="Nome do Produto" required>
-                                                    </div>
+                                                <div
+                                                    style="background-color: white; padding: 1%; border-radius: 1%; box-shadow: 0px 0px 10px 5px #0000002e; margin: 5% 0;">
+                                                    <table id="tabela" class="table table-striped table-bordered"
+                                                        style="width:100%">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Nome do Produto</th>
+                                                                <th>Quantidade</th>
+                                                                <th>Valor Total</th>
+                                                            </tr>
+                                                        </thead>
 
-                                                    <div class="form-group">
-                                                        <label for="recipient-name" class="control-label">Identificação
-                                                            do Fornecedor:</label>
-                                                        <input class="form-control" type="text" name="ID_FORNECEDOR"
-                                                            id="ID_FORNECEDOR" maxlength="80"
-                                                            placeholder="Identificação do Fornecedor" required value="1"
-                                                            disabled>
-                                                    </div>
+                                                        <tbody id="bodyTableProdutos" style="transition: 0.5s;">
 
-                                                    <div class="form-group">
-                                                        <label for="recipient-name" class="control-label">Valor:</label>
-                                                        <input class="form-control" type="text" name="VALOR" id="VALOR"
-                                                            placeholder="R$00.00" required onkeyup="moeda(this);">
-                                                    </div>
 
-                                                    <div class="form-group">
-                                                        <label for="recipient-name"
-                                                            class="control-label">Descrição:</label>
-                                                        <input class="form-control" type="text" name="DESCRICAO"
-                                                            id="DESCRICAO" placeholder="Descrição" required>
-                                                    </div>
+                                                        </tbody>
 
-                                                    <div class="form-group">
-                                                        <label for="recipient-name" class="control-label">Código de
-                                                            Barra:</label>
-                                                        <input class="form-control" type="text" name="CODIGO_BARRA"
-                                                            id="CODIGO_BARRA" placeholder="000000000000" maxlength="12"
-                                                            required>
-                                                    </div>
+                                                        <tfoot>
+                                                            <tr>
+                                                                <th>Nome do Produto</th>
+                                                                <th>Quantidade</th>
+                                                                <th>Valor Total</th>
+                                                            </tr>
+                                                        </tfoot>
+                                                    </table>
+                                                </div>
 
-                                                    <div class="form-group">
-                                                        <label for="recipient-name" class="control-label">Tipo:</label>
-                                                        <input class="form-control" type="text" name="TIPO" id="TIPO"
-                                                            placeholder="Tipo" required>
-                                                    </div>
 
-                                                    <div class="form-group">
-                                                        <label for="recipient-name"
-                                                            class="control-label">Validade:</label>
-                                                        <input class="form-control" type="date" name="VALIDADE"
-                                                            id="VALIDADE" placeholder="DD/MM/YYYY" required>
-                                                    </div>
-
-                                                    <div class="form-group">
-                                                        <label for="recipient-name"
-                                                            class="control-label">Imagem:</label>
-                                                        <input class="form-control" type="file" name="IMG" id="IMG"
-                                                            placeholder="Imagem" required>
-                                                    </div>
-
-                                                </form>
                                             </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-default"
-                                                    data-dismiss="modal">Fechar</button>
-                                                <button type="button" class="btn btn-primary" name="cadastrar"
-                                                    value="Cadastrar" type="submit"
-                                                    onclick="cadastro()">Cadastrar</button>
-                                            </div>
-                                            </form>
                                         </div>
+
                                     </div>
 
-                                </div> -->
+                                </div>
+                                <div
+                                    style="background-color: white; padding: 1%; border-radius: 1%; box-shadow: 0px 0px 10px 5px #0000002e; margin: 5% 0;">
+                                    <table id="tabela" class="table table-striped table-bordered" style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                <th>Nome da Mesa</th>
+                                                <th>Funcionario</th>
+                                                <th>Status da Mesa</th>
+                                                <th>Detalhes</th>
+                                            </tr>
+                                        </thead>
 
-                            </div>
-                            <div
-                                style="background-color: white; padding: 1%; border-radius: 1%; box-shadow: 0px 0px 10px 5px #0000002e; margin: 5% 0;">
-                                <table id="tabela" class="table table-striped table-bordered" style="width:100%">
-                                    <thead>
-                                        <tr>
-                                            <th>Nome da Mesa</th>
-                                            <th>Data de Inicio</th>
-                                            <th>Funcionario</th>
-                                            <th>Status da Mesa</th>
-                                            <th>Nome do Produto</th>
-                                            <th>Quantidade</th>
-                                            <th>Valor Total</th>
-                                        </tr>
-                                    </thead>
-
-                                    <tbody id="bodyTable" style="transition: 0.5s;">
+                                        <tbody id="bodyTable" style="transition: 0.5s;">
 
 
-                                    </tbody>
+                                        </tbody>
 
-                                    <tfoot>
-                                        <tr>
-                                            <th>Nome da Mesa</th>
-                                            <th>Data de Inicio</th>
-                                            <th>Funcionario</th>
-                                            <th>Status da Mesa</th>
-                                            <th>Nome do Produto</th>
-                                            <th>Quantidade</th>
-                                            <th>Valor Total</th>
-                                        </tr>
-                                    </tfoot>
-                                </table>
+                                        <tfoot>
+                                            <tr>
+                                                <th>Nome da Mesa</th>
+                                                <th>Funcionario</th>
+                                                <th>Status da Mesa</th>
+                                                <th>Detalhes</th>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -401,25 +356,39 @@
         </div>
     </div>
     </div>
-    </div>
     <script type="text/javascript">
 
         $(document).ready(function () {
             $('#tabela').DataTable();
         });
 
+        let produtos
+
         $.ajax({
             type: 'get',		//Definimos o método HTTP usado
             dataType: 'json',	//Definimos o tipo de retorno
             url: 'http://app-ee0cc445-4a89-42ba-8fe5-8954b141f3e2.cleverapps.io/consultarContaWeb',//Definindo o arquivo onde serão buscados os dados
             success: function (dados) {
-                console.log(dados);
+                produtos = dados;
+                dados = dados.map(row => {
+
+                    return { id_mesa: row.id_mesa, descricao: row.descricao, funcionarios: row.funcionarios, observacao: row.observacao };
+
+                }).reduce(
+                    (arr, el) => arr.concat(arr.filter(row => row.id_mesa == el.id_mesa).length ? [] : [el]), []
+                );
+
+                //console.log(dados);
+
                 for (var i = 0; dados.length > i; i++) {
                     //Adicionando registros retornados na tabela
-                    $('#bodyTable').append('<tr><td>' + dados[i].descricao + '</td><td>' + dados[i].data_hr_inicio_comanda + '</td><td>' + dados[i].funcionarios + '</td><td>' + dados[i].observacao + '</td><td>' + dados[i].nome_produto + '</td><td>' + dados[i].quantidade + '</td><td>' + dados[i].valor_total + '</td></tr>');
+                    $('#bodyTable').append('<tr><td>' + dados[i].descricao + '</td><td>' + dados[i].funcionarios + '</td><td>' + dados[i].observacao + '</td><td> <button type="button" class="btn btn-primary" data-toggle="modal" style="color: #000; background-color: #fff; border-color: #fff; box-shadow: 0px 0px 10px 5px #0000002e;" data-target="#exampleModal" data-whatever="@mdo" onclick="listarProdutos(' + dados[i].id_mesa + ')">Detalhes da Mesa</button> </td></tr>');
                 }
             }
         });
+
+
+
 
         function reload() {
 
@@ -433,11 +402,22 @@
                     type: 'get',		//Definimos o método HTTP usado
                     dataType: 'json',	//Definimos o tipo de retorno
                     url: 'http://app-ee0cc445-4a89-42ba-8fe5-8954b141f3e2.cleverapps.io/consultarContaWeb',//Definindo o arquivo onde serão buscados os dados
+
                     success: function (dados) {
-                        console.log(dados);
+
+                        dados = dados.map(row => {
+
+                            return { id_mesa: row.id_mesa, descricao: row.descricao, funcionarios: row.funcionarios, observacao: row.observacao };
+
+                        }).reduce(
+                            (arr, el) => arr.concat(arr.filter(row => row.id_mesa == el.id_mesa).length ? [] : [el]), []
+                        );
+
+                        //console.log(dados);
+
                         for (var i = 0; dados.length > i; i++) {
                             //Adicionando registros retornados na tabela
-                            $('#bodyTable').append('<tr><td>' + dados[i].descricao + '</td><td>' + dados[i].data_hr_inicio_comanda + '</td><td>' + dados[i].funcionarios + '</td><td>' + dados[i].observacao + '</td><td>' + dados[i].nome_produto + '</td><td>' + dados[i].quantidade + '</td><td>' + dados[i].valor_total + '</td></tr>');  
+                            $('#bodyTable').append('<tr><td>' + dados[i].descricao + '</td><td>' + dados[i].funcionarios + '</td><td>' + dados[i].observacao + '</td><td><a class="btn btn-primary" href="#" role="button" onclick="listarProdutos(' + dados[i].id_mesa + ')">Detalhes</a></td></tr>');
                         }
                     }
                 });
@@ -466,7 +446,7 @@
 
 
         function deleteRow(caguei) {
-            
+
             let ID_PRODUTO = caguei[0];
 
             fetch('http://app-ee0cc445-4a89-42ba-8fe5-8954b141f3e2.cleverapps.io/deletarProduto/', {
@@ -480,6 +460,17 @@
 
                 }),
             }).then(response => response.json()).then(data => alert(data.status)).then(clearModal()).then(reload());
+
+        }
+
+        function listarProdutos(id_mesa) {
+            $('#bodyTableProdutos').empty()
+            let lista = produtos.filter(row => row.id_mesa == id_mesa)
+
+            for (var i = 0; lista.length > i; i++) {
+
+                $('#bodyTableProdutos').append('<tr><td>' + lista[i].nome_produto + '</td><td>' + lista[i].quantidade + '</td><td>' + lista[i].valor_total + '</td></tr>');
+            }
 
         }
     </script>
