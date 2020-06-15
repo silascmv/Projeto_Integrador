@@ -24,7 +24,7 @@ function cadastro() {
   const address = document.getElementsByName('address')[0].value;
   const telephone = document.getElementsByName('telephone')[0].value;
   const cellphone = document.getElementsByName('cellphone')[0].value;
-  fetch('http://app-84c469d6-9c06-4181-9a74-5d84696798cf.cleverapps.io/addCliente/', {
+  fetch('http://app-ee0cc445-4a89-42ba-8fe5-8954b141f3e2.cleverapps.io/addCliente/', {
     method: 'POST',
     headers: {
       'Accept': 'application/json',
