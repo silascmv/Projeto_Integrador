@@ -1,39 +1,26 @@
 
-package com.example.meucardapio;
+package com.example.meucardapio.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.telephony.PhoneNumberFormattingTextWatcher;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.meucardapio.R;
+import com.example.meucardapio.activities.MainActivity;
 import com.example.meucardapio.model.Cadastro;
-import com.example.meucardapio.model.RetrofitClient;
-import com.example.meucardapio.service.Api;
 import com.example.meucardapio.service.CodeStatus;
 import com.example.meucardapio.service.HttpServiceCadastro;
 import com.google.gson.Gson;
 
-import org.json.JSONObject;
-
-import java.io.IOException;
 import java.util.concurrent.ExecutionException;
-
-import okhttp3.MediaType;
-import okhttp3.RequestBody;
-import okhttp3.ResponseBody;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
 
 public class MainActivityCadastro extends AppCompatActivity {
 

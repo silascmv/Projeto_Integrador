@@ -1,10 +1,8 @@
-package com.example.meucardapio;
+package com.example.meucardapio.activities;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -17,13 +15,10 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.meucardapio.MainActivityCadastro;
-import com.example.meucardapio.MainActivityPrincipal;
 import com.example.meucardapio.R;
 import com.example.meucardapio.model.UsuarioLogado;
 import com.example.meucardapio.service.CodeStatus;
 import com.example.meucardapio.service.HttpServiceLogin;
-import com.example.meucardapio.model.Login;
 
 import java.util.concurrent.ExecutionException;
 

@@ -18,14 +18,14 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:targetApi="n">
-        <activity android:name=".MainActivityAbrirMesa" />
-        <activity android:name=".MainActivityLocalizar" />
-        <activity android:name=".MainActivityAjuda" />
-        <activity android:name=".MainActivityCarteira" />
-        <activity android:name=".MainActivityCupom" />
-        <activity android:name=".MainActivityCardapio" />
-        <activity android:name=".MainActivityPrincipal" />
-        <activity android:name=".MainActivityCadastro" />
+        <activity android:name=".activities.MainActivityAbrirMesa" />
+        <activity android:name=".activities.MainActivityLocalizar" />
+        <activity android:name=".activities.MainActivityAjuda" />
+        <activity android:name=".activities.MainActivityCarteira" />
+        <activity android:name=".activities.MainActivityCupom" />
+        <activity android:name=".activities.MainActivityCardapio" />
+        <activity android:name=".activities.MainActivityPrincipal" />
+        <activity android:name=".activities.MainActivityCadastro" />
         <activity
             android:name="com.journeyapps.barcodescanner.CaptureActivity"
             android:screenOrientation="fullSensor"
@@ -38,7 +38,7 @@
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
 
-        <activity android:name=".MainActivity">
+        <activity android:name=".activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -47,7 +47,7 @@
 
             </activity>
 
-        <activity android:name=".Splash">
+        <activity android:name=".activities.Splash">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

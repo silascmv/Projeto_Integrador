@@ -1,10 +1,11 @@
-package com.example.meucardapio;
+package com.example.meucardapio.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.widget.TextView;
 
+import com.example.meucardapio.R;
 import com.example.meucardapio.model.UsuarioLogado;
 
 public class MainActivityCarteira extends AppCompatActivity {

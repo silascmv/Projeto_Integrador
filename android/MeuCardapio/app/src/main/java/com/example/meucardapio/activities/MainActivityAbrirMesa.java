@@ -1,34 +1,24 @@
-package com.example.meucardapio;
+package com.example.meucardapio.activities;
 
-import androidx.annotation.ColorInt;
 import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 
-import me.dm7.barcodescanner.core.CameraUtils;
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.DrawableWrapper;
-import android.hardware.Camera;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.text.style.BackgroundColorSpan;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.example.meucardapio.R;
 import com.example.meucardapio.model.AddMesa;
 import com.example.meucardapio.model.UsuarioLogado;
 import com.example.meucardapio.service.CodeStatus;
@@ -39,7 +29,6 @@ import java.util.concurrent.ExecutionException;
 
 import static android.app.PendingIntent.getActivity;
 import static com.example.meucardapio.R.*;
-import static com.example.meucardapio.R.drawable.bordaqrcode;
 
 public class MainActivityAbrirMesa extends AppCompatActivity implements ZXingScannerView.ResultHandler {
 

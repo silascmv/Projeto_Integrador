@@ -1,4 +1,4 @@
-package com.example.meucardapio;
+package com.example.meucardapio.activities;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,24 +12,17 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Adapter;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.EditText;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.meucardapio.R;
 import com.example.meucardapio.adapter.CardapioAdapter;
-import com.example.meucardapio.adapter.CarrinhoAdapter;
 import com.example.meucardapio.model.Cardapio;
 import com.example.meucardapio.model.ItemPedido;
-import com.example.meucardapio.model.UsuarioLogado;
 import com.example.meucardapio.service.CodeStatus;
-import com.example.meucardapio.service.HtppServiceAddMesa;
 import com.example.meucardapio.service.HttpServiceListarCardapio;
-import com.example.meucardapio.listener.RecyclerItemClickListener;
 import com.example.meucardapio.service.HttpServiceRealizarPedido;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.Gson;

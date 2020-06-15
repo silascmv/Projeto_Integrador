@@ -1,15 +1,22 @@
-package com.example.meucardapio;
+package com.example.meucardapio.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Parcelable;
-import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
+import com.example.meucardapio.R;
+import com.example.meucardapio.activities.MainActivityAbrirMesa;
+import com.example.meucardapio.activities.MainActivityAjuda;
+import com.example.meucardapio.activities.MainActivityCardapio;
+import com.example.meucardapio.activities.MainActivityCarteira;
+import com.example.meucardapio.activities.MainActivityCupom;
+import com.example.meucardapio.activities.MainActivityLocalizar;
 import com.example.meucardapio.model.UsuarioLogado;
 
 public class MainActivityPrincipal extends AppCompatActivity {
@@ -21,17 +28,26 @@ public class MainActivityPrincipal extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_principal);
-        //VARIAVEL PRA SETAR VALOR NO CAMPO DE TEXTO NO USUÁRIO LOGADO.
-//        usuarioLogado = getIntent().getExtras().getParcelable("usuarioLogado");
-      //  final TextView txtUsuarioLogado = findViewById(R.id.usuarioLogado);
-       // txtUsuarioLogado.setText(usuarioLogado.getNomeUsuarioLogado());
-        //VARIAVEIS PARA TRABALHAR COM OS ICONES DA TELA.
+
         final LinearLayout abrirComanda = findViewById(R.id.abrirComanda);
         final LinearLayout abrirCardapio = findViewById(R.id.abrirCardapio);
         final LinearLayout abrirCupom = findViewById(R.id.abrirCupom);
         final LinearLayout abrirCarteira = findViewById(R.id.abrirCarteira);
         final LinearLayout abrirAjuda = findViewById(R.id.abrirAjuda);
         final LinearLayout abrirLocalizar = findViewById(R.id.abrirLocalizar);
+
+
+
+
+        if(verificaComandaAberta() == true){
+
+            abrirComanda.setVisibility(View.INVISIBLE);
+            abrirCarteira.setVisibility(View.VISIBLE);
+
+        }
+
+
+
 
 
       //  Log.i(TAG, getClasseName() + "ID : ----->" + usuarioLogado.getIdUsuarioLogado());
@@ -109,6 +125,23 @@ public class MainActivityPrincipal extends AppCompatActivity {
         //retorna o nome da classe sem o pacote
         String s = getClass().getName();
         return s.substring(s.lastIndexOf("."));
+    }
+
+    private boolean verificaComandaAberta(){
+
+        SharedPreferences sharedPreferences = getSharedPreferences("preferencias", Context.MODE_PRIVATE);
+        int resultado = sharedPreferences.getInt("idComandaUsuario", 0);
+
+
+        if(resultado == 0){
+
+            return false;
+
+        }else{
+
+            return true;
+        }
+
     }
 
 
