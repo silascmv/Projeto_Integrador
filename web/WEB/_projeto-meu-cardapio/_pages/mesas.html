@@ -272,6 +272,9 @@
                         <a href="./funcionario.html"><i class="glyphicon glyphicon-user"></i> FUNCIONÁRIOS</a>
                     </li>
                     <li>
+                        <a href="./listarPedidos.html"><i class="glyphicon glyphicon-book"></i> LISTAR PEDIDOS</a>
+                    </li>
+                    <li>
                         <a href="./empresa.html"><i class="glyphicon glyphicon-asterisk"></i> PERFÍL DA EMPRESA</a>
                     </li>
                     <li>
@@ -404,7 +407,7 @@
         $.ajax({
             type: 'get',		//Definimos o método HTTP usado
             dataType: 'json',	//Definimos o tipo de retorno
-            url: 'http://app-84c469d6-9c06-4181-9a74-5d84696798cf.cleverapps.io/listarTodasMesas',//Definindo o arquivo onde serão buscados os dados
+            url: 'http://app-ee0cc445-4a89-42ba-8fe5-8954b141f3e2.cleverapps.io/listarTodasMesas',//Definindo o arquivo onde serão buscados os dados
             success: function (dados) {
                 console.log(dados);
                 for (var i = 0; dados.length > i; i++) {
