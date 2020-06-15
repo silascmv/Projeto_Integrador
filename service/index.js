@@ -689,6 +689,54 @@ app.post('/consultarConta/', (req, res) => {
 
 })
 
+app.get('/consultarContaWeb/', (req, res) => {
+    pool.getConnection((err, pool) => {
+
+        var query = 'SELECT MESAS.DESCRICAO,CLIENTE.NOME, COMANDA.DT_HR_INICIO_COMANDA, FUNCIONARIO.NOME AS FUNCIONARIO, COMANDA.OBSERVACAO,PRODUTOS.NOME_PRODUTO,COUNT(PRODUTOS.NOME_PRODUTO) AS QUANTIDADE,SUM(PRODUTOS.VALOR) AS ' + "'VALOR_TOTAL'" + 'FROM COMANDA_PRODUTO JOIN PRODUTOS ON PRODUTOS.ID_PRODUTO = ID_PRODUTO_FK JOIN COMANDA  ON COMANDA.ID_COMANDA = COMANDA_PRODUTO.ID_COMANDA_FK JOIN MESAS ON COMANDA.ID_MESA = MESAS.ID_MESA JOIN CLIENTE ON COMANDA.ID_CLIENTE = CLIENTE.ID_CLIENTE JOIN FUNCIONARIO ON COMANDA.ID_FUNCIONARIO = FUNCIONARIO.ID_FUNCIONARIO GROUP BY MESAS.DESCRICAO,CLIENTE.NOME, COMANDA.DT_HR_INICIO_COMANDA, FUNCIONARIO.NOME, COMANDA.OBSERVACAO,PRODUTOS.NOME_PRODUTO'
+		
+		pool.query(query, (error, results, fields) => {
+            if (error) {
+                console.log(error)
+            }
+
+            if (results.length == 0) {
+                res.json({
+                    status: "Realiza seus pedidos através do Cárdapio",
+                    code_status: 00
+                });
+            } else {
+
+                var objeto_array = new Array();
+                for (var i = 0; i < results.length; i++) {
+
+                    var objeto_retorno = {
+                        'descricao': results[i].DESCRICAO,
+						'nome': results[i].NOME_CLIENTE,
+						'data_hr_inicio_comanda': results[i].DT_HR_INICIO_COMANDA,
+						'funcionarios': results[i].FUNCIONARIO,
+						'observacao': results[i].OBSERVACAO,
+                        'nome_produto': results[i].NOME_PRODUTO,
+                        'quantidade': results[i].QUANTIDADE,
+                        'valor_total': results[i].VALOR_TOTAL,                      
+
+                    }
+
+                    objeto_array.push(objeto_retorno);
+
+                }
+            }
+            res.json(objeto_array);
+
+        })
+
+    })
+
+})
+
+
+
+
+
 app.listen(8080, () => {
     console.log('Service is UP - LocalHost:8080');
 });
