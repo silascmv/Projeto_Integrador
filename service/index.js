@@ -710,7 +710,8 @@ app.get('/consultarContaWeb/', (req, res) => {
                 for (var i = 0; i < results.length; i++) {
 
                     var objeto_retorno = {
-                        'descricao': results[i].DESCRICAO,
+                        'id_mesa': results[i].ID_MESA,
+						'descricao': results[i].DESCRICAO,
 						'nome': results[i].NOME_CLIENTE,
 						'data_hr_inicio_comanda': results[i].DT_HR_INICIO_COMANDA,
 						'funcionarios': results[i].FUNCIONARIO,
