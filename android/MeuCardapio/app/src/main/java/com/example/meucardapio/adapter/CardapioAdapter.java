@@ -1,11 +1,14 @@
 package com.example.meucardapio.adapter;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -16,6 +19,8 @@ import com.example.meucardapio.listener.RecyclerItemClickListener;
 import com.example.meucardapio.model.Cardapio;
 import com.example.meucardapio.model.ItemPedido;
 import com.squareup.picasso.Picasso;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +36,11 @@ public class CardapioAdapter extends RecyclerView.Adapter<CardapioAdapter.ViewHo
     private Context context;
     private RecyclerItemClickListener.OnItemClickListener mListener;
 
+    private int contadorTexto;
+    private double valorTexto;
+
+
+
     public CardapioAdapter(Context context, ArrayList<Cardapio> cardapioModel) {
         this.cardapioModel = cardapioModel;
         this.context = context;
@@ -45,7 +55,10 @@ public class CardapioAdapter extends RecyclerView.Adapter<CardapioAdapter.ViewHo
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         private ImageView imagemProduto;
-        private TextView nomeProduto, descricaoProduto, valorProduto, contadorProduto, somarProduto, subtrairProduto, txtContador;
+        private TextView nomeProduto, descricaoProduto, valorProduto, somarProduto, subtrairProduto, txtContador,textQuantidade,valorTotal;
+        private LinearLayout linearLayoutSomar, linearLayoutSubtrair;
+
+
         //private ImageButton somarProduto,subtrairProduto;
 
         public ViewHolder(@NonNull View itemView, final RecyclerItemClickListener.OnItemClickListener listener) {
@@ -59,6 +72,8 @@ public class CardapioAdapter extends RecyclerView.Adapter<CardapioAdapter.ViewHo
             somarProduto = (TextView) itemView.findViewById((R.id.txtSomar));
             subtrairProduto = (TextView) itemView.findViewById(R.id.txtSubtrair);
             txtContador = (TextView) itemView.findViewById(R.id.txtContador);
+
+
 
 
             itemView.setOnClickListener(new View.OnClickListener() {
@@ -95,6 +110,11 @@ public class CardapioAdapter extends RecyclerView.Adapter<CardapioAdapter.ViewHo
                     if (itensCarrinho.isEmpty() == true) {
 
                         itensCarrinho.add(itemPedido);
+                        valorTexto += itemPedido.getQuantidade() * itemPedido.getPreco();
+                        contadorTexto += itemPedido.getQuantidade();
+
+
+
 
                     } else {
 
@@ -134,7 +154,6 @@ public class CardapioAdapter extends RecyclerView.Adapter<CardapioAdapter.ViewHo
 
 
             });
-
 
             subtrairProduto.setOnClickListener(new View.OnClickListener() {
 
@@ -213,10 +232,30 @@ public class CardapioAdapter extends RecyclerView.Adapter<CardapioAdapter.ViewHo
         return cardapioModel.size();
     }
 
-    public List<ItemPedido> retornaCarrinho(){
+    public List<ItemPedido> retornaCarrinho() {
         return itensCarrinho;
 
     }
+
+    public void limparCarrinho() {
+
+        itensCarrinho.clear();
+
+    }
+
+    public void definirIdComandaItensCarrinho(int idComanda){
+
+
+        for ( int i = 0 ; i< itensCarrinho.size();i++){
+
+            itensCarrinho.get(i).setIdComanda(idComanda);
+
+        }
+
+
+
+    }
+
 
 
 }

@@ -16,7 +16,6 @@ public class HtppServiceAddMesa extends AsyncTask<Void, Void, CodeStatus> {
 
 
     private static final String TAG = "MyActivity";
-    static String retorno_api;
     private AddMesa abrirMesa = new AddMesa();
     Gson gson = new Gson();
     CodeStatus codeStatus;

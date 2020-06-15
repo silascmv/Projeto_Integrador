@@ -270,42 +270,42 @@ app.get('/realizarLogin/:login&:password', function (req, res) {
 
 });
 
-app.post('/realizarLoginFuncionario/', (req,res) => {
+app.post('/realizarLoginFuncionario/', (req, res) => {
 
-        let cd_login = req.param("CD_LOGIN")
-        let cd_senha = req.param("CD_SENHA")
+    let cd_login = req.param("CD_LOGIN")
+    let cd_senha = req.param("CD_SENHA")
 
-        let query = 'SELECT FUNCIONARIO.ID_FUNCIONARIO,LOGIN.CD_LOGIN,LOGIN.CD_SENHA,LOGIN.TP_LOGIN FROM FUNCIONARIO JOIN LOGIN ON  FUNCIONARIO.ID_LOGIN = LOGIN.ID_LOGIN WHERE CD_LOGIN = ' + "'" + cd_login + "'" + ' ' + 'AND CD_SENHA=' + "'"  + cd_senha + "'"
-        console.log(query)
-        pool.getConnection(function(err,pool){
+    let query = 'SELECT FUNCIONARIO.ID_FUNCIONARIO,LOGIN.CD_LOGIN,LOGIN.CD_SENHA,LOGIN.TP_LOGIN FROM FUNCIONARIO JOIN LOGIN ON  FUNCIONARIO.ID_LOGIN = LOGIN.ID_LOGIN WHERE CD_LOGIN = ' + "'" + cd_login + "'" + ' ' + 'AND CD_SENHA=' + "'" + cd_senha + "'"
+    console.log(query)
+    pool.getConnection(function (err, pool) {
 
-            pool.query(query, function(error,results,fields){
+        pool.query(query, function (error, results, fields) {
 
-                if(results.length == 0){
+            if (results.length == 0) {
 
-                    res.json({
-                        status: "Usuario ou Senha Invalido",
-                        code_status: 00
-                    });
+                res.json({
+                    status: "Usuario ou Senha Invalido",
+                    code_status: 00
+                });
 
 
-                }else{
+            } else {
 
-                    res.json({
-                        status: "Login Realizado com Sucesso",
-                        code_status: 01,
-                        usuario: results[0].ID_FUNCIONARIO,
-                        tp_login: results[0].TP_LOGIN
-                    });
+                res.json({
+                    status: "Login Realizado com Sucesso",
+                    code_status: 01,
+                    usuario: results[0].ID_FUNCIONARIO,
+                    tp_login: results[0].TP_LOGIN
+                });
 
-                }
+            }
 
-            
-            })
 
         })
 
-    
+    })
+
+
 })
 
 
@@ -414,7 +414,7 @@ app.get('/listarTodosFuncionarios/', (req, res) => {
                         'TELEFONE': results[i].TELEFONE,
                         'SETOR': results[i].SETOR,
                         'SN_ATIVO': results[i].SN_ATIVO,
-                        
+
                     };
 
                     objeto_array.push(objeto_retorno);
@@ -434,24 +434,24 @@ app.post('/desativarFuncionario/', (req, res) => {
 
 
     pool.getConnection(function (err, pool) {
-       
+
         try {
-            
+
             let id_funcionario = req.param("ID_FUNCIONARIO")
 
             let query = 'UPDATE LOGIN JOIN FUNCIONARIO  ON LOGIN.ID_LOGIN = FUNCIONARIO.ID_LOGIN SET LOGIN.SN_ATIVO = 0 WHERE FUNCIONARIO.ID_FUNCIONARIO =' + id_funcionario
-            
+
             console.log(query)
 
-            pool.query(query,function(error,results,fields){
+            pool.query(query, function (error, results, fields) {
 
-                if(!error){
+                if (!error) {
                     res.json({
                         status: "Funcionário desativado com sucesso",
                         code_status: 01
 
                     })
-                }else {
+                } else {
 
                     console.log(error)
                     res.json({
@@ -459,8 +459,8 @@ app.post('/desativarFuncionario/', (req, res) => {
                         code_status: 00
 
                     })
-                
-                
+
+
                 }
 
 
@@ -505,11 +505,11 @@ app.post('/abrirMesa/', (req, res) => {
 
                         res.send(resultado).end();
 
-                    } else if (resultado.code_status === '03'){
+                    } else if (resultado.code_status === '03') {
 
                         res.send(resultado).end();
 
-                    }else if(resultado.code_status === '02'){
+                    } else if (resultado.code_status === '02') {
 
                         res.send(resultado).end();
 
@@ -625,6 +625,117 @@ app.post('/apagarProduto/', (req, res) => {
 
 
 })
+
+app.post('/realizarPedidoAndroid/', (req, res) => {
+
+
+    pool.getConnection(function (err, pool) {
+
+        const objeto_dal = new DataAcessLayer();
+
+        async function realizarPedido() {
+            await objeto_dal.realizadrPedidoAndroid(req, pool).then(resultado => {
+                res.send(resultado);
+            });
+        }
+
+        realizarPedido();
+
+    });
+
+
+
+
+})
+
+app.post('/consultarConta/', (req, res) => {
+    pool.getConnection((err, pool) => {
+
+        var id_comanda = req.param("ID_COMANDA")
+
+        var query = 'SELECT  MESAS.DESCRICAO,PRODUTOS.NOME_PRODUTO,COUNT(PRODUTOS.NOME_PRODUTO) AS QUANTIDADE,SUM(PRODUTOS.VALOR) AS ' + "'VALOR_TOTAL'" + 'FROM COMANDA_PRODUTO JOIN PRODUTOS ON PRODUTOS.ID_PRODUTO = ID_PRODUTO_FK JOIN COMANDA  ON COMANDA.ID_COMANDA = COMANDA_PRODUTO.ID_COMANDA_FK JOIN MESAS ON COMANDA.ID_MESA = MESAS.ID_MESA JOIN CLIENTE ON COMANDA.ID_CLIENTE = CLIENTE.ID_CLIENTE WHERE COMANDA_PRODUTO.ID_COMANDA_FK = ' + id_comanda + ' GROUP BY PRODUTOS.NOME_PRODUTO'
+        pool.query(query, (error, results, fields) => {
+            if (error) {
+                console.log(error)
+            }
+
+            if (results.length == 0) {
+                res.json({
+                    status: "Realiza seus pedidos através do Cárdapio",
+                    code_status: 00
+                });
+            } else {
+
+                var objeto_array = new Array();
+                for (var i = 0; i < results.length; i++) {
+
+                    var objeto_retorno = {
+                        'descricao': results[i].DESCRICAO,
+                        'nome_produto': results[i].NOME_PRODUTO,
+                        'quantidade': results[i].QUANTIDADE,
+                        'valor_total': results[i].VALOR_TOTAL,                      
+
+                    }
+
+                    objeto_array.push(objeto_retorno);
+
+                }
+            }
+            res.json(objeto_array);
+
+        })
+
+    })
+
+})
+
+app.get('/consultarContaWeb/', (req, res) => {
+    pool.getConnection((err, pool) => {
+
+        var query = 'SELECT MESAS.ID_MESA,MESAS.DESCRICAO,CLIENTE.NOME, COMANDA.DT_HR_INICIO_COMANDA, FUNCIONARIO.NOME AS FUNCIONARIO, COMANDA.OBSERVACAO,PRODUTOS.NOME_PRODUTO,COUNT(PRODUTOS.NOME_PRODUTO) AS QUANTIDADE,SUM(PRODUTOS.VALOR) AS ' + "'VALOR_TOTAL'" + 'FROM COMANDA_PRODUTO JOIN PRODUTOS ON PRODUTOS.ID_PRODUTO = ID_PRODUTO_FK JOIN COMANDA  ON COMANDA.ID_COMANDA = COMANDA_PRODUTO.ID_COMANDA_FK JOIN MESAS ON COMANDA.ID_MESA = MESAS.ID_MESA JOIN CLIENTE ON COMANDA.ID_CLIENTE = CLIENTE.ID_CLIENTE JOIN FUNCIONARIO ON COMANDA.ID_FUNCIONARIO = FUNCIONARIO.ID_FUNCIONARIO GROUP BY MESAS.ID_MESA,MESAS.DESCRICAO,CLIENTE.NOME, COMANDA.DT_HR_INICIO_COMANDA, FUNCIONARIO.NOME, COMANDA.OBSERVACAO,PRODUTOS.NOME_PRODUTO'
+		
+		pool.query(query, (error, results, fields) => {
+            if (error) {
+                console.log(error)
+            }
+
+            if (results.length == 0) {
+                res.json({
+                    status: "Realiza seus pedidos através do Cárdapio",
+                    code_status: 00
+                });
+            } else {
+
+                var objeto_array = new Array();
+                for (var i = 0; i < results.length; i++) {
+
+                    var objeto_retorno = {
+                        'id_mesa': results[i].ID_MESA,
+						'descricao': results[i].DESCRICAO,
+						'nome': results[i].NOME_CLIENTE,
+						'data_hr_inicio_comanda': results[i].DT_HR_INICIO_COMANDA,
+						'funcionarios': results[i].FUNCIONARIO,
+						'observacao': results[i].OBSERVACAO,
+                        'nome_produto': results[i].NOME_PRODUTO,
+                        'quantidade': results[i].QUANTIDADE,
+                        'valor_total': results[i].VALOR_TOTAL,                      
+
+                    }
+
+                    objeto_array.push(objeto_retorno);
+
+                }
+            }
+            res.json(objeto_array);
+
+        })
+
+    })
+
+})
+
+
+
 
 
 app.listen(8080, () => {
