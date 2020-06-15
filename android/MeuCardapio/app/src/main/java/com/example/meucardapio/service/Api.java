@@ -54,7 +54,6 @@ public interface Api {
     );
  */
 
-
     @POST("realizarPedidoAndroid")
     Call<CodeStatus> realizarPedido(@Body List<ItemPedido> itemPedido);
 

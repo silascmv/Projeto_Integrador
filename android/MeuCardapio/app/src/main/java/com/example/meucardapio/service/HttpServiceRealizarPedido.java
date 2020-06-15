@@ -44,7 +44,7 @@ public class HttpServiceRealizarPedido extends AsyncTask<Void, Void, CodeStatus>
 
         } catch (IOException e) {
             e.printStackTrace();
-
+            
         }
 
 

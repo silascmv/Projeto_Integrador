@@ -87,19 +87,13 @@ public class MainActivityCardapio extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Log.i(TAG, getClasseName() + "CLICOU FLOATING BUTTON ");
-                Log.i(TAG, getClasseName() + "JSON ITENS DO CARRINHO TESTE RETORNO ----->" + cardapioAdapter.retornaCarrinho());
                 String JsonObject = gson.toJson(cardapioAdapter.retornaCarrinho());
                 cardapioAdapter.definirIdComandaItensCarrinho(getIdComandaCliente());
+                Log.i(TAG, getClasseName() + "JSON ITENS DO CARRINHO TESTE RETORNO ----->" + cardapioAdapter.retornaCarrinho());
                 confirmarPedido(JsonObject, (ArrayList<ItemPedido>) cardapioAdapter.retornaCarrinho());
 
             }
         });
-
-
-        //VARIAVEL PRA SETAR VALOR NO CAMPO DE TEXTO NO USUÁRIO LOGADO.
-        UsuarioLogado usuarioLogado = getIntent().getExtras().getParcelable("usuarioLogado");
-        //      final TextView txtUsuarioLogado = findViewById(R.id.usuarioLogado);
-//        txtUsuarioLogado.setText(usuarioLogado.getNomeUsuarioLogado());
 
 
     }
@@ -139,8 +133,6 @@ public class MainActivityCardapio extends AppCompatActivity {
 
                 textQuantidade.setText("Quantidade: 0 |  ");
                 valorTotal.setText("Valor Total - R$00,00");
-                itensCarrinho.clear();
-                cardapioAdapter.limparCarrinho();
                 buildRecyclerView();
                 Log.i(TAG, "LISTA DE OBJETOS NO CARRINHO" + json);
                 Log.i(TAG, "COMANDA USUARIO" + getComandaUsuario());
@@ -148,17 +140,24 @@ public class MainActivityCardapio extends AppCompatActivity {
                 try {
                     CodeStatus retornoRealizarPedido = new HttpServiceRealizarPedido(itensCarrinho).execute().get();
 
-                    Log.i(TAG,"STATUS :::" + retornoRealizarPedido);
-                    Toasty.custom(MainActivityCardapio.this, "Pedido realizado com sucesso!", null, Toast.LENGTH_SHORT, false).show();
+                    if (retornoRealizarPedido.getCode_status() == 1) {
 
+                        Toasty.custom(MainActivityCardapio.this, "Pedido realizado com sucesso!", null, Toast.LENGTH_SHORT, false).show();
+                        itensCarrinho.clear();
+                        cardapioAdapter.limparCarrinho();
+
+
+                    } else {
+                        Toasty.custom(MainActivityCardapio.this, "Não foi possivel realizar pedido", null, Toast.LENGTH_SHORT, false).show();
+
+
+                    }
 
                 } catch (ExecutionException e) {
                     e.printStackTrace();
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-
-
 
 
             }
@@ -218,13 +217,9 @@ public class MainActivityCardapio extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences("preferencias", Context.MODE_PRIVATE);
         int comandaUsuario = sharedPreferences.getInt("idComandaUsuario", 0);
         return comandaUsuario;
-
-
     }
 
-
-
-    public int getIdComandaCliente(){
+    public int getIdComandaCliente() {
 
         SharedPreferences sharedPreferences = getSharedPreferences("preferencias", Context.MODE_PRIVATE);
         int comandaUsuario = sharedPreferences.getInt("idComandaUsuario", 0);
