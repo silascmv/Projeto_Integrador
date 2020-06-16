@@ -225,6 +225,8 @@ public class MainActivityAbrirMesa extends AppCompatActivity implements ZXingSca
 
     }
 
+
+
     private void salvarIdComanda(int idComandaUsuario) {
 
         SharedPreferences sharedPreferences = getSharedPreferences("preferencias", Context.MODE_PRIVATE);

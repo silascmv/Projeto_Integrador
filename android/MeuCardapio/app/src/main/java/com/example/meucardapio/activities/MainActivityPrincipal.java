@@ -7,8 +7,10 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.example.meucardapio.R;
 import com.example.meucardapio.activities.MainActivityAbrirMesa;
@@ -36,15 +38,47 @@ public class MainActivityPrincipal extends AppCompatActivity {
         final LinearLayout abrirAjuda = findViewById(R.id.abrirAjuda);
         final LinearLayout abrirLocalizar = findViewById(R.id.abrirLocalizar);
 
+        if(verificaComandaAberta() == true) {
+
+
+            abrirComanda.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast toast = Toast.makeText(getApplicationContext(), "Usuário já está associado a uma mesa, fique a vontade pra realizar seus pedidos atráves do menu de cardápio", Toast.LENGTH_LONG);
+                    toast.setGravity(Gravity.CENTER, 0, 0);
+                    toast.show();
+
+                }
+            });
 
 
 
-        if(verificaComandaAberta() == true){
+        }else{
+
+
+            abrirComanda.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intentTelaCadastro = new Intent(getApplicationContext(), MainActivityAbrirMesa.class );
+                    intentTelaCadastro.putExtra("usuarioLogado", (Parcelable) usuarioLogado);
+                    startActivity(intentTelaCadastro);
+
+                }
+            });
+        }
+
+
+        /* if(verificaComandaAberta() == true){
 
             abrirComanda.setVisibility(View.INVISIBLE);
             abrirCarteira.setVisibility(View.VISIBLE);
 
-        }
+        }else{
+
+            abrirComanda.setVisibility(View.VISIBLE);
+            abrirCarteira.setVisibility(View.INVISIBLE);
+
+        } */
 
 
 
@@ -53,15 +87,7 @@ public class MainActivityPrincipal extends AppCompatActivity {
       //  Log.i(TAG, getClasseName() + "ID : ----->" + usuarioLogado.getIdUsuarioLogado());
 
 
-        abrirComanda.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intentTelaCadastro = new Intent(getApplicationContext(), MainActivityAbrirMesa.class );
-                intentTelaCadastro.putExtra("usuarioLogado", (Parcelable) usuarioLogado);
-                startActivity(intentTelaCadastro);
 
-            }
-        });
 
         abrirCardapio.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -116,6 +142,36 @@ public class MainActivityPrincipal extends AppCompatActivity {
         super.onResume();
         //Log.i(TAG, getClasseName() + "MESA : ----->" + usuarioLogado.getMesaUsuarioLogado());
 
+        final LinearLayout abrirComanda = findViewById(R.id.abrirComanda);
+        final LinearLayout abrirCarteira = findViewById(R.id.abrirCarteira);
+
+        if(verificaComandaAberta() == true) {
+
+            abrirComanda.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast toast = Toast.makeText(getApplicationContext(), "Usuário já está associado a uma mesa, fique a vontade pra realizar seus pedidos atráves do menu de cardápio", Toast.LENGTH_LONG);
+                    toast.setGravity(Gravity.CENTER, 0, 0);
+                    toast.show();
+
+                }
+            });
+
+
+
+        }else{
+
+
+            abrirComanda.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intentTelaCadastro = new Intent(getApplicationContext(), MainActivityAbrirMesa.class );
+                    intentTelaCadastro.putExtra("usuarioLogado", (Parcelable) usuarioLogado);
+                    startActivity(intentTelaCadastro);
+
+                }
+            });
+        }
 
 
     }
