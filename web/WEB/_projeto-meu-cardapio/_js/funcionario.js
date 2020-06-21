@@ -17,7 +17,7 @@ function cadastro() {
         body: JSON.stringify({
             CD_LOGIN: CD_LOGIN,
             CD_SENHA: CD_SENHA,
-            TIPO_USUARIO: TIPO_USUARIO,
+            TIPO_USUARIO: "Administrador",
             NOME_FUNCIONARIO: NOME_FUNCIONARIO,
             CPF: CPF,
             TELEFONE: TELEFONE,

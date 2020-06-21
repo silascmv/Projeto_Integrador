@@ -292,10 +292,11 @@
                                                     <table id="tabela" class="table table-striped table-bordered"
                                                         style="width:100%">
                                                         <thead>
-                                                            <tr>
+                                                            <tr> 
                                                                 <th>Nome do Produto</th>
                                                                 <th>Quantidade</th>
                                                                 <th>Valor Total</th>
+                                                                <th>Status do Produto</th>
                                                             </tr>
                                                         </thead>
 
@@ -309,6 +310,7 @@
                                                                 <th>Nome do Produto</th>
                                                                 <th>Quantidade</th>
                                                                 <th>Valor Total</th>
+                                                                <th>Status do Produto</th>
                                                             </tr>
                                                         </tfoot>
                                                     </table>
@@ -326,9 +328,11 @@
                                     <table id="tabela" class="table table-striped table-bordered" style="width:100%">
                                         <thead>
                                             <tr>
+                                                <th>Nome da Comanda</th>
                                                 <th>Nome da Mesa</th>
                                                 <th>Funcionario</th>
-                                                <th>Status da Mesa</th>
+                                                <th>Observação</th>
+                                                <th>Status de Pagamento da Comanda</th>
                                                 <th>Detalhes</th>
                                             </tr>
                                         </thead>
@@ -340,9 +344,11 @@
 
                                         <tfoot>
                                             <tr>
+                                                <th>Nome da Comanda</th>
                                                 <th>Nome da Mesa</th>
                                                 <th>Funcionario</th>
-                                                <th>Status da Mesa</th>
+                                                <th>Observação</th>
+                                                <th>Status de Pagamento da Comanda</th>
                                                 <th>Detalhes</th>
                                             </tr>
                                         </tfoot>
@@ -369,20 +375,30 @@
             dataType: 'json',	//Definimos o tipo de retorno
             url: 'http://app-ee0cc445-4a89-42ba-8fe5-8954b141f3e2.cleverapps.io/consultarContaWeb',//Definindo o arquivo onde serão buscados os dados
             success: function (dados) {
+                // produtos = dados;
+                // dados = dados.map(row => {
+
+                //     return { id_mesa: row.id_mesa, id_comanda: row.id_comanda, descricao: row.descricao, funcionarios: row.funcionarios, observacao: row.observacao };
+
+                // }).reduce(
+                //     (arr, el) => arr.concat(arr.filter(row => row.id_mesa == el.id_mesa).length ? [] : [el]), []
+                // );
+                
                 produtos = dados;
                 dados = dados.map(row => {
 
-                    return { id_mesa: row.id_mesa, descricao: row.descricao, funcionarios: row.funcionarios, observacao: row.observacao };
+                    return { id_mesa: row.id_mesa, id_comanda: row.id_comanda, descricao: row.descricao, funcionarios: row.funcionarios, observacao: row.observacao };
 
                 }).reduce(
-                    (arr, el) => arr.concat(arr.filter(row => row.id_mesa == el.id_mesa).length ? [] : [el]), []
+                    (arr, el) => arr.concat(arr.filter(row => row.id_comanda == el.id_comanda).length ? [] : [el]), []
                 );
+
 
                 //console.log(dados);
 
                 for (var i = 0; dados.length > i; i++) {
                     //Adicionando registros retornados na tabela
-                    $('#bodyTable').append('<tr><td>' + dados[i].descricao + '</td><td>' + dados[i].funcionarios + '</td><td>' + dados[i].observacao + '</td><td> <button type="button" class="btn btn-primary" data-toggle="modal" style="color: #000; background-color: #fff; border-color: #fff; box-shadow: 0px 0px 10px 5px #0000002e;" data-target="#exampleModal" data-whatever="@mdo" onclick="listarProdutos(' + dados[i].id_mesa + ')">Detalhes do Pedido</button> </td></tr>');
+                    $('#bodyTable').append('<tr><td>' + dados[i].id_comanda + '</td><td>' + dados[i].descricao + '</td><td>' + dados[i].funcionarios + '</td><td>' + dados[i].observacao + '</td><td>' + dados[i].status_comanda + '</td><td> <button type="button" class="btn btn-primary" data-toggle="modal" style="color: #000; background-color: #fff; border-color: #fff; box-shadow: 0px 0px 10px 5px #0000002e;" data-target="#exampleModal" data-whatever="@mdo" onclick="listarProdutos(' + dados[i].id_mesa + ')">Detalhes da Comanda</button> </td></tr>');
                 }
             }
         });
@@ -390,42 +406,42 @@
 
 
 
-        function reload() {
+        // function reload() {
 
-            $('#bodyTable').css('opacity', '0.5');
+        //     $('#bodyTable').css('opacity', '0.5');
 
-            setTimeout(function () {
+        //     setTimeout(function () {
 
-                $('#bodyTable').empty()
+        //         $('#bodyTable').empty()
 
-                $.ajax({
-                    type: 'get',		//Definimos o método HTTP usado
-                    dataType: 'json',	//Definimos o tipo de retorno
-                    url: 'http://app-ee0cc445-4a89-42ba-8fe5-8954b141f3e2.cleverapps.io/consultarContaWeb',//Definindo o arquivo onde serão buscados os dados
+        //         $.ajax({
+        //             type: 'get',		//Definimos o método HTTP usado
+        //             dataType: 'json',	//Definimos o tipo de retorno
+        //             url: 'http://app-ee0cc445-4a89-42ba-8fe5-8954b141f3e2.cleverapps.io/consultarContaWeb',//Definindo o arquivo onde serão buscados os dados
 
-                    success: function (dados) {
+        //             success: function (dados) {
 
-                        dados = dados.map(row => {
+        //                 dados = dados.map(row => {
 
-                            return { id_mesa: row.id_mesa, descricao: row.descricao, funcionarios: row.funcionarios, observacao: row.observacao };
+        //                     return { id_mesa: row.id_mesa, id_comanda: row.id_comanda, descricao: row.descricao, funcionarios: row.funcionarios, observacao: row.observacao };
 
-                        }).reduce(
-                            (arr, el) => arr.concat(arr.filter(row => row.id_mesa == el.id_mesa).length ? [] : [el]), []
-                        );
+        //                 }).reduce(
+        //                     (arr, el) => arr.concat(arr.filter(row => row.id_comanda == el.id_comanda).length ? [] : [el]), []
+        //                 );
 
-                        //console.log(dados);
+        //                 //console.log(dados);
 
-                        for (var i = 0; dados.length > i; i++) {
-                            //Adicionando registros retornados na tabela
-                            $('#bodyTable').append('<tr><td>' + dados[i].descricao + '</td><td>' + dados[i].funcionarios + '</td><td>' + dados[i].observacao + '</td><td><a class="btn btn-primary" href="#" role="button" onclick="listarProdutos(' + dados[i].id_mesa + ')">Detalhes</a></td></tr>');
-                        }
-                    }
-                });
+        //                 for (var i = 0; dados.length > i; i++) {
+        //                     //Adicionando registros retornados na tabela
+        //             $('#bodyTable').append('<tr><td>' + dados[i].id_comanda + '</td><td>' + dados[i].descricao + '</td><td>' + dados[i].funcionarios + '</td><td>' + dados[i].observacao + '</td><td>' + dados[i].status_comanda + '</td><td> <button type="button" class="btn btn-primary" data-toggle="modal" style="color: #000; background-color: #fff; border-color: #fff; box-shadow: 0px 0px 10px 5px #0000002e;" data-target="#exampleModal" data-whatever="@mdo" onclick="listarProdutos(' + dados[i].id_mesa + ')">Detalhes da Comanda</button> </td></tr>');
+        //                 }
+        //             }
+        //         });
 
-                $('#bodyTable').css('opacity', '1');
+        //         $('#bodyTable').css('opacity', '1');
 
-            }, 3000);
-        };
+        //     }, 3000);
+        // };
 
         function clearModal() {
 
@@ -463,13 +479,13 @@
 
         }
 
-        function listarProdutos(id_mesa) {
+        function listarProdutos(id_comanda) {
             $('#bodyTableProdutos').empty()
-            let lista = produtos.filter(row => row.id_mesa == id_mesa)
+            let lista = produtos.filter(row => row.id_comanda == id_comanda)
 
             for (var i = 0; lista.length > i; i++) {
 
-                $('#bodyTableProdutos').append('<tr><td>' + lista[i].nome_produto + '</td><td>' + lista[i].quantidade + '</td><td>' + lista[i].valor_total + '</td></tr>');
+                $('#bodyTableProdutos').append('<tr><td>' + lista[i].nome_produto + '</td><td>' + lista[i].quantidade + '</td><td>' + lista[i].valor_total + '</td><td>' + lista[i].status_produto + '</td></tr>');
             }
 
         }
