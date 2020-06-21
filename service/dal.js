@@ -420,8 +420,7 @@ class DataAcessLayer {
                                 + "'" + observacao + "'" + ','
                                 + data + ','
                                 + 'NULL ,' 
-                                + "'" + status_pagamento + "'"
-                                ')'
+                                + "'" + status_pagamento + "'" +')'
 
                             console.log(query_insert_comanda);
 
