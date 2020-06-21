@@ -631,9 +631,9 @@ app.post('/desativarMesa/', (req, res) => {
 
         var id_mesa = req.param("ID_MESA");
 
-        let query = 'UPDATE MESAS SET SN_ATIVO = 0 WHERE ID_MESA =' + id_mesa;
+        let query = 'UPDATE MESAS SET SN_ATIVO = 0 WHERE ID_MESA = ' + id_mesa;
 
-
+        console.log('ID MESA' + id_mesa)
 
         pool.query(query, (error, results, fields) => {
             if (error) {
