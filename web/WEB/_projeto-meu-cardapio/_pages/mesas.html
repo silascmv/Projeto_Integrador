@@ -370,7 +370,7 @@
                                             <th> Nome da Mesa </th>
                                             <th> Ativo </th>
                                             <th> Disponibilidade </th>
-                                            <th> Excluir </th>
+                                            <th> Desativar </th>
 
                                         </tr>
                                     </thead>
@@ -386,7 +386,7 @@
                                             <th> Nome da Mesa </th>
                                             <th> Ativo </th>
                                             <th> Disponibilidade </th>
-                                            <th> Excluir </th>
+                                            <th> Desativar </th>
                                             
                                         </tr>
                                     </tfoot>
@@ -414,7 +414,7 @@
                 console.log(dados);
                 for (var i = 0; dados.length > i; i++) {
                     //Adicionando registros retornados na tabela
-                    $('#bodyTable').append('<tr><td style="text-aling:center;"><img class="image_body_table" src="' + dados[i].IMAGEM_MESA + '"></td><td>' + dados[i].DESCRICAO + '</td><td>' + (dados[i].SN_ATIVO == "1" ? "Ativo" : "Inativo") + '</td><td>' + (dados[i].SN_DISPONIVEL == "1" ? "Disponível" : "Indisponível") + '</td><td><a class="btn btn-primary" href="#" role="button" onclick="deleteRow(' + dados[i].ID_MESA + ')">Excluir</a></td></tr>');
+                    $('#bodyTable').append('<tr><td style="text-aling:center;"><img class="image_body_table" src="' + dados[i].IMAGEM_MESA + '"></td><td>' + dados[i].DESCRICAO + '</td><td>' + (dados[i].SN_ATIVO == "1" ? "Ativo" : "Inativo") + '</td><td>' + (dados[i].SN_DISPONIVEL == "1" ? "Disponível" : "Indisponível") + '</td><td><a class="btn btn-primary" href="#" role="button" onclick="deleteRow(' + dados[i].ID_MESA + ')">Desativar</a></td></tr>');
                 }
             }
         });
@@ -435,7 +435,7 @@
                         //console.log(dados);
                         for (var i = 0; dados.length > i; i++) {
                             //Adicionando registros retornados na tabela
-                    $('#bodyTable').append('<tr><td style="text-aling:center;"><img class="image_body_table" src="' + dados[i].IMAGEM_MESA + '"></td><td>' + dados[i].DESCRICAO + '</td><td>' + (dados[i].SN_ATIVO == "1" ? "Ativo" : "Inativo") + '</td><td>' + (dados[i].SN_DISPONIVEL == "1" ? "Disponível" : "Indisponível") + '</td><td><a class="btn btn-primary" href="#" role="button" onclick="deleteRow(' + dados[i].ID_MESA + ')">Excluir</a></td></tr>');
+                    $('#bodyTable').append('<tr><td style="text-aling:center;"><img class="image_body_table" src="' + dados[i].IMAGEM_MESA + '"></td><td>' + dados[i].DESCRICAO + '</td><td>' + (dados[i].SN_ATIVO == "1" ? "Ativo" : "Inativo") + '</td><td>' + (dados[i].SN_DISPONIVEL == "1" ? "Disponível" : "Indisponível") + '</td><td><a class="btn btn-primary" href="#" role="button" onclick="deleteRow(' + dados[i].ID_MESA + ')">Desativar</a></td></tr>');
                         }
                     }
                 });
@@ -466,7 +466,7 @@
 
             let ID_MESA = caguei[0];
 
-            fetch('http://app-ee0cc445-4a89-42ba-8fe5-8954b141f3e2.cleverapps.io/deletarMesa/', {
+            fetch('http://app-ee0cc445-4a89-42ba-8fe5-8954b141f3e2.cleverapps.io/desativarMesa/', {
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json',
