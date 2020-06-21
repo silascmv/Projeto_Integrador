@@ -1,7 +1,7 @@
 function login() {
-  const cd_login = document.getElementsByName('nomeouendereco')[0].value;
-  const cd_senha = document.getElementsByName('senha')[0].value;
-  fetch('http://app-ee0cc445-4a89-42ba-8fe5-8954b141f3e2.cleverapps.io/realizaLogin/', {
+  const cd_login = document.getElementsByName('CD_LOGIN')[0].value;
+  const cd_senha = document.getElementsByName('CD_SENHA')[0].value;
+  fetch('http://app-ee0cc445-4a89-42ba-8fe5-8954b141f3e2.cleverapps.io/realizaLoginFuncionario/', {
     method: 'POST',
     headers: {
         'Accept': 'application/json',
@@ -9,8 +9,8 @@ function login() {
     },
     body: JSON.stringify({
 
-      cd_login = cd_login,
-      cd_senha = cd_senha
+      CD_LOGIN = CD_LOGIN,
+      CD_SENHA = CD_SENHA
 
     }),
   }).then(response => response.json()).then(data => {
