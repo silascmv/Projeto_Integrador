@@ -685,7 +685,6 @@ app.post('/consultarConta/', (req, res) => {
 
 })
 
-
 app.get('/consultarContaWeb/', (req, res) => {
     pool.getConnection((err, pool) => {
 

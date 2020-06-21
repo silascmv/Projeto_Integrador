@@ -269,6 +269,8 @@ public class CardapioAdapter extends RecyclerView.Adapter<CardapioAdapter.ViewHo
         for (int i = 0; i < itensCarrinho.size(); i++) {
 
             itensCarrinho.get(i).setIdComanda(idComanda);
+            itensCarrinho.get(i).setStatusProduto("Pendente");
+
 
         }
 

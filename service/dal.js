@@ -354,6 +354,7 @@ class DataAcessLayer {
                 let porcentagem_garcom_inicial = 0.0;
                 let sn_pago_inicial = 0;
                 let observacao = 'MESA INICIADA'
+                let status_pagamento = 'Pendente'
 
 
                 var query_verifica_mesa = 'SELECT ID_MESA FROM MESAS WHERE QR_CODE = ' + "'" + qr_code + "'"
@@ -418,7 +419,9 @@ class DataAcessLayer {
                                 + sn_pago_inicial + ','
                                 + "'" + observacao + "'" + ','
                                 + data + ','
-                                + 'NULL)'
+                                + 'NULL ,' 
+                                + "'" + status_pagamento + "'"
+                                ')'
 
                             console.log(query_insert_comanda);
 

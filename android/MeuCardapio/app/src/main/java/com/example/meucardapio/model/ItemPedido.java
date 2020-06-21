@@ -8,7 +8,15 @@ public class ItemPedido {
     private int quantidade;
     private Double preco;
     private int idComanda;
+    private String statusProduto;
 
+    public String getStatusProduto() {
+        return statusProduto;
+    }
+
+    public void setStatusProduto(String statusProduto) {
+        this.statusProduto = statusProduto;
+    }
 
     public ItemPedido() {
     }
