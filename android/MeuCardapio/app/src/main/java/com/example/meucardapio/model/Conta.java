@@ -6,9 +6,15 @@ public class Conta {
     private String nome_produto;
     private int quantidade;
     private double valor_total;
+    private String statusProduto;
 
+    public String getStatusProduto() {
+        return statusProduto;
+    }
 
-
+    public void setStatusProduto(String statusProduto) {
+        this.statusProduto = statusProduto;
+    }
 
     public String getDescrica() {
         return descrica;
