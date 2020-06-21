@@ -622,6 +622,51 @@ app.post('/apagarProduto/', (req, res) => {
 
 })
 
+
+
+app.post('/desativarMesa/', (req, res) => {
+
+
+    pool.getConnection((err, pool) => {
+
+        var id_mesa = req.param("ID_MESA");
+
+        let query = 'UPDATE MESAS SET SN_ATIVO = 0 WHERE ID_MESA =' + id_mesa;
+
+
+
+        pool.query(query, (error, results, fields) => {
+            if (error) {
+                console.log(error)
+            }
+
+            if (results.affectedRows == 0) {
+                res.json({
+                    status: "Mesa não pode ser desativada",
+                    code_status: 00
+                });
+            } else {
+
+                res.json({
+                    status: "Mesa Desativada com sucesso.",
+                    code_status: 01
+                })
+
+            }
+
+
+        })
+    })
+
+
+
+
+
+
+})
+
+
+
 app.post('/realizarPedidoAndroid/', (req, res) => {
 
 
