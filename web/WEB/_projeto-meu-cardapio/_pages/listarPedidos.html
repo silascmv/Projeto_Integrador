@@ -391,7 +391,7 @@
                 produtos = dados;
                 dados = dados.map(row => {
 
-                    return { id_mesa: row.id_mesa, id_comanda: row.id_comanda, descricao: row.descricao, funcionarios: row.funcionarios, observacao: row.observacao };
+                    return { id_mesa: row.id_mesa, id_comanda: row.id_comanda, status_comanda: row.status_comanda, descricao: row.descricao, funcionarios: row.funcionarios, observacao: row.observacao };
 
                 }).reduce(
                     (arr, el) => arr.concat(arr.filter(row => row.id_comanda == el.id_comanda).length ? [] : [el]), []
