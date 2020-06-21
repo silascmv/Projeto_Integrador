@@ -274,7 +274,7 @@
                                 box-shadow: 0px 0px 10px 5px #0000002e;" data-target="#exampleModal"
                                     data-whatever="@mdo">Cadastrar Novo Produto</button> -->
 
-                                    
+
 
                                 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
                                     aria-labelledby="exampleModalLabel">
@@ -292,11 +292,12 @@
                                                     <table id="tabela" class="table table-striped table-bordered"
                                                         style="width:100%">
                                                         <thead>
-                                                            <tr> 
+                                                            <tr>
                                                                 <th>Nome do Produto</th>
                                                                 <th>Quantidade</th>
                                                                 <th>Valor Total</th>
                                                                 <th>Status do Produto</th>
+                                                                <th>Alterar Status</th>
                                                             </tr>
                                                         </thead>
 
@@ -311,6 +312,7 @@
                                                                 <th>Quantidade</th>
                                                                 <th>Valor Total</th>
                                                                 <th>Status do Produto</th>
+                                                                <th>Alterar Status</th>
                                                             </tr>
                                                         </tfoot>
                                                     </table>
@@ -328,12 +330,13 @@
                                     <table id="tabela" class="table table-striped table-bordered" style="width:100%">
                                         <thead>
                                             <tr>
-                                                <th>Nome da Comanda</th>
+                                                <th>Número da Comanda</th>
                                                 <th>Nome da Mesa</th>
                                                 <th>Funcionario</th>
                                                 <th>Observação</th>
-                                                <th>Status de Pagamento da Comanda</th>
+                                                <th>Status de Pagamento</th>
                                                 <th>Detalhes</th>
+                                                <th>Encerrar</th>
                                             </tr>
                                         </thead>
 
@@ -344,12 +347,13 @@
 
                                         <tfoot>
                                             <tr>
-                                                <th>Nome da Comanda</th>
+                                                <th>Número da Comanda</th>
                                                 <th>Nome da Mesa</th>
                                                 <th>Funcionario</th>
                                                 <th>Observação</th>
-                                                <th>Status de Pagamento da Comanda</th>
+                                                <th>Status de Pagamento</th>
                                                 <th>Detalhes</th>
+                                                <th>Encerrar</th>
                                             </tr>
                                         </tfoot>
                                     </table>
@@ -383,7 +387,7 @@
                 // }).reduce(
                 //     (arr, el) => arr.concat(arr.filter(row => row.id_mesa == el.id_mesa).length ? [] : [el]), []
                 // );
-                
+
                 produtos = dados;
                 dados = dados.map(row => {
 
@@ -398,13 +402,10 @@
 
                 for (var i = 0; dados.length > i; i++) {
                     //Adicionando registros retornados na tabela
-                    $('#bodyTable').append('<tr><td>' + dados[i].id_comanda + '</td><td>' + dados[i].descricao + '</td><td>' + dados[i].funcionarios + '</td><td>' + dados[i].observacao + '</td><td>' + dados[i].status_comanda + '</td><td> <button type="button" class="btn btn-primary" data-toggle="modal" style="color: #000; background-color: #fff; border-color: #fff; box-shadow: 0px 0px 10px 5px #0000002e;" data-target="#exampleModal" data-whatever="@mdo" onclick="listarProdutos(' + dados[i].id_comanda + ')">Detalhes da Comanda</button> </td></tr>');
+                    $('#bodyTable').append('<tr><td>' + dados[i].id_comanda + '</td><td>' + dados[i].descricao + '</td><td>' + dados[i].funcionarios + '</td><td>' + dados[i].observacao + '</td><td>' + dados[i].status_comanda + '</td><td> <button type="button" class="btn btn-primary" data-toggle="modal" style="color: #000; background-color: #fff; border-color: #fff; box-shadow: 0px 0px 0px 1px #0000002e;" data-target="#exampleModal" data-whatever="@mdo" onclick="listarProdutos(' + dados[i].id_comanda + ')">Detalhes da Comanda</button> </td> <td> <button type="button" class="btn btn-primary" style="color: #000; background-color: #fff; border-color: #fff; box-shadow: 0px 0px 0px 1px #0000002e" onclick="encerrarMesa(' + dados[i].id_comanda + ')">Encerrar Pedido</button> </td> </tr>');
                 }
             }
         });
-
-
-
 
         // function reload() {
 
@@ -479,13 +480,31 @@
 
         }
 
+        function encerrarMesa(caguei2) {
+
+            let ID_COMANDA = caguei2[0];
+
+            fetch('http://app-ee0cc445-4a89-42ba-8fe5-8954b141f3e2.cleverapps.io/encerrarMesa/', {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    ID_COMANDA: ID_COMANDA
+
+                }),
+            }).then(response => response.json()).then(data => alert(data.status)).then(clearModal()).then(reload());
+
+        }
+
         function listarProdutos(id_comanda) {
             $('#bodyTableProdutos').empty()
             let lista = produtos.filter(row => row.id_comanda == id_comanda)
 
             for (var i = 0; lista.length > i; i++) {
 
-                $('#bodyTableProdutos').append('<tr><td>' + lista[i].nome_produto + '</td><td>' + lista[i].quantidade + '</td><td>' + lista[i].valor_total + '</td><td>' + lista[i].status_produto + '</td></tr>');
+                $('#bodyTableProdutos').append('<tr><td>' + lista[i].nome_produto + '</td><td>' + lista[i].quantidade + '</td><td>' + lista[i].valor_total + '</td><td>' + lista[i].status_produto + '</td><td> <select class="form-control" id="exampleFormControlSelect1"><option>Pendente</option><option>Entregue</option></select></td></tr>');
             }
 
         }
