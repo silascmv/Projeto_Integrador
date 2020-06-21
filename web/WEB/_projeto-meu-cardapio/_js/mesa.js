@@ -8,7 +8,6 @@ function cadastroMesa() {
 
     const nome_imagem = NOME_MESA + '.png'
     var file = dataURLtoFile(IMG, nome_imagem);
-    console.log(file);
 
     const formData = new FormData();
     formData.append('NOME_MESA', NOME_MESA)
