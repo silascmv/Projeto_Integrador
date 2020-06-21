@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <!-- This file has been downloaded from Bootsnipp.com. Enjoy! -->
+    <title>Meu Cardápio</title>
+
+    <script>
+      window.onload = function () {
+        if (localStorage.getItem("cardapio") != "true") {
+          window.location.href = "./pagina_de_login.html";
+        }
+      };
+
+      function exitUm() {
+        localStorage.setItem("cardapio", false);
+      }
+
+      function exitDois() {
+        window.location.href = "../pagina_de_login.html";
+      }
+    </script>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script src="./_js/bootstrap.min.js"></script>
+    <script src="./_js/jquery-3.4.1.min.js"></script>
+    <link
+      href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./_css/style_cadastro.css" />
+    <style type="text/css">
+      @import url("https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css");
+      @media (min-width: 768px) {
+        body {
+          margin-top: 50px;
+        }
+        /*html, body, #wrapper, #page-wrapper {height: 100%; overflow: hidden;}*/
+      }
+
+      .hover-home:hover {
+        transform: scale(1.03);
+      }
+
+      .hover-home {
+        cursor: pointer;
+        transition: 0.5s;
+        box-shadow: 0px 0px 5px 5px #0000002e;
+      }
+
+      #wrapper {
+        padding-left: 0;
+      }
+
+      #page-wrapper {
+        width: 100%;
+        padding: 0;
+        background-color: #fff;
+        min-height: 100vh;
+        background-image: -webkit-linear-gradient(
+          136deg,
+          rgb(254, 225, 64) 0%,
+          rgb(250, 112, 154) 100%
+        );
+        background-image: -ms-linear-gradient(
+          136deg,
+          rgb(254, 225, 64) 0%,
+          rgb(250, 112, 154) 100%
+        );
+      }
+
+      @media (min-width: 768px) {
+        #wrapper {
+          padding-left: 225px;
+        }
+
+        #page-wrapper {
+          padding: 22px 10px;
+        }
+      }
+
+      /* Top Navigation */
+
+      .top-nav {
+        padding: 0 15px;
+      }
+
+      .top-nav > li {
+        display: inline-block;
+        float: left;
+      }
+
+      .top-nav > li > a {
+        padding-top: 20px;
+        padding-bottom: 20px;
+        line-height: 20px;
+        color: #fff;
+      }
+
+      .top-nav > li > a:hover,
+      .top-nav > li > a:focus,
+      .top-nav > .open > a,
+      .top-nav > .open > a:hover,
+      .top-nav > .open > a:focus {
+        color: #fff;
+        background-color: #1a242f;
+      }
+
+      .top-nav > .open > .dropdown-menu {
+        float: left;
+        position: absolute;
+        margin-top: 0;
+        /*border: 1px solid rgba(0,0,0,.15);*/
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
+        background-color: #fff;
+        -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+      }
+
+      .top-nav > .open > .dropdown-menu > li > a {
+        white-space: normal;
+      }
+
+      /* Side Navigation */
+
+      @media (min-width: 768px) {
+        .side-nav {
+          position: fixed;
+          top: 60px;
+          left: 225px;
+          width: 225px;
+          margin-left: -225px;
+          border: none;
+          border-radius: 0;
+          border-top: 1px rgba(0, 0, 0, 0.5) solid;
+          overflow-y: auto;
+          background-color: #222;
+          /*background-color: #5A6B7D;*/
+          bottom: 0;
+          overflow-x: hidden;
+          padding-bottom: 40px;
+        }
+
+        .side-nav > li > a {
+          width: 225px;
+          border-bottom: 1px rgba(0, 0, 0, 0.3) solid;
+        }
+
+        .side-nav li a:hover,
+        .side-nav li a:focus {
+          outline: none;
+          background-color: #1a242f !important;
+        }
+      }
+
+      .side-nav > li > ul {
+        padding: 0;
+        border-bottom: 1px rgba(0, 0, 0, 0.3) solid;
+      }
+
+      .side-nav > li > ul > li > a {
+        display: block;
+        padding: 10px 15px 10px 38px;
+        text-decoration: none;
+        /*color: #999;*/
+        color: #fff;
+      }
+
+      .side-nav > li > ul > li > a:hover {
+        color: #fff;
+      }
+
+      .navbar .nav > li > a > .label {
+        -webkit-border-radius: 50%;
+        -moz-border-radius: 50%;
+        border-radius: 50%;
+        position: absolute;
+        top: 14px;
+        right: 6px;
+        font-size: 10px;
+        font-weight: normal;
+        min-width: 15px;
+        min-height: 15px;
+        line-height: 1em;
+        text-align: center;
+        padding: 2px;
+      }
+
+      .navbar .nav > li > a:hover > .label {
+        top: 10px;
+      }
+
+      .navbar-brand {
+        padding: 5px 15px;
+      }
+    </style>
+    <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+  </head>
+  <body>
+    <div id="throbber" style="display: none; min-height: 120px;"></div>
+    <div id="noty-holder"></div>
+    <div id="wrapper">
+      <!-- Navigation -->
+      <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <button
+            type="button"
+            class="navbar-toggle"
+            data-toggle="collapse"
+            data-target=".navbar-ex1-collapse"
+          >
+            <span class="sr-only"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="./index.html">
+            <h3 style="margin-top: 10px; font-family: inherit;">
+              Meu Cardápio
+            </h3>
+          </a>
+        </div>
+        <!-- Top Menu Items -->
+        <ul class="nav navbar-right top-nav">
+          <!-- <li><a href="#" data-placement="bottom" data-toggle="tooltip" href="#" data-original-title="Stats"><i class="fa fa-bar-chart-o"></i>
+                </a>
+            </li> -->
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown"
+              >Admin <b class="fa fa-angle-down"></b
+            ></a>
+            <ul class="dropdown-menu">
+              <li>
+                <a href="#"
+                  ><i class="fa fa-fw fa-user"></i> Funcções do Administrador</a
+                >
+              </li>
+              <li>
+                <a href="#"><i class="fa fa-fw fa-cog"></i> Alterar Senha</a>
+              </li>
+              <li class="divider"></li>
+              <li>
+                <a
+                  href="./pagina_de_login.html"
+                  id="exit"
+                  onclick="exitUm();exitDois();"
+                  ><i class="fa fa-fw fa-power-off"></i> Sair</a
+                >
+              </li>
+            </ul>
+          </li>
+        </ul>
+        <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+          <ul class="nav navbar-nav side-nav">
+            <li>
+              <a href="./_pages/cardapio.html"
+                ><i class="glyphicon glyphicon-book"></i> CARDÁPIO</a
+              >
+            </li>
+            <li>
+              <a href="./_pages/mesas.html"
+                ><i class="glyphicon glyphicon-book"></i> MESA</a
+              >
+            </li>
+            <li>
+              <a href="./_pages/funcionario.html"
+                ><i class="glyphicon glyphicon-user"></i> FUNCIONÁRIOS</a
+              >
+            </li>
+            <li>
+              <a href="./listarPedidos.html"
+                ><i class="glyphicon glyphicon-book"></i> LISTAR PEDIDOS</a
+              >
+            </li>
+            <li>
+              <a href="./_pages/empresa.html"
+                ><i class="glyphicon glyphicon-asterisk"></i> PERFÍL DA
+                EMPRESA</a
+              >
+            </li>
+            <li>
+              <a href="./_pages/relatorios.html"
+                ><i class="glyphicon glyphicon-signal"></i> RELATÓRIOS</a
+              >
+            </li>
+            <li>
+              <a href="./_pages/suporte.html"
+                ><i class="glyphicon glyphicon-cog"></i> SUPORTE</a
+              >
+            </li>
+          </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+      </nav>
+
+      <div id="page-wrapper">
+        <div class="container-fluid">
+          <!-- Page Heading -->
+
+          <div class="row">
+            <div class="col-sm-6 col-md-4">
+              <div
+                class="thumbnail hover-home"
+                onclick="location.href='./_pages/cardapio.html';"
+              >
+                <img src="./_imagens/food.png" alt="..." />
+                <div class="caption">
+                  <h3 style="text-align: center;">CARDÁPIO</h3>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-sm-6 col-md-4">
+              <div
+                class="thumbnail hover-home"
+                onclick="location.href='./_pages/mesas.html';"
+              >
+                <img src="./_imagens/mesa.png" alt="..." />
+                <div class="caption">
+                  <h3 style="text-align: center;">MESAS</h3>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-sm-6 col-md-4">
+              <div
+                class="thumbnail hover-home"
+                onclick="location.href='./_pages/funcionario.html';"
+              >
+                <img src="./_imagens/team.png" alt="..." />
+                <div class="caption">
+                  <h3 style="text-align: center;">FUNCIONARIOS</h3>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-sm-6 col-md-4">
+              <div
+                class="thumbnail hover-home"
+                onclick="location.href='./_pages/listarPedidos.html';"
+              >
+                <img src="./_imagens/listPedidos.png" alt="..." />
+                <div class="caption">
+                  <h3 style="text-align: center;">LISTAR PEDIDOS</h3>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-sm-6 col-md-4">
+              <div
+                class="thumbnail hover-home"
+                onclick="location.href='./_pages/empresa.html';"
+              >
+                <img src="./_imagens/empresa.png" alt="..." />
+                <div class="caption">
+                  <h3 style="text-align: center;">PERFÍL DA EMPRESA</h3>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-sm-6 col-md-4">
+              <div
+                class="thumbnail hover-home"
+                onclick="location.href='./_pages/relatorios.html';"
+              >
+                <img src="./_imagens/reports.png" alt="..." />
+                <div class="caption">
+                  <h3 style="text-align: center;">RELATÓRIOS</h3>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-sm-6 col-md-4">
+              <div
+                class="thumbnail hover-home"
+                onclick="location.href='./_pages/suporte.html';"
+              >
+                <img src="./_imagens/support.png" alt="..." />
+                <div class="caption">
+                  <h3 style="text-align: center;">SUPORTE</h3>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- /.row -->
+        </div>
+        <!-- /.container-fluid -->
+      </div>
+      <!-- /#page-wrapper -->
+    </div>
+    <!-- /#wrapper -->
+    <script type="text/javascript">
+      $(function () {
+        $('[data-toggle="tooltip"]').tooltip();
+        $(".side-nav .collapse").on("hide.bs.collapse", function () {
+          $(this)
+            .prev()
+            .find(".fa")
+            .eq(1)
+            .removeClass("fa-angle-right")
+            .addClass("fa-angle-down");
+        });
+        $(".side-nav .collapse").on("show.bs.collapse", function () {
+          $(this)
+            .prev()
+            .find(".fa")
+            .eq(1)
+            .removeClass("fa-angle-down")
+            .addClass("fa-angle-right");
+        });
+      });
+    </script>
+  </body>
+</html>
