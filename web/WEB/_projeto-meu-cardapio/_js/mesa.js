@@ -1,6 +1,7 @@
 function cadastroMesa() {
 
     const NOME_MESA = $('#NOME_MESA').val();
+    const DESCRICAO = $('#NOME_MESA').val();
     const SN_ATIVO = $('#SN_ATIVO:checked').length;
     const QR_CODE = NOME_MESA; //wtf????? MERMA COISA, TIO
     const IMG = $('#qrcodeMesa>img').attr('src');
@@ -9,6 +10,7 @@ function cadastroMesa() {
 
     const formData = new FormData();
     formData.append('NOME_MESA', NOME_MESA)
+    formData.append('DESCRICAO', DESCRICAO)
     formData.append('SN_ATIVO', SN_ATIVO)
     formData.append('QR_CODE', QR_CODE)
     formData.append('IMG', file)

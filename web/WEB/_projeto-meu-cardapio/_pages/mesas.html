@@ -435,7 +435,7 @@
                         //console.log(dados);
                         for (var i = 0; dados.length > i; i++) {
                             //Adicionando registros retornados na tabela
-                            $('#bodyTable').append('<tr><td style="text-aling:center;"><img class="image_body_table" src="' + dados[i].IMAGEM + '"></td><td>' + dados[i].NOME + '</td><td>R$' + dados[i].VALOR + '</td><td>' + dados[i].DESCRICAO + '</td><td>' + dados[i].CODIGO_BARRA + '</td><td>' + dados[i].TIPO + '</td><td><a class="btn btn-primary" href="#" role="button" onclick="deleteRow(' + dados[i].ID_MESA + ')">Excluir</a></td></tr>');
+                    $('#bodyTable').append('<tr><td style="text-aling:center;"><img class="image_body_table" src="' + dados[i].IMAGEM_MESA + '"></td><td>' + dados[i].DESCRICAO + '</td><td>' + (dados[i].SN_ATIVO == "1" ? "Ativo" : "Inativo") + '</td><td>' + (dados[i].SN_DISPONIVEL == "1" ? "Disponível" : "Indisponível") + '</td><td><a class="btn btn-primary" href="#" role="button" onclick="deleteRow(' + dados[i].ID_MESA + ')">Excluir</a></td></tr>');
                         }
                     }
                 });
