@@ -1,98 +1,183 @@
 <!DOCTYPE html>
 <html>
-<head>
-	<meta charset="utf-8">
-	<title>Tela de Cadastro</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-	<link rel="stylesheet" type="text/css" href="_css/opensans-font.css">
-	<link rel="stylesheet" type="text/css" href="_fonts/line-awesome/css/line-awesome.min.css">
-	<link rel="stylesheet" href="https://jqueryvalidation.org/files/demo/site-demos.css">
-    <link rel="stylesheet" href="_css/style_cadastro.css"/>
-</head>
-<body class="form-v7">
-	<div class="page-content">
-		<div class="form-v7-content">
-			<div class="form-left">
-				<img src="_imagens/bg-heading-02.jpg" alt="form">
-			</div>
-			<form class="form-detail" action="javascript:void(0);" method="POST" onsubmit="cadastro()" id="myform">
-				<div class="form-row">
-					<label for="username">USUÁRIO</label>
-					<input type="text" name="username" id="username" class="input-text" maxlength="30" placeholder="Digite seu Usuário" required>
-				</div>
-				<div class="form-row">
-					<label for="your_email">E-MAIL</label>
-					<input type="text" name="your_email" id="your_email" class="input-text" placeholder="Digite seu E-mail" required pattern="[^@]+@[^@]+.[a-zA-Z]{2,6}" title="Formato Inválido." >
-				</div>
-<div class="form-row">
-					<label for="password">SENHA</label>
-					<input type="password" name="password" id="password" class="input-text" placeholder="Digite sua Senha" required pattern=".{8,}" title="Sua senha precisa ter 8 caracteres ou mais.">
-				</div>
-				<div class="form-row">
-					<label for="comfirm_password">CONFIRME SUA SENHA</label>
-					<input type="password" name="comfirm_password" id="comfirm_password" class="input-text" placeholder="Confirme sua Senha" required>
-				</div>
-				<div class="form-row">
-					<label for="name">NOME</label>
-					<input type="text" name="name" id="name" class="input-text" maxlength="80" placeholder="Digite seu Nome" required pattern="^([A-Za-z\u00C0-\u00D6\u00D8-\u00f6\u00f8-\u00ff\s]*)$" title="Esse campo é obrigatório.">
-				</div>
-				<div class="form-row">
-					<label for="address">ENDEREÇO</label>
-					<input type="text" name="address" id="address" class="input-text" placeholder="Digite seu Endereço"required pattern="^([A-Za-z0-9\u00C0-\u00D6\u00D8-\u00f6\u00f8-\u00ff\s]*)$" title="Esse campo é obrigatório.">
-				</div>
-				<div class="form-row">
-					<label for="telephone">TELEFONE</label>
-					<input type="number" name="telephone" id="telephone" class="input-text"  placeholder="Digite seu Telefone:">
-				</div>
-				<div class="form-row">
-					<label for="cellphone">CELULAR</label>
-					<input type="number" name="cellphone" id="cellphone" class="input-text"  placeholder="Digite seu Telefone Celular:">
-				</div>
-				<div class="form-row-last">
-					<input type="submit" name="register" class="register" value="Cadastrar">
-					<p>Ou<a href="pagina_de_login.html">Fazer login</a></p>
-				</div>
-			</form>
-		</div>
-	</div>
-	<script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
-	<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
-	<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
-	<script src="_js/cadastro.js"></script>
-	<script>
-		jQuery.validator.setDefaults({
-		  	debug: true,
-		  	success:  function(label){
-        		label.attr('id', 'valid');
-   		 	},
-		});
-		$( "#myform" ).validate({
-		  	rules: {
-			    your_email: {
-			      	required: true,
-			      	email: true
-			    },
-			    password: "required",
-		    	comfirm_password: {
-		      		equalTo: "#password"
-		    	}
-		  	},
-		  	messages: {
-		  		username: {
-		  			required: "Por favor, digite um nome de usuário"
-		  		},
-		  		your_email: {
-		  			required: "Por favor, digite um e-mail válido"
-		  		},
-		  		password: {
-	  				required: "Por favor, digite sua senha"
-		  		},
-		  		comfirm_password: {
-		  			required: "Por favor, digite sua senha novamente",
-		      		equalTo: "Senha não compatível"
-		    	}
-		  	}
-		});
-	</script>
-</body>
+  <head>
+    <meta charset="utf-8" />
+    <title>Tela de Cadastro</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1"
+    />
+    <link rel="stylesheet" type="text/css" href="_css/opensans-font.css" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="_fonts/line-awesome/css/line-awesome.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://jqueryvalidation.org/files/demo/site-demos.css"
+    />
+    <link rel="stylesheet" href="_css/style_cadastro.css" />
+  </head>
+  <body class="form-v7">
+    <div class="page-content">
+      <div class="form-v7-content">
+        <div class="form-left">
+          <img src="_imagens/bg-heading-02.jpg" alt="form" />
+        </div>
+        <form
+          class="form-detail"
+          action="javascript:void(0);"
+          method="POST"
+          onsubmit="cadastro()"
+          id="myform"
+        >
+          <div class="form-row">
+            <label for="username">USUÁRIO</label>
+            <input
+              type="text"
+              name="username"
+              id="username"
+              class="input-text"
+              maxlength="30"
+              placeholder="Digite seu Usuário"
+              required
+            />
+          </div>
+          <div class="form-row">
+            <label for="your_email">E-MAIL</label>
+            <input
+              type="text"
+              name="your_email"
+              id="your_email"
+              class="input-text"
+              placeholder="Digite seu E-mail"
+              required
+              pattern="[^@]+@[^@]+.[a-zA-Z]{2,6}"
+              title="Formato Inválido."
+            />
+          </div>
+          <div class="form-row">
+            <label for="password">SENHA</label>
+            <input
+              type="password"
+              name="password"
+              id="password"
+              class="input-text"
+              placeholder="Digite sua Senha"
+              required
+              pattern=".{8,}"
+              title="Sua senha precisa ter 8 caracteres ou mais."
+            />
+          </div>
+          <div class="form-row">
+            <label for="comfirm_password">CONFIRME SUA SENHA</label>
+            <input
+              type="password"
+              name="comfirm_password"
+              id="comfirm_password"
+              class="input-text"
+              placeholder="Confirme sua Senha"
+              required
+            />
+          </div>
+          <div class="form-row">
+            <label for="name">NOME</label>
+            <input
+              type="text"
+              name="name"
+              id="name"
+              class="input-text"
+              maxlength="80"
+              placeholder="Digite seu Nome"
+              required
+              pattern="^([A-Za-z\u00C0-\u00D6\u00D8-\u00f6\u00f8-\u00ff\s]*)$"
+              title="Esse campo é obrigatório."
+            />
+          </div>
+          <div class="form-row">
+            <label for="address">ENDEREÇO</label>
+            <input
+              type="text"
+              name="address"
+              id="address"
+              class="input-text"
+              placeholder="Digite seu Endereço"
+              required
+              pattern="^([A-Za-z0-9\u00C0-\u00D6\u00D8-\u00f6\u00f8-\u00ff\s]*)$"
+              title="Esse campo é obrigatório."
+            />
+          </div>
+          <div class="form-row">
+            <label for="telephone">TELEFONE</label>
+            <input
+              type="number"
+              name="telephone"
+              id="telephone"
+              class="input-text"
+              placeholder="Digite seu Telefone:"
+            />
+          </div>
+          <div class="form-row">
+            <label for="cellphone">CELULAR</label>
+            <input
+              type="number"
+              name="cellphone"
+              id="cellphone"
+              class="input-text"
+              placeholder="Digite seu Telefone Celular:"
+            />
+          </div>
+          <div class="form-row-last">
+            <input
+              type="submit"
+              name="register"
+              class="register"
+              value="Cadastrar"
+            />
+            <p>Ou<a href="pagina_de_login.html">Fazer login</a></p>
+          </div>
+        </form>
+      </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
+    <script src="_js/cadastro.js"></script>
+    <script>
+      jQuery.validator.setDefaults({
+        debug: true,
+        success: function (label) {
+          label.attr("id", "valid");
+        },
+      });
+      $("#myform").validate({
+        rules: {
+          your_email: {
+            required: true,
+            email: true,
+          },
+          password: "required",
+          comfirm_password: {
+            equalTo: "#password",
+          },
+        },
+        messages: {
+          username: {
+            required: "Por favor, digite um nome de usuário",
+          },
+          your_email: {
+            required: "Por favor, digite um e-mail válido",
+          },
+          password: {
+            required: "Por favor, digite sua senha",
+          },
+          comfirm_password: {
+            required: "Por favor, digite sua senha novamente",
+            equalTo: "Senha não compatível",
+          },
+        },
+      });
+    </script>
+  </body>
 </html>
