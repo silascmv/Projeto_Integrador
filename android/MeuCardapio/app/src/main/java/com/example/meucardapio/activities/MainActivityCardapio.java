@@ -13,14 +13,17 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.meucardapio.R;
 import com.example.meucardapio.adapter.CardapioAdapter;
+import com.example.meucardapio.adapter.OnItemClick;
 import com.example.meucardapio.model.Cardapio;
 import com.example.meucardapio.model.ItemPedido;
+import com.example.meucardapio.model.Preferencias;
 import com.example.meucardapio.service.CodeStatus;
 import com.example.meucardapio.service.HttpServiceListarCardapio;
 import com.example.meucardapio.service.HttpServiceRealizarPedido;
@@ -35,7 +38,10 @@ import java.util.concurrent.ExecutionException;
 
 import es.dmoral.toasty.Toasty;
 
-public class MainActivityCardapio extends AppCompatActivity {
+public class MainActivityCardapio extends AppCompatActivity implements OnItemClick {
+    //Preferencias
+    Preferencias preferencias = new Preferencias(MainActivityCardapio.this);
+
     private static final String TAG = "MyActivity";
     //Objeto para Armazenar os itens que estão sendo adicionados ao carrinho
     private List<ItemPedido> itensCarrinho = new ArrayList<>();
@@ -50,10 +56,17 @@ public class MainActivityCardapio extends AppCompatActivity {
     private TextView valorTotal;
     private TextView txtSomar;
 
+
+
     private int contadorTexto;
     private int valorTexto;
+    private
+
     GsonBuilder gsonBuilder = new GsonBuilder();
     Gson gson = gsonBuilder.create();
+
+
+
 
     //ListView
     ArrayAdapter<String> adapter;
@@ -75,7 +88,6 @@ public class MainActivityCardapio extends AppCompatActivity {
 
         buildRecyclerView();
 
-
         btnRealizarPedido.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -84,6 +96,7 @@ public class MainActivityCardapio extends AppCompatActivity {
                 cardapioAdapter.definirIdComandaItensCarrinho(getIdComandaCliente());
                 Log.i(TAG, getClasseName() + "JSON ITENS DO CARRINHO TESTE RETORNO ----->" + cardapioAdapter.retornaCarrinho());
                 confirmarPedido(JsonObject, (ArrayList<ItemPedido>) cardapioAdapter.retornaCarrinho());
+
 
             }
         });
@@ -148,6 +161,8 @@ public class MainActivityCardapio extends AppCompatActivity {
                         Toasty.custom(MainActivityCardapio.this, "Pedido realizado com sucesso!", null, Toast.LENGTH_SHORT, false).show();
                         itensCarrinho.clear();
                         cardapioAdapter.limparCarrinho();
+                        preferencias.snRealizouPedido(true);
+
 
 
                     } else {
@@ -211,7 +226,7 @@ public class MainActivityCardapio extends AppCompatActivity {
 
         try {
             listarCardapioCompleto = new HttpServiceListarCardapio().execute().get();
-            cardapioAdapter = new CardapioAdapter(MainActivityCardapio.this, (ArrayList<Cardapio>) listarCardapioCompleto);
+            cardapioAdapter = new CardapioAdapter(MainActivityCardapio.this, (ArrayList<Cardapio>) listarCardapioCompleto,this);
             cardapio_recycleview.setAdapter(cardapioAdapter);
             Log.i(TAG, getClasseName() + "JSON CONVERTION DO OBJETO DENTRO DA CLASSE x " + listarCardapioCompleto.toArray());
 
@@ -239,4 +254,24 @@ public class MainActivityCardapio extends AppCompatActivity {
 
     }
 
+
+    @Override
+    public void onClickSoma(int value) {
+        textQuantidade = findViewById(R.id.quantidade);
+        contadorTexto += value;
+        textQuantidade.setText("Quantidade: " +  (String.valueOf(contadorTexto) + " " + "|"));
+;
+        Log.i(TAG,"CLICOUU");
+    }
+
+    @Override
+    public void onClickSubtrair(int value) {
+
+        textQuantidade = findViewById(R.id.quantidade);
+        contadorTexto -= value;
+        textQuantidade.setText("Quantidade: " +  (String.valueOf(contadorTexto) + " " + "|"));
+        ;
+        Log.i(TAG,"CLICOUU");
+
+    }
 }

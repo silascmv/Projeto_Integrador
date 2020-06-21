@@ -34,7 +34,7 @@ public class MainActivityCupom extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences("preferencias", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putBoolean("sn_ativo", false );
-        editor.putInt("idComandaUsuario",0);
+        editor.putInt("idComandaUsuario", 0 );
         editor.commit();
 
     }

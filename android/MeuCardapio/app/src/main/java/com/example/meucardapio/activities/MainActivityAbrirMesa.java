@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import com.example.meucardapio.R;
 import com.example.meucardapio.model.AddMesa;
+import com.example.meucardapio.model.Preferencias;
 import com.example.meucardapio.model.UsuarioLogado;
 import com.example.meucardapio.service.CodeStatus;
 import com.example.meucardapio.service.HtppServiceAddMesa;
@@ -31,7 +32,8 @@ import static android.app.PendingIntent.getActivity;
 import static com.example.meucardapio.R.*;
 
 public class MainActivityAbrirMesa extends AppCompatActivity implements ZXingScannerView.ResultHandler {
-
+    //PREFERENCIAS
+    Preferencias preferencias = new Preferencias(MainActivityAbrirMesa.this);
 
     //LOG
     private static final String TAG = "MyActivity";
@@ -54,7 +56,7 @@ public class MainActivityAbrirMesa extends AppCompatActivity implements ZXingSca
         usuarioLogado = getIntent().getExtras().getParcelable("usuarioLogado");
         super.onCreate(savedInstanceState);
         setContentView(layout.activity_main_abrir_mesa);
-        Log.i(TAG, getClasseName() + "------> ON CREATE <--------- ");
+        Log.i(TAG,  "------> ON CREATE <--------- ");
         rl = (RelativeLayout) findViewById(id.relative_scan);
         mScannerView = new ZXingScannerView(this);
 
@@ -66,7 +68,7 @@ public class MainActivityAbrirMesa extends AppCompatActivity implements ZXingSca
     @Override
     public void onResume() {
         super.onResume();
-        Log.i(TAG, getClasseName() + "------> ON  RESUME <--------- ");
+        Log.i(TAG, "------> ON  RESUME <--------- ");
         setContentView(layout.activity_main_abrir_mesa);
         //VARIAVEIS PARA TRABALHAR COM O FLASH e CAMERA - LAYOUT
         final ImageView btnflash = findViewById(id.btnFlash);
@@ -132,7 +134,7 @@ public class MainActivityAbrirMesa extends AppCompatActivity implements ZXingSca
     @Override
     public void onPause() {
         super.onPause();
-        Log.i(TAG, getClasseName() + "------> ON PAUSE <--------- ");
+        Log.i(TAG, "------> ON PAUSE <--------- ");
         mScannerView.stopCameraPreview();
         // Stop camera on pause
         //Camera camera = CameraUtils.getCameraInstance();
@@ -145,14 +147,14 @@ public class MainActivityAbrirMesa extends AppCompatActivity implements ZXingSca
     @Override
     protected void onStop() {
         super.onStop();
-        Log.i(TAG, getClasseName() + "------> ON STOP <--------- ");
+        Log.i(TAG,  "------> ON STOP <--------- ");
         mScannerView.stopCamera();
     }
 
     @Override
     public void onRestart() {
         super.onRestart();
-        Log.i(TAG, getClasseName() + "------> ON RESTART <--------- ");
+        Log.i(TAG, "------> ON RESTART <--------- ");
         mScannerView.startCamera();          // Start camera on resume
 
     }
@@ -160,7 +162,7 @@ public class MainActivityAbrirMesa extends AppCompatActivity implements ZXingSca
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Log.i(TAG, getClasseName() + "------> ON DESTROY <--------- ");
+        Log.i(TAG,  "------> ON DESTROY <--------- ");
         mScannerView.stopCameraPreview(); //stopPreview
         mScannerView.stopCamera();           // Stop camera on pause
     }
@@ -171,7 +173,7 @@ public class MainActivityAbrirMesa extends AppCompatActivity implements ZXingSca
         if (result.getText() != null) {
 
             abrirMesa.setQr_code(result.getText());
-            abrirMesa.setId_cliente(getUsuarioLogado());
+            abrirMesa.setId_cliente(preferencias.getIdUsuarioLogado());
             abrirMesa.setId_funcionario(1);
             abrirMesa.setTp_pagamento(1);
 
@@ -183,8 +185,8 @@ public class MainActivityAbrirMesa extends AppCompatActivity implements ZXingSca
                 toast.setGravity(Gravity.CENTER, 0, 0);
                 toast.show();
 
-                salvarIdComanda(retornoAbrirMesa.getId_comanda());
-                salvarMesaUsuario(retornoAbrirMesa.getMesa_cliente());
+                preferencias.salvarIdComanda(retornoAbrirMesa.getId_comanda());
+                preferencias.salvarMesaUsuario(retornoAbrirMesa.getMesa_cliente());
 
                 //SCANNER
                 mScannerView.startCamera();
@@ -197,7 +199,7 @@ public class MainActivityAbrirMesa extends AppCompatActivity implements ZXingSca
                 }, 2000);
             } catch (ExecutionException e) {
                 e.printStackTrace();
-                Log.i(TAG, getClasseName() + "------> ON DESTROY <--------- " + e);
+                Log.i(TAG,  "------> ON DESTROY <--------- " + e);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -212,40 +214,7 @@ public class MainActivityAbrirMesa extends AppCompatActivity implements ZXingSca
     }
 
 
-    private String getClasseName() {
-        //retorna o nome da classe sem o pacote
-        String s = getClass().getName();
-        return s.substring(s.lastIndexOf("."));
-    }
 
-    private int getUsuarioLogado() {
-        SharedPreferences sharedPreferences = getSharedPreferences("preferencias", Context.MODE_PRIVATE);
-        int idUsuarioLogado = sharedPreferences.getInt("idUsuarioLogado", 0);
-        return idUsuarioLogado;
-
-    }
-
-
-
-    private void salvarIdComanda(int idComandaUsuario) {
-
-        SharedPreferences sharedPreferences = getSharedPreferences("preferencias", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putInt("idComandaUsuario", idComandaUsuario);
-        editor.apply();
-    }
-
-
-
-    private void salvarMesaUsuario(int idMesaUsuario){
-
-        SharedPreferences sharedPreferences = getSharedPreferences("preferencias", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putInt("idMesaUsuario", idMesaUsuario);
-        editor.apply();
-
-
-    }
 
 
 }

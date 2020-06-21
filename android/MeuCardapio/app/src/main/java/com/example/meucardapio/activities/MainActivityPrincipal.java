@@ -30,7 +30,25 @@ public class MainActivityPrincipal extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_principal);
+        buildLayout();
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        buildLayout();
+
+    }
+
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        buildLayout();
+    }
+
+    private void buildLayout(){
         final LinearLayout abrirComanda = findViewById(R.id.abrirComanda);
         final LinearLayout abrirCardapio = findViewById(R.id.abrirCardapio);
         final LinearLayout abrirCupom = findViewById(R.id.abrirCupom);
@@ -39,8 +57,6 @@ public class MainActivityPrincipal extends AppCompatActivity {
         final LinearLayout abrirLocalizar = findViewById(R.id.abrirLocalizar);
 
         if(verificaComandaAberta() == true) {
-
-
             abrirComanda.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -50,10 +66,31 @@ public class MainActivityPrincipal extends AppCompatActivity {
 
                 }
             });
+            abrirCarteira.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intentTelaCarteira = new Intent(getApplicationContext(), MainActivityCarteira.class );
+                    intentTelaCarteira.putExtra("usuarioLogado", (Parcelable) usuarioLogado);
+                    startActivity(intentTelaCarteira);
+                }
+            });
 
 
 
         }else{
+
+
+            abrirCarteira.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast toast = Toast.makeText(getApplicationContext(), "Para consultar os produtos em sua conta, é necessário que tenha abeto a mesa e realizado alguns pedidos através do cardápio.", Toast.LENGTH_LONG);
+                    toast.setGravity(Gravity.CENTER, 0, 0);
+                    toast.show();
+
+                }
+            });
+
+
 
 
             abrirComanda.setOnClickListener(new View.OnClickListener() {
@@ -84,7 +121,7 @@ public class MainActivityPrincipal extends AppCompatActivity {
 
 
 
-      //  Log.i(TAG, getClasseName() + "ID : ----->" + usuarioLogado.getIdUsuarioLogado());
+        //  Log.i(TAG, getClasseName() + "ID : ----->" + usuarioLogado.getIdUsuarioLogado());
 
 
 
@@ -106,14 +143,7 @@ public class MainActivityPrincipal extends AppCompatActivity {
                 startActivity(intentTelaCupom);
             }
         });
-        abrirCarteira.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intentTelaCarteira = new Intent(getApplicationContext(), MainActivityCarteira.class );
-                intentTelaCarteira.putExtra("usuarioLogado", (Parcelable) usuarioLogado);
-                startActivity(intentTelaCarteira);
-            }
-        });
+
         abrirAjuda.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -137,51 +167,6 @@ public class MainActivityPrincipal extends AppCompatActivity {
 
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        //Log.i(TAG, getClasseName() + "MESA : ----->" + usuarioLogado.getMesaUsuarioLogado());
-
-        final LinearLayout abrirComanda = findViewById(R.id.abrirComanda);
-        final LinearLayout abrirCarteira = findViewById(R.id.abrirCarteira);
-
-        if(verificaComandaAberta() == true) {
-
-            abrirComanda.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Toast toast = Toast.makeText(getApplicationContext(), "Usuário já está associado a uma mesa, fique a vontade pra realizar seus pedidos atráves do menu de cardápio", Toast.LENGTH_LONG);
-                    toast.setGravity(Gravity.CENTER, 0, 0);
-                    toast.show();
-
-                }
-            });
-
-
-
-        }else{
-
-
-            abrirComanda.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intentTelaCadastro = new Intent(getApplicationContext(), MainActivityAbrirMesa.class );
-                    intentTelaCadastro.putExtra("usuarioLogado", (Parcelable) usuarioLogado);
-                    startActivity(intentTelaCadastro);
-
-                }
-            });
-        }
-
-
-    }
-
-    private String getClasseName()
-    {
-        //retorna o nome da classe sem o pacote
-        String s = getClass().getName();
-        return s.substring(s.lastIndexOf("."));
-    }
 
     private boolean verificaComandaAberta(){
 
@@ -198,6 +183,14 @@ public class MainActivityPrincipal extends AppCompatActivity {
             return true;
         }
 
+    }
+
+
+
+    private String getClasseName(){
+        //retorna o nome da classe sem o pacote
+        String s = getClass().getName();
+        return s.substring(s.lastIndexOf("."));
     }
 
 

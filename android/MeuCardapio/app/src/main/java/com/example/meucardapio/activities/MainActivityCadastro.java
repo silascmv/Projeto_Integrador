@@ -31,10 +31,11 @@ public class MainActivityCadastro extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_cadastro);
+        construcaoLayoutCadastroUsuario();
+    }
+    private void construcaoLayoutCadastroUsuario(){
 
-        //Variavies para pegar valores da tela
         final EditText login = findViewById(R.id.inputUsuario);
-        Log.i(TAG, getClasseName() + "CHEGOU AQUI " + login.toString());
         final EditText senha = findViewById(R.id.inputSenha);
         final EditText senha2 = findViewById(R.id.inputSenha2);
         final EditText nome = findViewById(R.id.inputNome);
@@ -42,18 +43,13 @@ public class MainActivityCadastro extends AppCompatActivity {
         final EditText endereco = findViewById(R.id.inputEndereco);
         final EditText telefone = findViewById(R.id.inputTelefone);
         final EditText celular = findViewById(R.id.inputCelular);
-
-        //Botão
         final Button btnCadastrar = findViewById(R.id.btnCadastrar);
-
 
         btnCadastrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //Variavel para verificar Checkbox Quando clicar
                 CheckBox checkBox = findViewById(R.id.checkBox);
-                //Validação REGEX E-mail
-                String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
                 //Validações
                 if (!checkBox.isChecked()) {
                     Toast.makeText(getApplicationContext(), "É necessário concordar com os termos de uso!", Toast.LENGTH_LONG).show();
@@ -89,6 +85,20 @@ public class MainActivityCadastro extends AppCompatActivity {
                 cadastro_usuario.setEndereco(endereco.getText().toString());
                 cadastro_usuario.setTelefone(telefone.getText().toString());
                 cadastro_usuario.setCelular(celular.getText().toString());
+
+
+
+
+                Log.i("CLASSE DE CADASTRO","SENHA" + cadastro_usuario.getCd_senha());
+
+
+
+                Log.i("CLASSE DE CADASTRO","SENHA" + cadastro_usuario.getNome());
+
+
+
+
+
                 //
                 Log.i(TAG, getClasseName() + "CHEGOU AQUI " + cadastro_usuario.toString());
                 Gson gson = new Gson();
@@ -98,8 +108,8 @@ public class MainActivityCadastro extends AppCompatActivity {
                 try {
                     CodeStatus cadastro = new HttpServiceCadastro(cadastro_usuario).execute().get();
                     if(cadastro == null){
-                        Toast.makeText(getApplicationContext(), "Falha oua", Toast.LENGTH_LONG).show();
-
+                        Toast.makeText(getApplicationContext(), "Falhoa ao realizar o cadastro.", Toast.LENGTH_LONG).show();
+                        return;
                     }
 
                     if (cadastro.getCode_status() == 0) {

@@ -16,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.meucardapio.R;
+import com.example.meucardapio.model.Preferencias;
 import com.example.meucardapio.model.UsuarioLogado;
 import com.example.meucardapio.service.CodeStatus;
 import com.example.meucardapio.service.HttpServiceLogin;
@@ -23,6 +24,8 @@ import com.example.meucardapio.service.HttpServiceLogin;
 import java.util.concurrent.ExecutionException;
 
 public class MainActivity extends AppCompatActivity {
+
+    private Preferencias preferencias = new Preferencias(MainActivity.this);
 
 
     private static final String TAG = "MyActivity";
@@ -35,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
         final TextView cadastrarUsuario = findViewById(R.id.lblCadastrar);
         Button btnLogin = findViewById(R.id.login);
 
-        if (VerificaUsuario() == true) {
+        if (preferencias.snVerificaLoginSalvo() == true) {
             Intent intent_tela_principal = new Intent(getApplicationContext(), MainActivityPrincipal.class);
             startActivity(intent_tela_principal);
 
@@ -103,11 +106,11 @@ public class MainActivity extends AppCompatActivity {
 
                 if (swSalvarUsuario.isChecked() == true) {
 
-                    salvarLoginPreferencia(true);
+                    preferencias.salvarLoginPreferencia(true);
 
                 }
 
-                SalvarUsuarioPreferencia(retorno.getUsuarioLogado());
+                preferencias.salvarIdUsuarioLogadoPreferencia(retorno.getUsuarioLogado());
                 startActivity(intent_tela_princiapl);
 
 
@@ -122,38 +125,9 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void salvarLoginPreferencia(Boolean chave) {
-        SharedPreferences sharedPreferences = getSharedPreferences("preferencias", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putBoolean("sn_ativo", chave);
-        editor.apply();
-
-    }
-
-    private void SalvarUsuarioPreferencia(int idUsuarioLogado) {
-
-        SharedPreferences sharedPreferences = getSharedPreferences("preferencias", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putInt("idUsuarioLogado", idUsuarioLogado);
-        editor.apply();
-
-    }
-
-    private Boolean VerificaUsuario() {
-
-        SharedPreferences sharedPreferences = getSharedPreferences("preferencias", Context.MODE_PRIVATE);
-        Boolean resultado = sharedPreferences.getBoolean("sn_ativo", false);
-
-        if (resultado == true) {
-
-            return true;
-        } else {
-
-            return false;
-        }
 
 
-    }
+
 
 
 }

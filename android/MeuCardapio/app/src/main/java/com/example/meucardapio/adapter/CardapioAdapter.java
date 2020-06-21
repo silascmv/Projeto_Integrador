@@ -1,12 +1,10 @@
 package com.example.meucardapio.adapter;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -15,12 +13,11 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.meucardapio.R;
+import com.example.meucardapio.activities.MainActivityCardapio;
 import com.example.meucardapio.listener.RecyclerItemClickListener;
 import com.example.meucardapio.model.Cardapio;
 import com.example.meucardapio.model.ItemPedido;
 import com.squareup.picasso.Picasso;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +25,10 @@ import java.util.List;
 public class CardapioAdapter extends RecyclerView.Adapter<CardapioAdapter.ViewHolder> {
 
     private static final String TAG = "MyActivity";
+
+    private static MainActivityCardapio cardapio;
+
+    private OnItemClick mCallback;
 
 
     private ArrayList<Cardapio> cardapioModel = new ArrayList<>();
@@ -38,12 +39,13 @@ public class CardapioAdapter extends RecyclerView.Adapter<CardapioAdapter.ViewHo
 
     private int contadorTexto;
     private double valorTexto;
+    private int somaQuantidadeCarrinho;
 
 
-
-    public CardapioAdapter(Context context, ArrayList<Cardapio> cardapioModel) {
+    public CardapioAdapter(Context context, ArrayList<Cardapio> cardapioModel, OnItemClick listener) {
         this.cardapioModel = cardapioModel;
         this.context = context;
+        this.mCallback = listener;
 
     }
 
@@ -55,8 +57,10 @@ public class CardapioAdapter extends RecyclerView.Adapter<CardapioAdapter.ViewHo
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         private ImageView imagemProduto;
-        private TextView nomeProduto, descricaoProduto, valorProduto, somarProduto, subtrairProduto, txtContador,textQuantidade,valorTotal;
+        private TextView nomeProduto, descricaoProduto, valorProduto, somarProduto, subtrairProduto, txtContador, textQuantidade, valorTotal;
         private LinearLayout linearLayoutSomar, linearLayoutSubtrair;
+
+        private TextView teste;
 
 
         //private ImageButton somarProduto,subtrairProduto;
@@ -74,8 +78,6 @@ public class CardapioAdapter extends RecyclerView.Adapter<CardapioAdapter.ViewHo
             txtContador = (TextView) itemView.findViewById(R.id.txtContador);
 
 
-
-
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -83,6 +85,7 @@ public class CardapioAdapter extends RecyclerView.Adapter<CardapioAdapter.ViewHo
                         int position = getAdapterPosition();
                         if (position != RecyclerView.NO_POSITION) {
                             listener.onItemClick(v, position);
+
                         }
                     }
                 }
@@ -97,7 +100,6 @@ public class CardapioAdapter extends RecyclerView.Adapter<CardapioAdapter.ViewHo
 
                     int contador = Integer.parseInt(txtContador.getText().toString());
                     ++contador;
-
                     Cardapio produtoSelecionado = cardapioModel.get(getAdapterPosition());
                     ItemPedido itemPedido = new ItemPedido();
                     itemPedido.setIdProduto(produtoSelecionado.getId_produto());
@@ -105,6 +107,7 @@ public class CardapioAdapter extends RecyclerView.Adapter<CardapioAdapter.ViewHo
                     itemPedido.setPreco(produtoSelecionado.getValor());
                     itemPedido.setQuantidade(contador);
                     Log.i(TAG, "CLICOU NO SOMAR" + itemPedido.getQuantidade());
+                    //mCallback.onClick(itemPedido.getQuantidade());
                     txtContador.setText(String.valueOf(contador));
 
                     if (itensCarrinho.isEmpty() == true) {
@@ -112,8 +115,10 @@ public class CardapioAdapter extends RecyclerView.Adapter<CardapioAdapter.ViewHo
                         itensCarrinho.add(itemPedido);
                         valorTexto += itemPedido.getQuantidade() * itemPedido.getPreco();
                         contadorTexto += itemPedido.getQuantidade();
+                        mCallback.onClickSoma(1);
 
 
+                        Log.i(TAG, "CLICOU NO SOMAR aq 01");
 
 
                     } else {
@@ -124,9 +129,13 @@ public class CardapioAdapter extends RecyclerView.Adapter<CardapioAdapter.ViewHo
 
                             if (itensCarrinho.get(i).equals(itemPedido)) {
                                 itensCarrinho.get(i).setQuantidade(contador);
+
                                 existeProduto = true;
                                 break;
                             }
+
+
+                            Log.i(TAG, "CLICOU NO SOMAR aq 02");
 
 
                         }
@@ -135,16 +144,16 @@ public class CardapioAdapter extends RecyclerView.Adapter<CardapioAdapter.ViewHo
                             itensCarrinho.add(itemPedido);
                             existeProduto = false;
 
+                            Log.i(TAG, "CLICOU NO SOMAR aq 03");
+
+                            mCallback.onClickSoma(1);
+
+                        } else {
+
+                            Log.i(TAG, "CLICOU NO SOMAR aq 03");
+
+                            mCallback.onClickSoma(1);
                         }
-
-
-                    }
-
-                    for (int i = 0; i < itensCarrinho.size(); ++i) {
-
-                        Log.i(TAG, "---PRODUTOS NO CARRINHO----");
-                        Log.i(TAG, "---NOME DO PRODUTO NO CARRINHO----" + itensCarrinho.get(i).getNomeProduto());
-                        Log.i(TAG, "---QUANTIDADE DO PRODUTO CARRINHO----" + itensCarrinho.get(i).getQuantidade());
 
 
                     }
@@ -156,16 +165,11 @@ public class CardapioAdapter extends RecyclerView.Adapter<CardapioAdapter.ViewHo
             });
 
             subtrairProduto.setOnClickListener(new View.OnClickListener() {
-
-
                 @Override
                 public void onClick(View v) {
-
                     Log.i(TAG, "CLICOU NO subtrairProduto");
-
                     int subtracao = Integer.parseInt(txtContador.getText().toString());
                     --subtracao;
-
 
                     Cardapio produtoSelecionado = cardapioModel.get(getAdapterPosition());
                     ItemPedido itemPedido = new ItemPedido();
@@ -173,30 +177,39 @@ public class CardapioAdapter extends RecyclerView.Adapter<CardapioAdapter.ViewHo
                     itemPedido.setNomeProduto(produtoSelecionado.getNome());
                     itemPedido.setPreco(produtoSelecionado.getValor());
 
+
                     if (subtracao == -1 || itensCarrinho.isEmpty() == true) {
                         Log.i(TAG, "O CARRINHO TA VAZIO");
                         subtracao = 0;
+
                         txtContador.setText(String.valueOf(subtracao));
                     }
 
                     if (subtracao == 0) {
                         boolean existeProduto = false;
+
                         txtContador.setText(String.valueOf(subtracao));
                         for (int i = 0; i < itensCarrinho.size(); ++i) {
                             if (itensCarrinho.get(i).equals(itemPedido)) {
                                 itensCarrinho.remove(i);
+                                mCallback.onClickSubtrair(1);
                                 break;
                             }
                         }
+
+
                     } else {
                         for (int i = 0; i < itensCarrinho.size(); ++i) {
                             if (itensCarrinho.get(i).equals(itemPedido)) {
                                 Log.i(TAG, "JÁ EXISTE ESSE PROUDO NA LISTA - SUBTRAÇÃO");
                                 itensCarrinho.get(i).setQuantidade(subtracao);
+
                                 break;
                             }
                         }
                         txtContador.setText(String.valueOf(subtracao));
+                        mCallback.onClickSubtrair(1);
+
 
                     }
                 }
@@ -243,20 +256,24 @@ public class CardapioAdapter extends RecyclerView.Adapter<CardapioAdapter.ViewHo
 
     }
 
-    public void definirIdComandaItensCarrinho(int idComanda){
+    public int getTotalProdutos() {
+
+        return contadorTexto;
 
 
-        for ( int i = 0 ; i< itensCarrinho.size();i++){
+    }
+
+    public void definirIdComandaItensCarrinho(int idComanda) {
+
+
+        for (int i = 0; i < itensCarrinho.size(); i++) {
 
             itensCarrinho.get(i).setIdComanda(idComanda);
 
         }
 
 
-
     }
-
-
 
 
 }
