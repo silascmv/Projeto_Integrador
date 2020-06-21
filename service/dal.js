@@ -580,7 +580,8 @@ class DataAcessLayer {
 
                 var objeto_retorno = {
                     'ID_COMANDA_FK': listaObjetos[i].idComanda,
-                    'ID_PRODUTO_FK': listaObjetos[i].idProduto
+                    'ID_PRODUTO_FK': listaObjetos[i].idProduto,
+					'STATUS_PRODUTO': listaObjetos[i].statusProduto
 
                 }
                 listaProdutosComanda.push(objeto_retorno);
@@ -590,9 +591,9 @@ class DataAcessLayer {
         }
 
 
-        var query = 'INSERT INTO COMANDA_PRODUTO (ID_COMANDA_FK,ID_PRODUTO_FK) VALUES ?';
+        var query = 'INSERT INTO COMANDA_PRODUTO (ID_COMANDA_FK,ID_PRODUTO_FK, STATUS_PRODUTO) VALUES ?';
 
-        pool.query(query, [listaProdutosComanda.map(item => [item.ID_COMANDA_FK, item.ID_PRODUTO_FK])], (error, results, fields) => {
+        pool.query(query, [listaProdutosComanda.map(item => [item.ID_COMANDA_FK, item.ID_PRODUTO_FK, item.STATUS_PRODUTO])], (error, results, fields) => {
 
 
             if (error) {
