@@ -711,7 +711,7 @@ app.post('/consultarConta/', (req, res) => {
                 for (var i = 0; i < results.length; i++) {
 
                     var objeto_retorno = {
-                        'descricao': results[i].DESCRICAO,
+                        'statusProduto': results[i].STATUS_PRODUTO,
                         'nome_produto': results[i].NOME_PRODUTO,
                         'quantidade': results[i].QUANTIDADE,
                         'valor_total': results[i].VALOR_TOTAL,                      

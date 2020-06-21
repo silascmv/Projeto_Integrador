@@ -63,7 +63,6 @@
             android:layout_height="95dp"
             android:layout_marginTop="8dp"
 
-            android:layout_marginBottom="8dp"
             android:background="#FFFFFF"
             android:orientation="vertical"
 
@@ -162,7 +161,7 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/contaRecyclerView"
             android:layout_width="match_parent"
-            android:layout_height="400dp"
+            android:layout_height="500dp"
             >
 
         </androidx.recyclerview.widget.RecyclerView>
