@@ -778,6 +778,27 @@ app.get('/consultarContaWeb/', (req, res) => {
 
 })
 
+app.post('/realizarPagamentoAndroid/', (req,res) =>{
+
+   
+    pool.getConnection(function (err, pool) {
+
+        const objeto_dal = new DataAcessLayer();
+
+        async function realizarPagamentoAndroid() {
+            await objeto_dal.realizarPagamentoAndroid(req, pool).then(resultado => {
+                res.send(resultado);
+            });
+        }
+
+        realizarPagamentoAndroid();
+
+    });
+
+
+
+
+})
 
 
 
