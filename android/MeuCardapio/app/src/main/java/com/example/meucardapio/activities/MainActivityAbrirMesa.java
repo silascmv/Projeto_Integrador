@@ -186,10 +186,9 @@ public class MainActivityAbrirMesa extends AppCompatActivity implements ZXingSca
                 toast.show();
 
                 preferencias.salvarIdComanda(retornoAbrirMesa.getId_comanda());
-                preferencias.snRealizouPedido(true);
                 preferencias.salvarMesaUsuario(retornoAbrirMesa.getMesa_cliente());
-                preferencias.SalvarIdPagamento(1,false);
                 preferencias.snAbriuComanda(true);
+                preferencias.SalvarIdPagamento(0,false);
 
                 //SCANNER
                 mScannerView.startCamera();

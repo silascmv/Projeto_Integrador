@@ -63,14 +63,10 @@ public class MainActivityCarteira extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_carteira);
-
         statusPagamento = (TextView) findViewById(R.id.statusPagamento);
         txtStatusPagamento = (TextView) findViewById(R.id.txtStatusPagamentoCarteira);
-
         txttotalConta = (TextView) findViewById(R.id.txttotalConta);
-
         btnRealizarPagamento = (Button) findViewById(R.id.realizarPagamento);
-
 
         Log.i("CHEGOU AQUI NO MENU CARTEIRA", "Chegou antes do  if");
 
@@ -90,42 +86,34 @@ public class MainActivityCarteira extends AppCompatActivity {
             txttotalConta.setText("");
 
 
-        }else{
-
-
-            Log.i("Chegou aqui", "AQUIII else" ) ;
-
-            Log.i("Chegou aqui", "AQUIII else" + preferencias.getIdComandaCliente()) ;
-
-
-
-            if(preferencias.getSnPago() == true){
+        }else if(preferencias.getSnPago() != true && preferencias.getIdPagamento() == 1){
+            Log.i("Chegou aqui", "AQUIII else" + preferencias.getIdComandaCliente());
 
                 btnRealizarPagamento.setEnabled(false);
-
-                Toast toast = Toast.makeText(getApplicationContext(), "Você ainda não adicionou nada ao seu carrinho, fique a vontade pra realizar pedidos atráves do menu de cárdapio.", Toast.LENGTH_LONG);
+                Toast toast = Toast.makeText(getApplicationContext(), "Aguarde alguns instantes até o Garçom se dirigir até sua Mesa", Toast.LENGTH_LONG);
                 toast.setGravity(Gravity.CENTER, 0, 0);
                 toast.show();
                 btnRealizarPagamento.setEnabled(false);
-
                 statusPagamento.setText("");
-                txtStatusPagamento.setText("Você ainda não tem produtos na sua conta.");
+                txtStatusPagamento.setText("Pendente de Recebimento.");
                 txttotalConta.setText("");
-
-
-            }else{
-
                 buildRecyclerView();
 
-                statusPagamento = findViewById(R.id.statusPagamento);
-
-                valorTotalConta = findViewById(R.id.txttotalConta);
-
-                valorTotalConta.setText("Valor total R$ " + String.valueOf(retornoValorTotal()));
 
 
 
-                btnRealizarPagamento.setOnClickListener(new View.OnClickListener() {
+
+        }else{
+
+            buildRecyclerView();
+            statusPagamento = findViewById(R.id.statusPagamento);
+            valorTotalConta = findViewById(R.id.txttotalConta);
+
+            valorTotalConta.setText("Valor total R$ " + String.valueOf(retornoValorTotal()));
+
+
+
+            btnRealizarPagamento.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
 
@@ -135,7 +123,8 @@ public class MainActivityCarteira extends AppCompatActivity {
                 }
             });
 
-            }
+
+
 
         }
 
@@ -238,6 +227,9 @@ public class MainActivityCarteira extends AppCompatActivity {
         toast.setGravity(Gravity.CENTER, 0, 0);
         toast.show();
         preferencias.SalvarIdPagamento(1,false);
+        preferencias.snAbriuComanda(false);
+
+
 
 
 
@@ -531,7 +523,6 @@ public class MainActivityCarteira extends AppCompatActivity {
         double calcularTotal = 0;
 
         for (int i = 0; i < contas.size(); i++) {
-
 
             calcularTotal += contas.get(i).getValor_total();
 
