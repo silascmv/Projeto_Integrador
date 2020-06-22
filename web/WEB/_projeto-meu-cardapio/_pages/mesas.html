@@ -432,7 +432,7 @@
                     dataType: 'json',	//Definimos o tipo de retorno
                     url: 'http://app-ee0cc445-4a89-42ba-8fe5-8954b141f3e2.cleverapps.io/listarTodasMesas',//Definindo o arquivo onde serão buscados os dados
                     success: function (dados) {
-                        //console.log(dados);
+                        console.log(dados);
                         for (var i = 0; dados.length > i; i++) {
                             //Adicionando registros retornados na tabela
                             $('#bodyTable').append('<tr><td style="text-aling:center;"><img class="image_body_table" src="' + dados[i].IMAGEM_MESA + '"></td><td>' + dados[i].DESCRICAO + '</td><td>' + (dados[i].SN_ATIVO == "1" ? "Ativo" : "Inativo") + '</td><td>' + (dados[i].SN_DISPONIVEL == "1" ? "Disponível" : "Indisponível") + '</td><td><a class="btn btn-primary" href="#" role="button" onclick="deleteRow(' + dados[i].ID_MESA + ')">Desativar</a></td></tr>');
@@ -483,7 +483,6 @@
 
         function deleteRow(caguei) {
             let ID_MESA = caguei;
-
             fetch('http://app-ee0cc445-4a89-42ba-8fe5-8954b141f3e2.cleverapps.io/desativarMesa/', {
                 method: 'POST',
                 headers: {
@@ -491,7 +490,7 @@
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    ID_MESA: ID_MESA
+                    ID_MESA: ID_MESA,
 
                 }),
             }).then(response => response.json()).then(data => alert(data.status)).then(clearModal()).then(reload());
