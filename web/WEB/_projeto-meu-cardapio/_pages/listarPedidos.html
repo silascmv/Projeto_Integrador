@@ -409,47 +409,58 @@
 
                 for (var i = 0; dados.length > i; i++) {
                     //Adicionando registros retornados na tabela
-                    $('#bodyTable').append('<tr><td>' + dados[i].id_comanda + '</td><td>' + dados[i].descricao + '</td><td>' + dados[i].funcionarios + '</td><td>' + dados[i].observacao + '</td><td>' + dados[i].status_comanda + '</td><td> <button type="button" class="btn btn-primary" data-toggle="modal" style="color: #000; background-color: #fff; border-color: #fff; box-shadow: 0px 0px 0px 1px #0000002e;" data-target="#exampleModal" data-whatever="@mdo" onclick="listarProdutos(' + dados[i].id_comanda + ')">Detalhes da Comanda</button> </td> <td> <button type="button" class="btn btn-primary" style="color: #000; background-color: #fff; border-color: #fff; box-shadow: 0px 0px 0px 1px #0000002e" onclick="encerrarMesa(' + dados[i].id_comanda + ')">Encerrar Pedido</button> </td> </tr>');
+                    $('#bodyTable').append('<tr><td>' + dados[i].id_comanda + '</td><td>' + dados[i].descricao + '</td><td>' + dados[i].funcionarios + '</td><td>' + dados[i].observacao + '</td><td>' + dados[i].status_comanda + '</td><td> <button type="button" class="btn btn-primary" data-toggle="modal" style="color: #000; background-color: #fff; border-color: #fff; box-shadow: 0px 0px 0px 1px #0000002e;" data-target="#exampleModal" data-whatever="@mdo" onclick="listarProdutos(' + dados[i].id_comanda + ')">Detalhes da Comanda</button> </td> <td> <button type="button" class="btn btn-primary" style="color: #000; background-color: #fff; border-color: #fff; box-shadow: 0px 0px 0px 1px #0000002e" onclick="encerrarMesa(' + dados[i].id_comanda + ')">Encerrar Comanda</button> </td> </tr>');
                 }
             }
         });
 
-        // function reload() {
+        function reload() {
 
-        //     $('#bodyTable').css('opacity', '0.5');
+            $('#bodyTable').css('opacity', '0.5');
 
-        //     setTimeout(function () {
+            setTimeout(function () {
 
-        //         $('#bodyTable').empty()
+                $('#bodyTable').empty()
 
-        //         $.ajax({
-        //             type: 'get',		//Definimos o método HTTP usado
-        //             dataType: 'json',	//Definimos o tipo de retorno
-        //             url: 'http://app-ee0cc445-4a89-42ba-8fe5-8954b141f3e2.cleverapps.io/consultarContaWeb',//Definindo o arquivo onde serão buscados os dados
+                let produtos
 
-        //             success: function (dados) {
+                $.ajax({
+                    type: 'get',		//Definimos o método HTTP usado
+                    dataType: 'json',	//Definimos o tipo de retorno
+                    url: 'http://app-ee0cc445-4a89-42ba-8fe5-8954b141f3e2.cleverapps.io/consultarContaWeb',//Definindo o arquivo onde serão buscados os dados
+                    success: function (dados) {
+                        // produtos = dados;
+                        // dados = dados.map(row => {
 
-        //                 dados = dados.map(row => {
+                        //     return { id_mesa: row.id_mesa, id_comanda: row.id_comanda, descricao: row.descricao, funcionarios: row.funcionarios, observacao: row.observacao };
 
-        //                     return { id_mesa: row.id_mesa, id_comanda: row.id_comanda, descricao: row.descricao, funcionarios: row.funcionarios, observacao: row.observacao };
+                        // }).reduce(
+                        //     (arr, el) => arr.concat(arr.filter(row => row.id_mesa == el.id_mesa).length ? [] : [el]), []
+                        // );
 
-        //                 }).reduce(
-        //                     (arr, el) => arr.concat(arr.filter(row => row.id_comanda == el.id_comanda).length ? [] : [el]), []
-        //                 );
+                        produtos = dados;
+                        dados = dados.map(row => {
 
-        //                 //console.log(dados);
+                            return { id_mesa: row.id_mesa, id_comanda: row.id_comanda, status_comanda: row.status_comanda, descricao: row.descricao, funcionarios: row.funcionarios, observacao: row.observacao };
 
-        //                 for (var i = 0; dados.length > i; i++) {
-        //                     //Adicionando registros retornados na tabela
-        //             $('#bodyTable').append('<tr><td>' + dados[i].id_comanda + '</td><td>' + dados[i].descricao + '</td><td>' + dados[i].funcionarios + '</td><td>' + dados[i].observacao + '</td><td>' + dados[i].status_comanda + '</td><td> <button type="button" class="btn btn-primary" data-toggle="modal" style="color: #000; background-color: #fff; border-color: #fff; box-shadow: 0px 0px 10px 5px #0000002e;" data-target="#exampleModal" data-whatever="@mdo" onclick="listarProdutos(' + dados[i].id_mesa + ')">Detalhes da Comanda</button> </td></tr>');
-        //                 }
-        //             }
-        //         });
+                        }).reduce(
+                            (arr, el) => arr.concat(arr.filter(row => row.id_comanda == el.id_comanda).length ? [] : [el]), []
+                        );
 
-        //         $('#bodyTable').css('opacity', '1');
 
-        //     }, 3000);
-        // };
+                        //console.log(dados);
+
+                        for (var i = 0; dados.length > i; i++) {
+                            //Adicionando registros retornados na tabela
+                            $('#bodyTable').append('<tr><td>' + dados[i].id_comanda + '</td><td>' + dados[i].descricao + '</td><td>' + dados[i].funcionarios + '</td><td>' + dados[i].observacao + '</td><td>' + dados[i].status_comanda + '</td><td> <button type="button" class="btn btn-primary" data-toggle="modal" style="color: #000; background-color: #fff; border-color: #fff; box-shadow: 0px 0px 0px 1px #0000002e;" data-target="#exampleModal" data-whatever="@mdo" onclick="listarProdutos(' + dados[i].id_comanda + ')">Detalhes da Comanda</button> </td> <td> <button type="button" class="btn btn-primary" style="color: #000; background-color: #fff; border-color: #fff; box-shadow: 0px 0px 0px 1px #0000002e" onclick="encerrarMesa(' + dados[i].id_comanda + ')">Encerrar Comanda</button> </td> </tr>');
+                        }
+                    }
+                });
+
+                $('#bodyTable').css('opacity', '1');
+
+            }, 3000);
+        };
 
         function clearModal() {
 
@@ -489,7 +500,7 @@
 
         function encerrarMesa(caguei2) {
 
-            let ID_COMANDA = caguei2[0];
+            let ID_COMANDA = caguei2;
 
             fetch('http://app-ee0cc445-4a89-42ba-8fe5-8954b141f3e2.cleverapps.io/encerrarMesa/', {
                 method: 'POST',
