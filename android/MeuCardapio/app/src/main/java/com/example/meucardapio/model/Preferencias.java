@@ -33,10 +33,55 @@ public class Preferencias {
     }
 
 
+    public int getIdComandaCliente() {
+
+        SharedPreferences sharedPreferences = context.getSharedPreferences("preferencias", Context.MODE_PRIVATE);
+        int comandaUsuario = sharedPreferences.getInt("idComandaUsuario", 0);
+        return comandaUsuario;
+
+    }
+
+
     public int getIdUsuarioLogado() {
         SharedPreferences sharedPreferences = context.getSharedPreferences("preferencias", Context.MODE_PRIVATE);
         int idUsuarioLogado = sharedPreferences.getInt("idUsuarioLogado", 0);
         return idUsuarioLogado;
+
+    }
+
+
+    public int getIdPagamento() {
+        SharedPreferences sharedPreferences = context.getSharedPreferences("preferencias", Context.MODE_PRIVATE);
+        int idUsuarioLogado = sharedPreferences.getInt("idPagamento", 0);
+        return idUsuarioLogado;
+
+    }
+
+
+    public boolean getSnPago() {
+        SharedPreferences sharedPreferences = context.getSharedPreferences("preferencias", Context.MODE_PRIVATE);
+        boolean snRealizouPagamento = sharedPreferences.getBoolean("snPago", false);
+
+        if(snRealizouPagamento ==false){
+            return false;
+        }else{
+
+            return true;
+        }
+
+    }
+
+    public boolean getSnAbriuComanda(){
+        SharedPreferences sharedPreferences = context.getSharedPreferences("preferencias", Context.MODE_PRIVATE);
+        boolean snRealizouPagamento = sharedPreferences.getBoolean("snAbriuComanda", false);
+
+        if(snRealizouPagamento ==false){
+            return false;
+        }else{
+            return true;
+        }
+
+
 
     }
 
@@ -65,7 +110,6 @@ public class Preferencias {
 
     }
 
-
     public void salvarMesaUsuario(int idMesaUsuario){
 
         SharedPreferences sharedPreferences = context.getSharedPreferences("preferencias", Context.MODE_PRIVATE);
@@ -82,6 +126,26 @@ public class Preferencias {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putBoolean("snRealizouPedido", chave);
         editor.apply();
+
+    }
+
+    public void snAbriuComanda(boolean chave){
+
+        SharedPreferences sharedPreferences = context.getSharedPreferences("preferencias", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean("snAbriuComanda", chave);
+        editor.apply();
+
+
+
+    }
+
+    public void SalvarIdPagamento(int idPagamento, boolean snPago){
+        SharedPreferences sharedPreferences = context.getSharedPreferences("preferencias", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putInt("idPagamento", idPagamento);
+                    editor.putBoolean("snPago",snPago);
+                        editor.apply();
 
     }
 

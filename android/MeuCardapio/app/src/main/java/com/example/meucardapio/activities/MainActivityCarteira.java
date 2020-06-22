@@ -25,7 +25,10 @@ import com.example.meucardapio.R;
 import com.example.meucardapio.adapter.ContaAdapter;
 import com.example.meucardapio.model.Conta;
 import com.example.meucardapio.model.Preferencias;
+import com.example.meucardapio.service.CodeStatus;
+import com.example.meucardapio.service.HtppServiceAddMesa;
 import com.example.meucardapio.service.HttpServiceConta;
+import com.example.meucardapio.service.HttpServicePagamentoConta;
 import com.github.dewinjm.monthyearpicker.MonthYearPickerDialog;
 import com.github.dewinjm.monthyearpicker.MonthYearPickerDialogFragment;
 
@@ -87,19 +90,42 @@ public class MainActivityCarteira extends AppCompatActivity {
             txttotalConta.setText("");
 
 
-        } else {
+        }else{
 
 
-            buildRecyclerView();
+            Log.i("Chegou aqui", "AQUIII else" ) ;
 
-            statusPagamento = findViewById(R.id.statusPagamento);
-
-            valorTotalConta = findViewById(R.id.txttotalConta);
-
-            valorTotalConta.setText("Valor total R$ " + String.valueOf(retornoValorTotal()));
+            Log.i("Chegou aqui", "AQUIII else" + preferencias.getIdComandaCliente()) ;
 
 
-            btnRealizarPagamento.setOnClickListener(new View.OnClickListener() {
+
+            if(preferencias.getSnPago() == true){
+
+                btnRealizarPagamento.setEnabled(false);
+
+                Toast toast = Toast.makeText(getApplicationContext(), "Você ainda não adicionou nada ao seu carrinho, fique a vontade pra realizar pedidos atráves do menu de cárdapio.", Toast.LENGTH_LONG);
+                toast.setGravity(Gravity.CENTER, 0, 0);
+                toast.show();
+                btnRealizarPagamento.setEnabled(false);
+
+                statusPagamento.setText("");
+                txtStatusPagamento.setText("Você ainda não tem produtos na sua conta.");
+                txttotalConta.setText("");
+
+
+            }else{
+
+                buildRecyclerView();
+
+                statusPagamento = findViewById(R.id.statusPagamento);
+
+                valorTotalConta = findViewById(R.id.txttotalConta);
+
+                valorTotalConta.setText("Valor total R$ " + String.valueOf(retornoValorTotal()));
+
+
+
+                btnRealizarPagamento.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
 
@@ -109,6 +135,7 @@ public class MainActivityCarteira extends AppCompatActivity {
                 }
             });
 
+            }
 
         }
 
@@ -121,20 +148,10 @@ public class MainActivityCarteira extends AppCompatActivity {
         conta_recyclerview.setLayoutManager(new LinearLayoutManager(this));
 
         try {
-            contas = new HttpServiceConta(getIdComanda()).execute().get();
+            contas = new HttpServiceConta(preferencias.getIdComandaCliente()).execute().get();
             contaAdapter = new ContaAdapter(MainActivityCarteira.this, (ArrayList<Conta>) contas);
             conta_recyclerview.setAdapter(contaAdapter);
 
-            for (int i = 0; i < contas.size(); i++) {
-
-                Log.i(TAG, "JSON CONVERTION DO OBJETO DENTRO DA CLASSE ------------> " + contas.get(i).getQuantidade());
-
-                Log.i(TAG, "JSON CONVERTION DO OBJETO DENTRO DA CLASSE ------------> " + contas.get(i).getNome_produto());
-
-                Log.i(TAG, "JSON CONVERTION DO OBJETO DENTRO DA CLASSE ------------> " + contas.get(i).getValor_total());
-
-
-            }
 
         } catch (ExecutionException e) {
             e.printStackTrace();
@@ -179,7 +196,13 @@ public class MainActivityCarteira extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int which) {
 
                 if (tipoDePagamentoSelecionado[0] == 0) {
-                    pagamentoDinheiro();
+                    try {
+                        pagamentoDinheiro();
+                    } catch (ExecutionException e) {
+                        e.printStackTrace();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                     setStatusDePagamento("Pendente de Recebimento ");
                     statusPagamento.setText(getStatusDePagamento());
 
@@ -207,13 +230,18 @@ public class MainActivityCarteira extends AppCompatActivity {
     }
 
 
-    public void pagamentoDinheiro() {
-
+    public void pagamentoDinheiro() throws ExecutionException, InterruptedException {
         btnRealizarPagamento.setEnabled(false);
-
-        Toast toast = Toast.makeText(getApplicationContext(), "Aguarde alguns instantes, um garçom irá se direcionar até você pra receber o pagamento em dinheiro.", Toast.LENGTH_LONG);
+        CodeStatus retornoRealizarPagamento = new HttpServicePagamentoConta(retornoValorTotal(),1,preferencias.getIdComandaCliente()).execute().get();
+        //TOAST RETORNO USUÁRIO
+        Toast toast = Toast.makeText(getApplicationContext(), retornoRealizarPagamento.status, Toast.LENGTH_LONG);
         toast.setGravity(Gravity.CENTER, 0, 0);
         toast.show();
+        preferencias.SalvarIdPagamento(1,false);
+
+
+
+
 
 
     }
