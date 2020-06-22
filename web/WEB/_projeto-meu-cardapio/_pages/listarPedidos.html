@@ -318,6 +318,7 @@
                                                     </table>
                                                 </div>
 
+                                                <div id="valorTotalProduto"></div>
 
                                             </div>
                                         </div>
@@ -500,13 +501,22 @@
 
         function listarProdutos(id_comanda) {
             $('#bodyTableProdutos').empty()
+            $('#valorTotalProduto').empty()
+
             let lista = produtos.filter(row => row.id_comanda == id_comanda)
 
+            var valorTotalProduto = 0;
+
             for (var i = 0; lista.length > i; i++) {
+
+                valorTotalProduto += lista[i].valor_total;
 
                 $('#bodyTableProdutos').append('<tr><td>' + lista[i].nome_produto + '</td><td>' + lista[i].quantidade + '</td><td>' + lista[i].valor_total + '</td><td>' + lista[i].status_produto + '</td><td> <select class="form-control" id="exampleFormControlSelect1"><option>Pendente</option><option>Entregue</option></select></td></tr>');
             }
 
+            valorTotalProduto = valorTotalProduto.toFixed(2);
+
+            $('#valorTotalProduto').append('<h4>Valor total da comanda = R$ ' + valorTotalProduto + '</h4>');
         }
     </script>
 </body>
