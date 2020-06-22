@@ -111,11 +111,15 @@ public class MainActivityCardapio extends AppCompatActivity implements OnItemCli
         boolean verificaCarrinho = false;
 
 
-        if (getIdComandaCliente() == 0) {
+        if (preferencias. getSnAbriuComanda() == false) {
             listaPedidos = new String[1];
             listaPedidos[0] = "Para iniciar seus pedidos é necessário iniciar uma mesa no restaurante.";
 
-        } else if (listaPedidos.length == 0) {
+        } else if(preferencias.getIdPagamento() == 1){
+            listaPedidos = new String[1];
+            listaPedidos[0] = "Você já realizou o pagamento de sua conta caso seja necessário realizar mais pedidos abra uma nova mesa.";
+
+        }else if (listaPedidos.length == 0) {
             String[] mensagem = {"Adicione produtos ao carrinho para finalizar seu pedido."};
             listaPedidos = new String[]{mensagem[0]};
             verificaCarrinho = true;
@@ -157,7 +161,7 @@ public class MainActivityCardapio extends AppCompatActivity implements OnItemCli
                         itensCarrinho.clear();
                         cardapioAdapter.limparCarrinho();
                         preferencias.snRealizouPedido(true);
-                        preferencias.SalvarIdPagamento(1,false);
+                        preferencias.SalvarIdPagamento(0,false);
 
 
 
@@ -195,7 +199,12 @@ public class MainActivityCardapio extends AppCompatActivity implements OnItemCli
                     dialog.getButton(AlertDialog.BUTTON_POSITIVE).setEnabled(false);
                     dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(R.color.colorPrimaryDark);
 
-                } else {
+                } else if(preferencias.getIdPagamento() == 1){
+
+                    dialog.getButton(AlertDialog.BUTTON_POSITIVE).setEnabled(false);
+                    dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(R.color.colorPrimaryDark);
+
+                }else{
                     dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(R.color.colorPrimaryDark);
                     dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(R.color.colorPrimaryDark);
                 }

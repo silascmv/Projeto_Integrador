@@ -98,7 +98,7 @@ public class MainActivityPrincipal extends AppCompatActivity {
             abrirCarteira.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast toast = Toast.makeText(getApplicationContext(), "Para consultar os produtos em sua conta, é necessário que tenha abeto a mesa e realizado alguns pedidos através do cardápio.", Toast.LENGTH_LONG);
+                    Toast toast = Toast.makeText(getApplicationContext(), "Para consultar os produtos em sua conta, é necessário que tenha aberto a mesa e realizado alguns pedidos através do cardápio.", Toast.LENGTH_LONG);
                     toast.setGravity(Gravity.CENTER, 0, 0);
                     toast.show();
 

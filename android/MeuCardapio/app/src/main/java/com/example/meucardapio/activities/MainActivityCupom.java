@@ -37,7 +37,7 @@ public class MainActivityCupom extends AppCompatActivity {
         preferencias.salvarIdComanda(0);
         preferencias.snRealizouPedido(false);
         preferencias.snAbriuComanda(false);
-
+        preferencias.SalvarIdPagamento(0,false);
 
     }
 }

@@ -165,6 +165,14 @@ public class Preferencias {
 
     }
 
+    public void removerPreferencia(String key){
+        SharedPreferences settings = context.getSharedPreferences("preferencias", Context.MODE_PRIVATE);
+        settings.edit().remove(key).commit();
+
+
+
+    }
+
 
 
 
