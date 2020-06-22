@@ -419,8 +419,8 @@ class DataAcessLayer {
                                 + sn_pago_inicial + ','
                                 + "'" + observacao + "'" + ','
                                 + data + ','
-                                + 'NULL ,' 
-                                + "'" + status_pagamento + "'" +')'
+                                + 'NULL ,'
+                                + "'" + status_pagamento + "'" + ')'
 
                             console.log(query_insert_comanda);
 
@@ -566,62 +566,62 @@ class DataAcessLayer {
 
         return new Promise((resolve, reject) => {
 
-        var listaObjetos = new Array();
-        var listaProdutosComanda = new Array();
-        listaObjetos = req.body;
+            var listaObjetos = new Array();
+            var listaProdutosComanda = new Array();
+            listaObjetos = req.body;
 
 
 
 
-        console.log('CORPO DA REQUISIÇÃO')
-        console.log(req.body);
+            console.log('CORPO DA REQUISIÇÃO')
+            console.log(req.body);
 
-        for (var i = 0; i < listaObjetos.length; i++) {
+            for (var i = 0; i < listaObjetos.length; i++) {
 
-            for (var j = 0; j < listaObjetos[i].quantidade; j++) {
+                for (var j = 0; j < listaObjetos[i].quantidade; j++) {
 
-                var objeto_retorno = {
-                    'ID_COMANDA_FK': listaObjetos[i].idComanda,
-                    'ID_PRODUTO_FK': listaObjetos[i].idProduto,
-					'STATUS_PRODUTO': listaObjetos[i].statusProduto
+                    var objeto_retorno = {
+                        'ID_COMANDA_FK': listaObjetos[i].idComanda,
+                        'ID_PRODUTO_FK': listaObjetos[i].idProduto,
+                        'STATUS_PRODUTO': listaObjetos[i].statusProduto
+
+                    }
+                    listaProdutosComanda.push(objeto_retorno);
 
                 }
-                listaProdutosComanda.push(objeto_retorno);
 
             }
 
-        }
+
+            var query = 'INSERT INTO COMANDA_PRODUTO (ID_COMANDA_FK,ID_PRODUTO_FK, STATUS_PRODUTO) VALUES ?';
+
+            pool.query(query, [listaProdutosComanda.map(item => [item.ID_COMANDA_FK, item.ID_PRODUTO_FK, item.STATUS_PRODUTO])], (error, results, fields) => {
 
 
-        var query = 'INSERT INTO COMANDA_PRODUTO (ID_COMANDA_FK,ID_PRODUTO_FK, STATUS_PRODUTO) VALUES ?';
+                if (error) {
+                    var resposta = {
+                        'status': 'Não foi possivel realizar pedido!',
+                        'code_status': '00'
 
-        pool.query(query, [listaProdutosComanda.map(item => [item.ID_COMANDA_FK, item.ID_PRODUTO_FK, item.STATUS_PRODUTO])], (error, results, fields) => {
+                    }
 
+                    console.log(error);
 
-            if (error) {
-                var resposta = {
-                    'status': 'Não foi possivel realizar pedido!',
-                    'code_status': '00'         
-                    
+                    resolve(resposta);
+
+                } else {
+
+                    var resposta = {
+                        'status': 'Pedido Realizado com Sucesso',
+                        'code_status': '01'
+                    }
+
+                    resolve(resposta);
+
                 }
 
-                console.log(error);
 
-                resolve(resposta);
-
-            } else {
-
-                var resposta = {
-                    'status': 'Pedido Realizado com Sucesso',
-                    'code_status': '01'
-                 }
-
-                resolve(resposta);
-
-          }
-       
-
-        })
+            })
 
 
 
@@ -629,7 +629,7 @@ class DataAcessLayer {
 
 
 
-    });
+        });
 
 
 
@@ -637,9 +637,90 @@ class DataAcessLayer {
 
 
 
+    realizarPagamentoAndroid(req, pool) {
+
+        return new Promise((resolve, reject) => {
 
 
 
+            let valor_total = req.param("VALOR_TOTAL");
+            let id_tp_pagamento = req.param("TP_PAGAMENTO");
+            let id_comanda = req.param("ID_COMANDA");
+
+
+            if (id_tp_pagamento == 1) {
+                let query = 'UPDATE COMANDA SET VALOR_TOTAL =' + valor_total + ',ID_TP_PAGAMENTO =' + id_tp_pagamento + ',STATUS_COMANDA =' + "'" + 'Pendente de Recebimento' + "'" + ' WHERE ID_COMANDA = ' + id_comanda
+                console.log('Query' + query);
+                pool.query(query, function (error, results, fields) {
+                    if (error) {
+                        console.log('ERROR NA EXECUÇÃO DA QUERY')
+                        console.log('ERRO' + error)
+                        resolve('Falha ao realizar operação.' + error)
+
+                    } else {
+                        var resposta = {
+                            'status': 'Aguarde alguns instantes, um garço irá se direcionar a sua Mesa',
+                            'code_status': '01'
+                        }
+
+                        resolve(resposta);
+
+                    }
+
+
+                })
+            } else if (id_tp_pagamento == 2) {
+                let query = 'UPDATE COMANDA SET VALOR_TOTAL =' + valor_total + ',ID_TP_PAGAMENTO =' + id_tp_pagamento + ',STATUS_COMANDA =' + "'" + 'Pendente de Recebimento(Maq. de Cartão)' + "'" + ' WHERE ID_COMANDA = ' + id_comanda
+                console.log('Query' + query);
+                pool.query(query, function (error, results, fields) {
+                    if (error) {
+                        console.log('ERROR NA EXECUÇÃO DA QUERY')
+                        resolve('Falha ao realizar operação.' + error)
+                    } else {
+                        var resposta = {
+                            'status': 'Aguarde alguns instantes, um garçom irá se direcionar a sua Mesa',
+                            'code_status': '01'
+                        }
+
+                        resolve(resposta);
+
+                    }
+
+
+                })
+
+
+
+            } else if (id_tp_pagamento == 3) {
+                let query = 'UPDATE COMANDA SET VALOR_TOTAL =' + valor_total + ',ID_TP_PAGAMENTO =' + id_tp_pagamento + ',STATUS_COMANDA =' + "'" + 'Pagamento Online' + "'" + ' WHERE ID_COMANDA = ' + id_comanda
+                console.log('Query' + query);
+                    pool.query(query, function (error, results, fields) {
+                        if (error) {
+                            console.log('ERROR NA EXECUÇÃO DA QUERY')
+                            resolve('Falha ao realizar operação.' + error)
+
+                        } else {
+                            var resposta = {
+                                'status': 'Pagamento realizado com sucesso, obrigado pela preferência',
+                                'code_status': '01'
+                            }
+
+                            resolve(resposta);
+
+                        }
+
+
+                    })
+
+
+            };
+
+
+
+        });
+
+
+    }
 
 
 

@@ -15,6 +15,8 @@ import com.example.meucardapio.model.Cardapio;
 import com.example.meucardapio.model.Conta;
 import com.example.meucardapio.model.ItemPedido;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,7 +42,7 @@ public class ContaAdapter extends RecyclerView.Adapter<ContaAdapter.ViewHolder> 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
 
-        private TextView nomeProduto, quantidadeProduto, valorTotalProduto;
+        private TextView nomeProduto, quantidadeProduto, valorTotalProduto,statusProduto;
 
 
         public ViewHolder(@NonNull View itemView, final RecyclerItemClickListener.OnItemClickListener listener) {
@@ -50,6 +52,7 @@ public class ContaAdapter extends RecyclerView.Adapter<ContaAdapter.ViewHolder> 
             nomeProduto = (TextView) itemView.findViewById(R.id.nomeProduto);
             quantidadeProduto = (TextView) itemView.findViewById(R.id.quantidadeProduto);
             valorTotalProduto = (TextView) itemView.findViewById(R.id.valorTotalProduto);
+            statusProduto = (TextView) itemView.findViewById(R.id.statusProduto);
 
 
             itemView.setOnClickListener(new View.OnClickListener() {
@@ -88,6 +91,7 @@ public class ContaAdapter extends RecyclerView.Adapter<ContaAdapter.ViewHolder> 
         holder.nomeProduto.setText(contas.get(position).getNome_produto());
         holder.quantidadeProduto.setText("Quantidade : " + String.valueOf(contas.get(position).getQuantidade()));
         holder.valorTotalProduto.setText("Valor Total R$ " + String.valueOf(contas.get(position).getValor_total()));
+        holder.statusProduto.setText("Status do Pedido : " + contas.get(position).getStatusProduto());
 
 
 

@@ -32,6 +32,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -57,15 +58,11 @@ public class MainActivityCardapio extends AppCompatActivity implements OnItemCli
     private TextView txtSomar;
 
 
-
     private int contadorTexto;
-    private int valorTexto;
-    private
+    private double valorTexto;
 
     GsonBuilder gsonBuilder = new GsonBuilder();
     Gson gson = gsonBuilder.create();
-
-
 
 
     //ListView
@@ -79,7 +76,7 @@ public class MainActivityCardapio extends AppCompatActivity implements OnItemCli
 
         //Quantidade de itens no carrinho
         textQuantidade = findViewById(R.id.quantidade);
-        valorTotal = findViewById(R.id.valor);
+        valorTotal = findViewById(R.id.valorTotal);
         FloatingActionButton btnRealizarPedido = (FloatingActionButton) findViewById(R.id.addCarrinho);
         txtSomar = findViewById(R.id.txtSomar);
 
@@ -93,7 +90,7 @@ public class MainActivityCardapio extends AppCompatActivity implements OnItemCli
             public void onClick(View v) {
                 Log.i(TAG, getClasseName() + "CLICOU FLOATING BUTTON ");
                 String JsonObject = gson.toJson(cardapioAdapter.retornaCarrinho());
-                cardapioAdapter.definirIdComandaItensCarrinho(getIdComandaCliente());
+                cardapioAdapter.definirIdComanda(getIdComandaCliente());
                 Log.i(TAG, getClasseName() + "JSON ITENS DO CARRINHO TESTE RETORNO ----->" + cardapioAdapter.retornaCarrinho());
                 confirmarPedido(JsonObject, (ArrayList<ItemPedido>) cardapioAdapter.retornaCarrinho());
 
@@ -114,20 +111,20 @@ public class MainActivityCardapio extends AppCompatActivity implements OnItemCli
         boolean verificaCarrinho = false;
 
 
-        if(getIdComandaCliente() == 0 ){
+        if (getIdComandaCliente() == 0) {
             listaPedidos = new String[1];
             listaPedidos[0] = "Para iniciar seus pedidos é necessário iniciar uma mesa no restaurante.";
 
-        }else if(listaPedidos.length == 0) {
+        } else if (listaPedidos.length == 0) {
             String[] mensagem = {"Adicione produtos ao carrinho para finalizar seu pedido."};
             listaPedidos = new String[]{mensagem[0]};
             verificaCarrinho = true;
 
-        }else{
+        } else {
             listaPedidos = new String[itensCarrinho.size()];
-        for (int i = 0; i < itensCarrinho.size(); i++) {
-            listaPedidos[i] = itensCarrinho.get(i).getNomeProduto() + "|Quantidade: " + itensCarrinho.get(i).getQuantidade();
-        }
+            for (int i = 0; i < itensCarrinho.size(); i++) {
+                listaPedidos[i] = itensCarrinho.get(i).getNomeProduto() + "|Quantidade: " + itensCarrinho.get(i).getQuantidade();
+            }
 
         }
 
@@ -155,14 +152,11 @@ public class MainActivityCardapio extends AppCompatActivity implements OnItemCli
 
                 try {
                     CodeStatus retornoRealizarPedido = new HttpServiceRealizarPedido(itensCarrinho).execute().get();
-
                     if (retornoRealizarPedido.getCode_status() == 1) {
-
                         Toasty.custom(MainActivityCardapio.this, "Pedido realizado com sucesso!", null, Toast.LENGTH_SHORT, false).show();
                         itensCarrinho.clear();
                         cardapioAdapter.limparCarrinho();
                         preferencias.snRealizouPedido(true);
-
 
 
                     } else {
@@ -194,14 +188,14 @@ public class MainActivityCardapio extends AppCompatActivity implements OnItemCli
             @SuppressLint("ResourceAsColor")
             @Override
             public void onShow(DialogInterface arg0) {
-                if(getIdComandaCliente() == 0 || finalVerificaCarrinho ==true){
+                if (getIdComandaCliente() == 0 || finalVerificaCarrinho == true) {
 
                     dialog.getButton(AlertDialog.BUTTON_POSITIVE).setEnabled(false);
                     dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(R.color.colorPrimaryDark);
 
-                }else{
-                dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(R.color.colorPrimaryDark);
-                dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(R.color.colorPrimaryDark);
+                } else {
+                    dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(R.color.colorPrimaryDark);
+                    dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(R.color.colorPrimaryDark);
                 }
             }
         });
@@ -220,16 +214,14 @@ public class MainActivityCardapio extends AppCompatActivity implements OnItemCli
     }
 
     public void buildRecyclerView() {
-        //VARIAVEIS RECYCLEVIEW
+
         cardapio_recycleview = (RecyclerView) findViewById(R.id.cardapioRecyclerview);
         cardapio_recycleview.setLayoutManager(new LinearLayoutManager(this));
 
         try {
             listarCardapioCompleto = new HttpServiceListarCardapio().execute().get();
-            cardapioAdapter = new CardapioAdapter(MainActivityCardapio.this, (ArrayList<Cardapio>) listarCardapioCompleto,this);
+            cardapioAdapter = new CardapioAdapter(MainActivityCardapio.this, (ArrayList<Cardapio>) listarCardapioCompleto, this);
             cardapio_recycleview.setAdapter(cardapioAdapter);
-            Log.i(TAG, getClasseName() + "JSON CONVERTION DO OBJETO DENTRO DA CLASSE x " + listarCardapioCompleto.toArray());
-
 
         } catch (ExecutionException e) {
             e.printStackTrace();
@@ -259,9 +251,9 @@ public class MainActivityCardapio extends AppCompatActivity implements OnItemCli
     public void onClickSoma(int value) {
         textQuantidade = findViewById(R.id.quantidade);
         contadorTexto += value;
-        textQuantidade.setText("Quantidade: " +  (String.valueOf(contadorTexto) + " " + "|"));
-;
-        Log.i(TAG,"CLICOUU");
+        textQuantidade.setText("Quantidade: " + (String.valueOf(contadorTexto) + " " + "|"));
+        ;
+        Log.i(TAG, "CLICOUU");
     }
 
     @Override
@@ -269,9 +261,29 @@ public class MainActivityCardapio extends AppCompatActivity implements OnItemCli
 
         textQuantidade = findViewById(R.id.quantidade);
         contadorTexto -= value;
-        textQuantidade.setText("Quantidade: " +  (String.valueOf(contadorTexto) + " " + "|"));
-        ;
-        Log.i(TAG,"CLICOUU");
+        textQuantidade.setText("Quantidade: " + (String.valueOf(contadorTexto) + " " + "|"));
+
+
+    }
+
+    @Override
+    public void onClickSomarTotalCompra(double value) {
+
+        valorTotal = findViewById(R.id.valorTotal);
+        valorTexto += value;
+        DecimalFormat df = new DecimalFormat("#.##");
+        String formatted = df.format(valorTexto);
+        valorTotal.setText("Valor Total - R$" + (String.valueOf(formatted)));
+    }
+
+    @Override
+    public void onClickSubtrairTotalCompra(double value) {
+        valorTotal = findViewById(R.id.valorTotal);
+        valorTexto -= value;
+        DecimalFormat df = new DecimalFormat("#.##");
+        String formatted = df.format(valorTexto);
+        valorTotal.setText("Valor Total - R$" + (String.valueOf(formatted)));
+
 
     }
 }

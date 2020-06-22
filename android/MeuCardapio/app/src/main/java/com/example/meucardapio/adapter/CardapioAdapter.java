@@ -121,6 +121,12 @@ public class CardapioAdapter extends RecyclerView.Adapter<CardapioAdapter.ViewHo
                         Log.i(TAG, "CLICOU NO SOMAR aq 01");
 
 
+                        mCallback.onClickSomarTotalCompra( itemPedido.getQuantidade() * itemPedido.getPreco());
+
+
+                        Log.i(TAG, "CLICOU NO SOMAR aq 01");
+
+
                     } else {
 
                         boolean existeProduto = false;
@@ -147,12 +153,14 @@ public class CardapioAdapter extends RecyclerView.Adapter<CardapioAdapter.ViewHo
                             Log.i(TAG, "CLICOU NO SOMAR aq 03");
 
                             mCallback.onClickSoma(1);
+                            mCallback.onClickSomarTotalCompra(itemPedido.getPreco());
 
                         } else {
 
                             Log.i(TAG, "CLICOU NO SOMAR aq 03");
 
                             mCallback.onClickSoma(1);
+                            mCallback.onClickSomarTotalCompra(itemPedido.getPreco());
                         }
 
 
@@ -193,6 +201,7 @@ public class CardapioAdapter extends RecyclerView.Adapter<CardapioAdapter.ViewHo
                             if (itensCarrinho.get(i).equals(itemPedido)) {
                                 itensCarrinho.remove(i);
                                 mCallback.onClickSubtrair(1);
+                                mCallback.onClickSubtrairTotalCompra(itemPedido.getPreco());
                                 break;
                             }
                         }
@@ -209,7 +218,7 @@ public class CardapioAdapter extends RecyclerView.Adapter<CardapioAdapter.ViewHo
                         }
                         txtContador.setText(String.valueOf(subtracao));
                         mCallback.onClickSubtrair(1);
-
+                        mCallback.onClickSubtrairTotalCompra(itemPedido.getPreco());
 
                     }
                 }
@@ -263,7 +272,7 @@ public class CardapioAdapter extends RecyclerView.Adapter<CardapioAdapter.ViewHo
 
     }
 
-    public void definirIdComandaItensCarrinho(int idComanda) {
+    public void definirIdComanda(int idComanda) {
 
 
         for (int i = 0; i < itensCarrinho.size(); i++) {

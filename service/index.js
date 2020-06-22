@@ -694,7 +694,7 @@ app.post('/consultarConta/', (req, res) => {
 
         var id_comanda = req.param("ID_COMANDA")
 
-        var query = 'SELECT  MESAS.DESCRICAO,PRODUTOS.NOME_PRODUTO,COUNT(PRODUTOS.NOME_PRODUTO) AS QUANTIDADE,SUM(PRODUTOS.VALOR) AS ' + "'VALOR_TOTAL'" + 'FROM COMANDA_PRODUTO JOIN PRODUTOS ON PRODUTOS.ID_PRODUTO = ID_PRODUTO_FK JOIN COMANDA  ON COMANDA.ID_COMANDA = COMANDA_PRODUTO.ID_COMANDA_FK JOIN MESAS ON COMANDA.ID_MESA = MESAS.ID_MESA JOIN CLIENTE ON COMANDA.ID_CLIENTE = CLIENTE.ID_CLIENTE WHERE COMANDA_PRODUTO.ID_COMANDA_FK = ' + id_comanda + ' GROUP BY PRODUTOS.NOME_PRODUTO'
+        var query = 'SELECT COMANDA_PRODUTO.STATUS_PRODUTO,PRODUTOS.NOME_PRODUTO,COUNT(PRODUTOS.NOME_PRODUTO) AS QUANTIDADE,SUM(PRODUTOS.VALOR) AS' + "'" + 'VALOR_TOTAL' + "'" + 'FROM COMANDA_PRODUTO JOIN PRODUTOS ON PRODUTOS.ID_PRODUTO = ID_PRODUTO_FK JOIN COMANDA  ON COMANDA.ID_COMANDA = COMANDA_PRODUTO.ID_COMANDA_FK JOIN MESAS ON COMANDA.ID_MESA =MESAS.ID_MESA JOIN CLIENTE ON COMANDA.ID_CLIENTE = CLIENTE.ID_CLIENTE WHERE COMANDA_PRODUTO.ID_COMANDA_FK =' + id_comanda +  ' GROUP BY PRODUTOS.NOME_PRODUTO,MESAS.DESCRICAO,COMANDA_PRODUTO.STATUS_PRODUTO,PRODUTOS.NOME_PRODUTO,VALOR_TOTAL'
         pool.query(query, (error, results, fields) => {
             if (error) {
                 console.log(error)
@@ -711,7 +711,7 @@ app.post('/consultarConta/', (req, res) => {
                 for (var i = 0; i < results.length; i++) {
 
                     var objeto_retorno = {
-                        'descricao': results[i].DESCRICAO,
+                        'statusProduto': results[i].STATUS_PRODUTO,
                         'nome_produto': results[i].NOME_PRODUTO,
                         'quantidade': results[i].QUANTIDADE,
                         'valor_total': results[i].VALOR_TOTAL,                      
@@ -778,6 +778,27 @@ app.get('/consultarContaWeb/', (req, res) => {
 
 })
 
+app.post('/realizarPagamentoAndroid/', (req,res) =>{
+
+   
+    pool.getConnection(function (err, pool) {
+
+        const objeto_dal = new DataAcessLayer();
+
+        async function realizarPagamentoAndroid() {
+            await objeto_dal.realizarPagamentoAndroid(req, pool).then(resultado => {
+                res.send(resultado);
+            });
+        }
+
+        realizarPagamentoAndroid();
+
+    });
+
+
+
+
+})
 
 
 

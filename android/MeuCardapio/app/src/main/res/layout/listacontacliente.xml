@@ -17,9 +17,10 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="80dp"
             android:layout_toRightOf="@+id/imagemProduto"
             android:orientation="vertical">
+
 
             <TextView
                 android:id="@+id/nomeProduto"
@@ -30,16 +31,17 @@
                 android:text="Nome Produto"
                 />
 
-            <TextView
-                android:id="@+id/quantidadeProduto"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:lines="1"
-                android:fontFamily="@font/alfa_slab_one"
-                android:textSize="12sp"
-                android:text="Valor: " />
+                <TextView
+                    android:id="@+id/quantidadeProduto"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/alfa_slab_one"
+                    android:lines="1"
+                    android:text="Valor: "
+                    android:textSize="12sp"
+                    />
 
-            <TextView
+                <TextView
                 android:id="@+id/valorTotalProduto"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -48,6 +50,20 @@
                 android:textSize="12sp"
 
                 />
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/statusProduto"
+                    android:text="Status do Produto"
+                    android:fontFamily="@font/alfa_slab_one"
+                    android:textSize="12sp"
+                    />
+
+
+
+
 
 
         </LinearLayout>
