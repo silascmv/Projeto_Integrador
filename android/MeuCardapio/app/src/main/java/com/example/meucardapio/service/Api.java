@@ -45,6 +45,16 @@ public interface Api {
 
 
     @FormUrlEncoded
+    @POST("realizarPagamentoAndroid")
+    Call<CodeStatus> realizarPagamentoAndroid(
+            @Field("VALOR_TOTAL") double valorTotalPagamento,
+            @Field("TP_PAGAMENTO") double tpPagamento,
+            @Field("ID_COMANDA") int idComanda
+
+    );
+
+
+    @FormUrlEncoded
     @POST("consultarConta")
     Call<List<Conta>> consultarConta(
             @Field("ID_COMANDA")int idComanda);

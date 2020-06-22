@@ -157,6 +157,8 @@ public class MainActivityCardapio extends AppCompatActivity implements OnItemCli
                         itensCarrinho.clear();
                         cardapioAdapter.limparCarrinho();
                         preferencias.snRealizouPedido(true);
+                        preferencias.SalvarIdPagamento(1,false);
+
 
 
                     } else {
@@ -241,7 +243,7 @@ public class MainActivityCardapio extends AppCompatActivity implements OnItemCli
     public int getIdComandaCliente() {
 
         SharedPreferences sharedPreferences = getSharedPreferences("preferencias", Context.MODE_PRIVATE);
-        int comandaUsuario = sharedPreferences.getInt("idComandaUsuario", 0);
+        int comandaUsuario = sharedPreferences.getInt("idComandaUsuario", -1);
         return comandaUsuario;
 
     }

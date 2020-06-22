@@ -8,9 +8,12 @@ import android.os.Bundle;
 import android.widget.TextView;
 
 import com.example.meucardapio.R;
+import com.example.meucardapio.model.Preferencias;
 import com.example.meucardapio.model.UsuarioLogado;
 
 public class MainActivityCupom extends AppCompatActivity {
+
+    Preferencias preferencias = new Preferencias(MainActivityCupom.this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,11 +34,10 @@ public class MainActivityCupom extends AppCompatActivity {
 
 
 
-        SharedPreferences sharedPreferences = getSharedPreferences("preferencias", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putBoolean("sn_ativo", false );
-        editor.putInt("idComandaUsuario", 0 );
-        editor.commit();
+        preferencias.salvarIdComanda(0);
+        preferencias.snRealizouPedido(false);
+        preferencias.snAbriuComanda(false);
+
 
     }
 }

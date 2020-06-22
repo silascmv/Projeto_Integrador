@@ -659,7 +659,7 @@ class DataAcessLayer {
 
                     } else {
                         var resposta = {
-                            'status': 'Aguarde alguns instantes, um garço irá se direcionar a sua Mesa',
+                            'status': 'Aguarde alguns instantes, um garçom irá se direcionar até sua Mesa para o receber o pagamento',
                             'code_status': '01'
                         }
 
@@ -678,7 +678,7 @@ class DataAcessLayer {
                         resolve('Falha ao realizar operação.' + error)
                     } else {
                         var resposta = {
-                            'status': 'Aguarde alguns instantes, um garçom irá se direcionar a sua Mesa',
+                            'status': 'Aguarde alguns instantes, um garçom irá se direcionar a sua Mesa para receber o pagamento',
                             'code_status': '01'
                         }
 

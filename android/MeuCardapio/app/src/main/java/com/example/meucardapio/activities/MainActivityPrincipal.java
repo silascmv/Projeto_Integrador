@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -19,12 +20,14 @@ import com.example.meucardapio.activities.MainActivityCardapio;
 import com.example.meucardapio.activities.MainActivityCarteira;
 import com.example.meucardapio.activities.MainActivityCupom;
 import com.example.meucardapio.activities.MainActivityLocalizar;
+import com.example.meucardapio.model.Preferencias;
 import com.example.meucardapio.model.UsuarioLogado;
 
 public class MainActivityPrincipal extends AppCompatActivity {
 
     private static final String TAG = "MyActivity";
     UsuarioLogado usuarioLogado;
+    Preferencias preferencias = new Preferencias(MainActivityPrincipal.this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +59,14 @@ public class MainActivityPrincipal extends AppCompatActivity {
         final LinearLayout abrirAjuda = findViewById(R.id.abrirAjuda);
         final LinearLayout abrirLocalizar = findViewById(R.id.abrirLocalizar);
 
-        if(verificaComandaAberta() == true) {
+        Log.i("TESTE","TESTE" + preferencias.getSnAbriuComanda());
+
+        Log.i("TESTE","REALIZOU PEDIDO" + preferencias.getRealizouPedido());
+
+        if(preferencias.getSnAbriuComanda() != false) {
+
+            Log.i("CHEGOU AQUI NO IF","IF" + preferencias.getSnAbriuComanda());
+
             abrirComanda.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -77,7 +87,12 @@ public class MainActivityPrincipal extends AppCompatActivity {
 
 
 
-        }else{
+        }else if(!preferencias.getRealizouPedido()){
+
+
+            Log.i("CHEGOU AQUI NO ELSE IF","IF" + preferencias.getRealizouPedido());
+
+
 
 
             abrirCarteira.setOnClickListener(new View.OnClickListener() {
@@ -91,7 +106,20 @@ public class MainActivityPrincipal extends AppCompatActivity {
             });
 
 
+            abrirComanda.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intentTelaCadastro = new Intent(getApplicationContext(), MainActivityAbrirMesa.class );
+                    intentTelaCadastro.putExtra("usuarioLogado", (Parcelable) usuarioLogado);
+                    startActivity(intentTelaCadastro);
 
+                }
+            });
+
+
+        }else{
+
+            Log.i("CHEGOU AQUI NO ELSE","ELSE" + preferencias.getRealizouPedido());
 
             abrirComanda.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -103,25 +131,6 @@ public class MainActivityPrincipal extends AppCompatActivity {
                 }
             });
         }
-
-
-        /* if(verificaComandaAberta() == true){
-
-            abrirComanda.setVisibility(View.INVISIBLE);
-            abrirCarteira.setVisibility(View.VISIBLE);
-
-        }else{
-
-            abrirComanda.setVisibility(View.VISIBLE);
-            abrirCarteira.setVisibility(View.INVISIBLE);
-
-        } */
-
-
-
-
-
-        //  Log.i(TAG, getClasseName() + "ID : ----->" + usuarioLogado.getIdUsuarioLogado());
 
 
 
