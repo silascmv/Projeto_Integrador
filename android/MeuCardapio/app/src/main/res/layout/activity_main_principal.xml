@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/gradient"
-    tools:context=".MainActivityPrincipal">
+    tools:context=".activities.MainActivityPrincipal">
 
 
     <LinearLayout
@@ -15,32 +15,30 @@
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="40dp"
             android:layout_rowWeight="1"
             android:layout_columnWeight="1"
-            android:layout_margin="12dp"
             android:visibility="visible"
-            app:cardCornerRadius="12dp"
             app:cardElevation="6dp">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:layout_marginLeft="6dp"
                 android:layout_marginTop="6dp"
                 android:fontFamily="@font/alfa_slab_one"
                 android:text="@string/bem_vindo_user"
                 android:textColor="#000000"
-                android:layout_gravity="center"
                 android:textSize="10sp" />
 
             <TextView
                 android:id="@+id/usuarioLogado"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:layout_marginLeft="47dp"
                 android:layout_marginTop="6dp"
-                android:layout_gravity="center"
                 android:fontFamily="@font/alfa_slab_one"
                 android:text=""
                 android:textColor="#000000"
@@ -49,10 +47,11 @@
             <ImageView
                 android:layout_width="42dp"
                 android:layout_height="42dp"
-                android:layout_marginLeft="140dp"
-                android:layout_marginTop="6dp"
                 android:layout_gravity="center"
+                android:layout_marginLeft="140dp"
                 android:src="@drawable/robo" />
+
+
 
         </androidx.cardview.widget.CardView>
 
@@ -98,6 +97,10 @@
                         android:textSize="18sp" />
 
                 </LinearLayout>
+
+
+
+
 
             </androidx.cardview.widget.CardView>
 
@@ -147,46 +150,13 @@
                 app:cardElevation="6dp">
 
                 <LinearLayout
-                    android:id="@+id/abrirCupom"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    android:padding="16dp">
-
-                    <ImageView
-                        android:layout_width="80dp"
-                        android:layout_height="80dp"
-                        android:src="@drawable/cupom" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="12dp"
-                        android:text="Cupons"
-                        android:textColor="#6f6f6f"
-                        android:textSize="18sp" />
-
-                </LinearLayout>
-
-            </androidx.cardview.widget.CardView>
-
-            <androidx.cardview.widget.CardView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_rowWeight="1"
-                android:layout_columnWeight="1"
-                android:layout_margin="12dp"
-                app:cardCornerRadius="12dp"
-                app:cardElevation="6dp">
-
-                <LinearLayout
                     android:id="@+id/abrirCarteira"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
                     android:orientation="vertical"
-                    android:padding="16dp">
+                    android:padding="16dp"
+                    >
 
                     <ImageView
                         android:layout_width="80dp"
@@ -202,6 +172,44 @@
                         android:textSize="18sp" />
 
                 </LinearLayout>
+
+
+
+            </androidx.cardview.widget.CardView>
+
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_rowWeight="1"
+                android:layout_columnWeight="1"
+                android:layout_margin="12dp"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="6dp">
+
+                <LinearLayout
+                    android:id="@+id/abrirLocalizar"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <ImageView
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:src="@drawable/localizar" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:text="Restaurantes"
+                        android:textColor="#6f6f6f"
+                        android:textSize="18sp" />
+
+                </LinearLayout>
+
 
             </androidx.cardview.widget.CardView>
 
@@ -239,6 +247,8 @@
 
             </androidx.cardview.widget.CardView>
 
+
+
             <androidx.cardview.widget.CardView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -249,7 +259,7 @@
                 app:cardElevation="6dp">
 
                 <LinearLayout
-                    android:id="@+id/abrirLocalizar"
+                    android:id="@+id/abrirCupom"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
@@ -259,19 +269,20 @@
                     <ImageView
                         android:layout_width="80dp"
                         android:layout_height="80dp"
-                        android:src="@drawable/localizar" />
+                        android:src="@drawable/cupom" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="12dp"
-                        android:text="Restaurantes"
+                        android:text="Cupons"
                         android:textColor="#6f6f6f"
                         android:textSize="18sp" />
 
                 </LinearLayout>
 
             </androidx.cardview.widget.CardView>
+
 
 
         </GridLayout>

@@ -1,10 +1,12 @@
-package com.example.meucardapio;
+package com.example.meucardapio.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+
+import com.example.meucardapio.R;
 
 public class Splash extends AppCompatActivity {
 
@@ -20,7 +22,7 @@ public class Splash extends AppCompatActivity {
                 finish();
 
             }
-        },3000);
+        },1500);
 
         /*Thread timerThread = new Thread() {
             @Override

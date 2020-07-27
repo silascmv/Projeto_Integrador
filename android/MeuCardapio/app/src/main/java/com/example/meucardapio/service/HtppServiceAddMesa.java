@@ -16,7 +16,6 @@ public class HtppServiceAddMesa extends AsyncTask<Void, Void, CodeStatus> {
 
 
     private static final String TAG = "MyActivity";
-    static String retorno_api;
     private AddMesa abrirMesa = new AddMesa();
     Gson gson = new Gson();
     CodeStatus codeStatus;
@@ -36,6 +35,9 @@ public class HtppServiceAddMesa extends AsyncTask<Void, Void, CodeStatus> {
             codeStatus = rp.body();
             //codeStatus = gson.fromJson(retorno_api,CodeStatus.class);
             Log.i(TAG, getClasseName() + "Sucesso CONVERSÃO JSON body --------------->" + codeStatus);
+
+            Log.i(TAG, getClasseName() + "Sucesso CONVERSÃO JSON body --------------->" + this.abrirMesa.getTp_pagamento() + this.abrirMesa.getId_funcionario() + this.abrirMesa.getTp_pagamento() + this.abrirMesa.getQr_code());
+
 
         } catch (IOException e) {
             e.printStackTrace();

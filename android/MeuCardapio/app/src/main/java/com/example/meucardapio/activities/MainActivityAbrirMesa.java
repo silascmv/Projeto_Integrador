@@ -1,33 +1,26 @@
-package com.example.meucardapio;
+package com.example.meucardapio.activities;
 
-import androidx.annotation.ColorInt;
 import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 
-import me.dm7.barcodescanner.core.CameraUtils;
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
-import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.DrawableWrapper;
-import android.hardware.Camera;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.text.style.BackgroundColorSpan;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.example.meucardapio.R;
 import com.example.meucardapio.model.AddMesa;
+import com.example.meucardapio.model.Preferencias;
 import com.example.meucardapio.model.UsuarioLogado;
 import com.example.meucardapio.service.CodeStatus;
 import com.example.meucardapio.service.HtppServiceAddMesa;
@@ -37,11 +30,10 @@ import java.util.concurrent.ExecutionException;
 
 import static android.app.PendingIntent.getActivity;
 import static com.example.meucardapio.R.*;
-import static com.example.meucardapio.R.drawable.bordaqrcode;
 
 public class MainActivityAbrirMesa extends AppCompatActivity implements ZXingScannerView.ResultHandler {
-
-
+    //PREFERENCIAS
+    Preferencias preferencias = new Preferencias(MainActivityAbrirMesa.this);
 
     //LOG
     private static final String TAG = "MyActivity";
@@ -62,11 +54,11 @@ public class MainActivityAbrirMesa extends AppCompatActivity implements ZXingSca
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         usuarioLogado = getIntent().getExtras().getParcelable("usuarioLogado");
-        super.onCreate( savedInstanceState );
-        setContentView( layout.activity_main_abrir_mesa );
-        Log.i( TAG, getClasseName() + "------> ON CREATE <--------- " );
-        rl = (RelativeLayout) findViewById( id.relative_scan );
-        mScannerView = new ZXingScannerView( this );
+        super.onCreate(savedInstanceState);
+        setContentView(layout.activity_main_abrir_mesa);
+        Log.i(TAG,  "------> ON CREATE <--------- ");
+        rl = (RelativeLayout) findViewById(id.relative_scan);
+        mScannerView = new ZXingScannerView(this);
 
 
     }
@@ -76,44 +68,44 @@ public class MainActivityAbrirMesa extends AppCompatActivity implements ZXingSca
     @Override
     public void onResume() {
         super.onResume();
-        Log.i( TAG, getClasseName() + "------> ON  RESUME <--------- " );
-        setContentView( layout.activity_main_abrir_mesa );
+        Log.i(TAG, "------> ON  RESUME <--------- ");
+        setContentView(layout.activity_main_abrir_mesa);
         //VARIAVEIS PARA TRABALHAR COM O FLASH e CAMERA - LAYOUT
-        final ImageView btnflash = findViewById( id.btnFlash );
+        final ImageView btnflash = findViewById(id.btnFlash);
         final ImageView btnFlashDesligado = findViewById(R.id.btnFlashDesligado);
-        rl = (RelativeLayout) findViewById( id.relative_scan );
+        rl = (RelativeLayout) findViewById(id.relative_scan);
         //Variavies pra trabalhar com o scanner e configuração do mesmo
-        mScannerView = new ZXingScannerView( this );
-        rl.addView( mScannerView );
-        mScannerView.setResultHandler( this );
-        mScannerView.setBorderColor( Color.WHITE );
+        mScannerView = new ZXingScannerView(this);
+        rl.addView(mScannerView);
+        mScannerView.setResultHandler(this);
+        mScannerView.setBorderColor(Color.WHITE);
         mScannerView.setLaserColor(Color.RED);
         mScannerView.setBorderLineLength(30);
         mScannerView.startCamera();
 
 
         //FUNÇÃO PARA LIGAR E DESLIGAR FLASH
-        btnflash.setOnClickListener( new View.OnClickListener() {
+        btnflash.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 if (verificaFlash == false) {
 
-                    mScannerView.setFlash( true );
+                    mScannerView.setFlash(true);
                     verificaFlash = true;
 
                     btnflash.setVisibility(View.INVISIBLE);
                     btnFlashDesligado.setVisibility(View.VISIBLE);
                 } else {
 
-                    mScannerView.setFlash( false );
+                    mScannerView.setFlash(false);
 
                     verificaFlash = false;
                 }
 
 
             }
-        } );
+        });
 
         btnFlashDesligado.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -121,13 +113,13 @@ public class MainActivityAbrirMesa extends AppCompatActivity implements ZXingSca
 
                 if (verificaFlash == true) {
 
-                    mScannerView.setFlash( false );
+                    mScannerView.setFlash(false);
                     verificaFlash = false;
                     btnflash.setVisibility(View.VISIBLE);
                     btnFlashDesligado.setVisibility(View.INVISIBLE);
                 } else {
 
-                    mScannerView.setFlash( false );
+                    mScannerView.setFlash(false);
 
                     verificaFlash = false;
                 }
@@ -142,9 +134,9 @@ public class MainActivityAbrirMesa extends AppCompatActivity implements ZXingSca
     @Override
     public void onPause() {
         super.onPause();
-        Log.i( TAG, getClasseName() + "------> ON PAUSE <--------- " );
-         mScannerView.stopCameraPreview();
-             // Stop camera on pause
+        Log.i(TAG, "------> ON PAUSE <--------- ");
+        mScannerView.stopCameraPreview();
+        // Stop camera on pause
         //Camera camera = CameraUtils.getCameraInstance();
         //if (camera != null) {
         //   camera.release();
@@ -155,14 +147,14 @@ public class MainActivityAbrirMesa extends AppCompatActivity implements ZXingSca
     @Override
     protected void onStop() {
         super.onStop();
-        Log.i( TAG, getClasseName() + "------> ON STOP <--------- " );
+        Log.i(TAG,  "------> ON STOP <--------- ");
         mScannerView.stopCamera();
     }
 
     @Override
     public void onRestart() {
         super.onRestart();
-        Log.i( TAG, getClasseName() + "------> ON RESTART <--------- " );
+        Log.i(TAG, "------> ON RESTART <--------- ");
         mScannerView.startCamera();          // Start camera on resume
 
     }
@@ -170,7 +162,7 @@ public class MainActivityAbrirMesa extends AppCompatActivity implements ZXingSca
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Log.i( TAG, getClasseName() + "------> ON DESTROY <--------- " );
+        Log.i(TAG,  "------> ON DESTROY <--------- ");
         mScannerView.stopCameraPreview(); //stopPreview
         mScannerView.stopCamera();           // Stop camera on pause
     }
@@ -180,40 +172,43 @@ public class MainActivityAbrirMesa extends AppCompatActivity implements ZXingSca
 
         if (result.getText() != null) {
 
-            abrirMesa.setQr_code( result.getText() );
-            abrirMesa.setId_cliente(usuarioLogado.getIdUsuarioLogado());
+            abrirMesa.setQr_code(result.getText());
+            abrirMesa.setId_cliente(preferencias.getIdUsuarioLogado());
             abrirMesa.setId_funcionario(1);
             abrirMesa.setTp_pagamento(1);
 
 
             try {
-                CodeStatus retornoAbrirMesa = new HtppServiceAddMesa( abrirMesa ).execute().get();
+                CodeStatus retornoAbrirMesa = new HtppServiceAddMesa(abrirMesa).execute().get();
                 //TOAST RETORNO USUÁRIO
-                Toast toast = Toast.makeText( getApplicationContext(), retornoAbrirMesa.status, Toast.LENGTH_LONG );
-                toast.setGravity( Gravity.CENTER, 0, 0 );
+                Toast toast = Toast.makeText(getApplicationContext(), retornoAbrirMesa.status, Toast.LENGTH_LONG);
+                toast.setGravity(Gravity.CENTER, 0, 0);
                 toast.show();
-                //DEFININDO MESA DO USUÁRIO LOGADO
-                usuarioLogado.setMesaUsuarioLogado(retornoAbrirMesa.mesa_cliente);
-                Log.i( TAG, getClasseName() + "------> ON DESTROY <--------- " + usuarioLogado.getMesaUsuarioLogado() );
+
+                preferencias.salvarIdComanda(retornoAbrirMesa.getId_comanda());
+                preferencias.salvarMesaUsuario(retornoAbrirMesa.getMesa_cliente());
+                preferencias.snAbriuComanda(true);
+                preferencias.SalvarIdPagamento(0,false);
+
                 //SCANNER
                 mScannerView.startCamera();
                 Handler handler = new Handler();
-                handler.postDelayed( new Runnable() {
+                handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        mScannerView.resumeCameraPreview( MainActivityAbrirMesa.this );
+                        mScannerView.resumeCameraPreview(MainActivityAbrirMesa.this);
                     }
-                }, 2000 );
+                }, 2000);
             } catch (ExecutionException e) {
                 e.printStackTrace();
-                Log.i( TAG, getClasseName() + "------> ON DESTROY <--------- " + e );
+                Log.i(TAG,  "------> ON DESTROY <--------- " + e);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
 
         } else {
-            Toast toast = Toast.makeText( getApplicationContext(), "Não foi possível realizar operação, tente novamente.", Toast.LENGTH_LONG );
-            toast.setGravity( Gravity.CENTER, 0, 0 );
+            Toast toast = Toast.makeText(getApplicationContext(), "Não foi possível realizar operação, tente novamente.", Toast.LENGTH_LONG);
+            toast.setGravity(Gravity.CENTER, 0, 0);
             toast.show();
 
         }
@@ -221,11 +216,7 @@ public class MainActivityAbrirMesa extends AppCompatActivity implements ZXingSca
     }
 
 
-    private String getClasseName() {
-        //retorna o nome da classe sem o pacote
-        String s = getClass().getName();
-        return s.substring( s.lastIndexOf( "." ) );
-    }
+
 
 
 }
