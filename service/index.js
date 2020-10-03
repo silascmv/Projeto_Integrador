@@ -329,7 +329,7 @@ app.get('/listarCardapioAndroid/', (req, res) => {
 
                     var objeto_retorno = {
                         'id_produto': results[i].ID_PRODUTO,
-                        'imagem': 'http://app-ee0cc445-4a89-42ba-8fe5-8954b141f3e2.cleverapps.io' + (results[i].IMAGEM_PATH),
+                        'imagem': 'http://root-7a103f0a.localhost.run/' + (results[i].IMAGEM_PATH),
                         'nome': results[i].NOME_PRODUTO,
                         'valor': results[i].VALOR,
                         'descricao': results[i].DESCRICAO
@@ -367,7 +367,7 @@ app.get('/listarTodosProdutos/', (req, res) => {
                 for (var i = 0; i < results.length; i++) {
 
                     var objeto_retorno = {
-                        'IMAGEM': 'http://app-ee0cc445-4a89-42ba-8fe5-8954b141f3e2.cleverapps.io' + (results[i].IMAGEM_PATH),
+                        'IMAGEM': 'http://root-7a103f0a.localhost.run/' + (results[i].IMAGEM_PATH),
                         'NOME': results[i].NOME_PRODUTO,
                         'VALOR': results[i].VALOR,
                         'DESCRICAO': results[i].DESCRICAO,
@@ -564,7 +564,7 @@ app.get('/listarTodasMesas/', (req, res) => {
                         'DESCRICAO': results[i].DESCRICAO,
                         'SN_ATIVO': results[i].SN_ATIVO,
                         'QR_CODE': results[i].QR_CODE,
-                        'IMAGEM_MESA': 'http://app-ee0cc445-4a89-42ba-8fe5-8954b141f3e2.cleverapps.io' + results[i].PATH_QR_CODE,
+                        'IMAGEM_MESA': 'http://root-7a103f0a.localhost.run/' + results[i].PATH_QR_CODE,
                         'SN_DISPONIVEL': results[i].SN_DISPONIVEL
 
                     }
