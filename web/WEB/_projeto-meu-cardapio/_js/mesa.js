@@ -16,7 +16,7 @@ function cadastroMesa() {
     formData.append('QR_CODE', QR_CODE)
     formData.append('IMG', file)
 
-    fetch('http://app-ee0cc445-4a89-42ba-8fe5-8954b141f3e2.cleverapps.io/addMesa/', {
+    fetch('http://root-7a103f0a.localhost.run/addMesa/', {
         method: 'POST',
         body: formData
 
