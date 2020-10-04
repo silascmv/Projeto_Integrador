@@ -804,6 +804,6 @@ app.post('/realizarPagamentoAndroid/', (req,res) =>{
 
 
 
-app.listen(8080, () => {
-    console.log('Service is UP - LocalHost:8080');
+app.listen(5000, () => {
+    console.log('Service is UP - LocalHost:5000');
 });
