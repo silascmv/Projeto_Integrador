@@ -16,7 +16,7 @@ function cadastroMesa() {
     formData.append('QR_CODE', QR_CODE)
     formData.append('IMG', file)
 
-    fetch('http://root-7a103f0a.localhost.run/addMesa/', {
+    fetch('https://rocky-citadel-23892.herokuapp.com/addMesa/', {
         method: 'POST',
         body: formData
 

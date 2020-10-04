@@ -411,7 +411,7 @@
         $.ajax({
             type: 'get',		//Definimos o método HTTP usado
             dataType: 'json',	//Definimos o tipo de retorno
-            url: 'http://root-7a103f0a.localhost.run/listarTodosProdutos/',//Definindo o arquivo onde serão buscados os dados
+            url: 'https://rocky-citadel-23892.herokuapp.com/listarTodosProdutos/',//Definindo o arquivo onde serão buscados os dados
             success: function (dados) {
                 console.log(dados);
                 for (var i = 0; dados.length > i; i++) {
@@ -432,7 +432,7 @@
                 $.ajax({
                     type: 'get',		//Definimos o método HTTP usado
                     dataType: 'json',	//Definimos o tipo de retorno
-                    url: 'http://root-7a103f0a.localhost.run/listarTodosProdutos/',//Definindo o arquivo onde serão buscados os dados
+                    url: 'https://rocky-citadel-23892.herokuapp.com/listarTodosProdutos/',//Definindo o arquivo onde serão buscados os dados
                     success: function (dados) {
                         console.log(dados);
                         for (var i = 0; dados.length > i; i++) {
@@ -469,7 +469,7 @@
 
             let ID_PRODUTO = caguei[0];
 
-            fetch('http://root-7a103f0a.localhost.run/deletarProduto/', {
+            fetch('https://rocky-citadel-23892.herokuapp.com/deletarProduto/', {
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json',

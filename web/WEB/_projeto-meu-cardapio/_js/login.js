@@ -50,7 +50,7 @@ function login() {
   const CD_SENHA = document.getElementsByName('CD_SENHA')[0].value;
 
 
-  fetch('http://root-7a103f0a.localhost.run/realizarLoginFuncionario', {
+  fetch('https://rocky-citadel-23892.herokuapp.com/realizarLoginFuncionario', {
     method: 'POST',
     headers: {
       'Accept': 'application/json',

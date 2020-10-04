@@ -52,7 +52,7 @@ function cadastro() {
   const SETOR = document.getElementsByName('SETOR')[0].value;
   const SN_ATIVO = $('#SN_ATIVO:checked').length;
 
-  fetch('http://root-7a103f0a.localhost.run/addFuncionario/', {
+  fetch('https://rocky-citadel-23892.herokuapp.com/addFuncionario/', {
       method: 'POST',
       headers: {
         'Accept': 'application/json',

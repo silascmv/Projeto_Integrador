@@ -384,7 +384,7 @@
         $.ajax({
             type: 'get',		//Definimos o método HTTP usado
             dataType: 'json',	//Definimos o tipo de retorno
-            url: 'http://root-7a103f0a.localhost.run/consultarContaWeb',//Definindo o arquivo onde serão buscados os dados
+            url: 'https://rocky-citadel-23892.herokuapp.com/consultarContaWeb',//Definindo o arquivo onde serão buscados os dados
             success: function (dados) {
                 // produtos = dados;
                 // dados = dados.map(row => {
@@ -427,7 +427,7 @@
                 $.ajax({
                     type: 'get',		//Definimos o método HTTP usado
                     dataType: 'json',	//Definimos o tipo de retorno
-                    url: 'http://root-7a103f0a.localhost.run/consultarContaWeb',//Definindo o arquivo onde serão buscados os dados
+                    url: 'https://rocky-citadel-23892.herokuapp.com/consultarContaWeb',//Definindo o arquivo onde serão buscados os dados
                     success: function (dados) {
                         // produtos = dados;
                         // dados = dados.map(row => {
@@ -484,7 +484,7 @@
 
             let ID_PRODUTO = caguei[0];
 
-            fetch('http://root-7a103f0a.localhost.run/deletarProduto/', {
+            fetch('https://rocky-citadel-23892.herokuapp.com/deletarProduto/', {
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json',
@@ -502,7 +502,7 @@
 
             let ID_COMANDA = caguei2;
 
-            fetch('http://root-7a103f0a.localhost.run/encerrarMesa/', {
+            fetch('https://rocky-citadel-23892.herokuapp.com/encerrarMesa/', {
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json',

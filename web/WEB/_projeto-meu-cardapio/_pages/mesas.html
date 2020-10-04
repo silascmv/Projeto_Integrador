@@ -409,7 +409,7 @@
         $.ajax({
             type: 'get',		//Definimos o método HTTP usado
             dataType: 'json',	//Definimos o tipo de retorno
-            url: 'http://root-7a103f0a.localhost.run/listarTodasMesas',//Definindo o arquivo onde serão buscados os dados
+            url: 'https://rocky-citadel-23892.herokuapp.com/listarTodasMesas',//Definindo o arquivo onde serão buscados os dados
             success: function (dados) {
                 console.log(dados);
                 for (var i = 0; dados.length > i; i++) {
@@ -433,7 +433,7 @@
                 $.ajax({
                     type: 'get',		//Definimos o método HTTP usado
                     dataType: 'json',	//Definimos o tipo de retorno
-                    url: 'http://root-7a103f0a.localhost.run/listarTodasMesas',//Definindo o arquivo onde serão buscados os dados
+                    url: 'https://rocky-citadel-23892.herokuapp.com/listarTodasMesas',//Definindo o arquivo onde serão buscados os dados
                     success: function (dados) {
                         console.log(dados);
                         for (var i = 0; dados.length > i; i++) {
@@ -472,7 +472,7 @@
 
         //     let ID_MESA = caguei[0];
 
-        //     fetch('http://root-7a103f0a.localhost.run/desativarMesa/', {
+        //     fetch('https://rocky-citadel-23892.herokuapp.com/desativarMesa/', {
         //         method: 'POST',
         //         headers: {
         //             'Accept': 'application/json',
@@ -489,7 +489,7 @@
 
         function deleteRow(caguei) {
             let ID_MESA = caguei;
-            fetch('http://root-7a103f0a.localhost.run/desativarMesa/', {
+            fetch('https://rocky-citadel-23892.herokuapp.com/desativarMesa/', {
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json',

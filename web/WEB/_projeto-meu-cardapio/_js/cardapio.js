@@ -18,7 +18,7 @@ function cadastro() {
     formData.append('VALIDADE', validade)
     formData.append('IMG', img.files[0])
 
-    fetch('http://root-7a103f0a.localhost.run/addProduto/', {
+    fetch('https://rocky-citadel-23892.herokuapp.com/addProduto/', {
         method: 'POST',
         body: formData
 
