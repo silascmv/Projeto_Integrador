@@ -11,6 +11,11 @@
     "type": "git",
     "url": "git+https://github.com/silascmv/Projeto_Integrador.git"
   },
+
+  "keywords": [
+     "heroku"
+  ],
+
   "engines": {
     "node": "10.21.0"
   },
