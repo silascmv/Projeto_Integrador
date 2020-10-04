@@ -7,7 +7,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitClient {
 
-    private static final String BASE_URL = "http://root-7a103f0a.localhost.run/";
+    private static final String BASE_URL = "https://rocky-citadel-23892.herokuapp.com/";
     private static RetrofitClient mInstance;
     private Retrofit retrofit;
 
