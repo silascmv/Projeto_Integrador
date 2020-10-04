@@ -367,7 +367,7 @@ app.get('/listarTodosProdutos/', (req, res) => {
                 for (var i = 0; i < results.length; i++) {
 
                     var objeto_retorno = {
-                        'IMAGEM': 'https://rocky-citadel-23892.herokuapp.com/' + (results[i].IMAGEM_PATH),
+                        'IMAGEM': 'https://rocky-citadel-23892.herokuapp.com' + (results[i].IMAGEM_PATH),
                         'NOME': results[i].NOME_PRODUTO,
                         'VALOR': results[i].VALOR,
                         'DESCRICAO': results[i].DESCRICAO,
@@ -564,7 +564,7 @@ app.get('/listarTodasMesas/', (req, res) => {
                         'DESCRICAO': results[i].DESCRICAO,
                         'SN_ATIVO': results[i].SN_ATIVO,
                         'QR_CODE': results[i].QR_CODE,
-                        'IMAGEM_MESA': 'https://rocky-citadel-23892.herokuapp.com/' + results[i].PATH_QR_CODE,
+                        'IMAGEM_MESA': 'https://rocky-citadel-23892.herokuapp.com' + results[i].PATH_QR_CODE,
                         'SN_DISPONIVEL': results[i].SN_DISPONIVEL
 
                     }
