@@ -11,6 +11,9 @@
     "type": "git",
     "url": "git+https://github.com/silascmv/Projeto_Integrador.git"
   },
+  "engines": {
+    "node": "10.21.0"
+  },
   "author": "",
   "license": "ISC",
   "bugs": {

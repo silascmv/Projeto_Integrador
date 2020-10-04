@@ -8,7 +8,7 @@ function cadastro() {
     const SETOR = document.getElementsByName('SETOR')[0].value;
     const SN_ATIVO = $('#SN_ATIVO:checked').length;
 
-    fetch('http://app-ee0cc445-4a89-42ba-8fe5-8954b141f3e2.cleverapps.io/addFuncionario/', {
+    fetch('http://root-7a103f0a.localhost.run/addFuncionario/', {
         method: 'POST',
         headers: {
           'Accept': 'application/json',

@@ -18,7 +18,7 @@ function cadastro() {
     formData.append('VALIDADE', validade)
     formData.append('IMG', img.files[0])
 
-    fetch('http://app-ee0cc445-4a89-42ba-8fe5-8954b141f3e2.cleverapps.io/addProduto/', {
+    fetch('http://root-7a103f0a.localhost.run/addProduto/', {
         method: 'POST',
         body: formData
 
