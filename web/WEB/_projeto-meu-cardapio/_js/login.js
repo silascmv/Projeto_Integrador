@@ -50,7 +50,7 @@ function login() {
   const CD_SENHA = document.getElementsByName('CD_SENHA')[0].value;
 
 
-  fetch('http://app-ee0cc445-4a89-42ba-8fe5-8954b141f3e2.cleverapps.io/realizarLoginFuncionario', {
+  fetch('http://root-7a103f0a.localhost.run/realizarLoginFuncionario', {
     method: 'POST',
     headers: {
       'Accept': 'application/json',
