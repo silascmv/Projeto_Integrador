@@ -64,6 +64,16 @@ router.get('/', (req, res) => res.json({
 }));
 app.use('/', router);
 
+var cloudinary = require('cloudinary')
+
+cloudinary.config({ 
+    cloud_name: 'himkykyiz', 
+    api_key: '184197379824936', 
+    api_secret: 'eHN-zNJ-3cYx71qYXHa07FBeHck' 
+  });
+
+
+
 app.post('/addCliente/', function (req, res) {
     //Abrindo Conexão com o Banco de Dados (Objeto Pool Importado da Classe DataBase)
     pool.getConnection(function (err, pool) {
