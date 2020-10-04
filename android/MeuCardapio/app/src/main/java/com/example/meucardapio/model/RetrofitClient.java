@@ -7,7 +7,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitClient {
 
-    private static final String BASE_URL = "http://app-ee0cc445-4a89-42ba-8fe5-8954b141f3e2.cleverapps.io/";
+    private static final String BASE_URL = "http://root-7a103f0a.localhost.run/";
     private static RetrofitClient mInstance;
     private Retrofit retrofit;
 

@@ -5,7 +5,30 @@ class DataAcessLayer {
         const bodyParser = require('body-parser');
         const mysql = require('mysql');
         const cors = require('cors');
+        //CONFIGURAÇÃO COM STORAGE DE IMAGEM
+     
+
     };
+
+
+
+    insertImagemStorage(imagem){
+        var cloudinary = require('cloudinary')
+        cloudinary.config({ 
+        cloud_name: 'himkykyiz', 
+        api_key: '184197379824936', 
+        api_secret: 'eHN-zNJ-3cYx71qYXHa07FBeHck' 
+        });
+
+        return new Promise((resolve, reject) => {
+            cloudinary.uploader.upload(imagem,(result)=> {            
+            resolve(result.url)
+            
+            })
+        });
+
+
+    }
 
     insertLoginTransaction(req, pool) {
         // Parâmetros para TABELA-LOGIN

@@ -64,6 +64,7 @@ router.get('/', (req, res) => res.json({
 }));
 app.use('/', router);
 
+//CONFIGURAÇÃO COM STORAGE DE IMAGEM
 var cloudinary = require('cloudinary')
 
 cloudinary.config({ 
@@ -117,6 +118,7 @@ app.post('/addFuncionario/', function (req, res) {
 
 app.post('/addMesa/', upload.single('IMG'), (req, res) => {
 
+    var url_imagem = ""
     var controle_disponibilidade = parseInt(req.param("SN_ATIVO"));
 
 
@@ -125,20 +127,24 @@ app.post('/addMesa/', upload.single('IMG'), (req, res) => {
         controle_disponibilidade = 0
     }
 
-    var mesa = {
-
-        DESCRICAO: req.param("DESCRICAO"),
-        SN_ATIVO: req.param("SN_ATIVO"),
-        QR_CODE: req.param("QR_CODE"),
-        PATH_QR_CODE: '/my-uploads/' + req.file.filename,
-        SN_DISPONIVEL: controle_disponibilidade
-    }
-
+   
     pool.getConnection(function (err, pool) {
         const objeto_dal = new DataAcessLayer();
         try {
             async function cadMesa() {
-                await objeto_dal.cadastrarMesa(req, pool, mesa).then(resultado => {
+                await objeto_dal.insertImagemStorage(req.file.path).then(resultado => {               
+                url_imagem = resultado;                 
+                var mesa = {
+
+                    DESCRICAO: req.param("DESCRICAO"),
+                    SN_ATIVO: req.param("SN_ATIVO"),
+                    QR_CODE: req.param("QR_CODE"),
+                    PATH_QR_CODE: url_imagem,
+                    SN_DISPONIVEL: controle_disponibilidade
+                }
+                
+
+                objeto_dal.cadastrarMesa(req, pool, mesa).then(resultado => {
                     if (resultado.code_status === '01') {
                         req.session.destroy(function (err) {
                             res.send(resultado).end();
@@ -159,6 +165,9 @@ app.post('/addMesa/', upload.single('IMG'), (req, res) => {
                     }
 
                 });
+
+
+            })
             }
             cadMesa();
 
@@ -171,7 +180,7 @@ app.post('/addMesa/', upload.single('IMG'), (req, res) => {
 });
 
 app.post('/addProduto/', upload.single('IMG'), (req, res) => {
-
+    var url_imagem = ""
     var data = new Date()
     //console.log('Caminho : ' + req.file.path);
     //variavel pra setar a hora na foto
@@ -188,45 +197,49 @@ app.post('/addProduto/', upload.single('IMG'), (req, res) => {
         console.log("ENTROU NO IF")
         req.file.filename = 'SemFoto'
     }
-
-    var produto = {
-
-        NOME_PRODUTO: req.param("NOME_PRODUTO"),
-        ID_FORNECEDOR: req.param("ID_FORNECEDOR"),
-        VALOR: req.param("VALOR"),
-        DESCRICAO: req.param("DESCRICAO"),
-        CODIGO_BARRA: req.param("CODIGO_BARRA"),
-        TIPO: req.param("TIPO"),
-        VALIDADE: data,
-        IMAGEM_PATH: '/my-uploads/' + req.file.filename
-    }
-
+  
     pool.getConnection(function (err, pool) {
         const objeto_dal = new DataAcessLayer();
         try {
-            async function uploadFoto() {
-                await objeto_dal.insertProduto(req, pool, produto).then(resultado => {
-                    if (resultado.code_status === '01') {
-                        req.session.destroy(function (err) {
-                            res.send(resultado).end();
-                        })
-                    } else if (resultado.code_status === '04') {
-                        //Remover arquivo caso não seja cadastrado
-                        unlinkAsync(req.file.destination + '/' + req.file.filename);
-                        res.send(resultado).end();
-                    } else if (resultado.code_status === '00') {
-                        //Remover arquivo caso não seja cadastrado
-                        unlinkAsync(req.file.destination + '/' + req.file.filename);
-                        res.send(resultado).end();
-
-                    } else {
-
-
-
-                    }
-
-                });
+            async function uploadFoto() {            
+            await objeto_dal.insertImagemStorage(req.file.path).then(resultado => {               
+            url_imagem = resultado;
+            var produto = {
+                NOME_PRODUTO: req.param("NOME_PRODUTO"),
+                ID_FORNECEDOR: req.param("ID_FORNECEDOR"),
+                VALOR: req.param("VALOR"),
+                DESCRICAO: req.param("DESCRICAO"),
+                CODIGO_BARRA: req.param("CODIGO_BARRA"),
+                TIPO: req.param("TIPO"),
+                VALIDADE: data,
+                IMAGEM_PATH: url_imagem
             }
+
+            objeto_dal.insertProduto(req, pool, produto).then(resultado => {
+                if (resultado.code_status === '01') {
+                    req.session.destroy(function (err) {
+                        res.send(resultado).end();
+                    })
+                }else if (resultado.code_status === '04') {
+                    //Remover arquivo caso não seja cadastrado
+                    unlinkAsync(req.file.destination + '/' + req.file.filename);
+                    res.send(resultado).end();
+                }else if (resultado.code_status === '00') {
+                    //Remover arquivo caso não seja cadastrado
+                    unlinkAsync(req.file.destination + '/' + req.file.filename);
+                    res.send(resultado).end();
+
+                }else {
+
+
+
+            }
+
+        });
+    
+    })
+
+    }
             uploadFoto();
 
         } catch (err) {
@@ -339,7 +352,7 @@ app.get('/listarCardapioAndroid/', (req, res) => {
 
                     var objeto_retorno = {
                         'id_produto': results[i].ID_PRODUTO,
-                        'imagem': 'https://rocky-citadel-23892.herokuapp.com' + (results[i].IMAGEM_PATH),
+                        'imagem': results[i].IMAGEM_PATH,
                         'nome': results[i].NOME_PRODUTO,
                         'valor': results[i].VALOR,
                         'descricao': results[i].DESCRICAO
@@ -377,7 +390,7 @@ app.get('/listarTodosProdutos/', (req, res) => {
                 for (var i = 0; i < results.length; i++) {
 
                     var objeto_retorno = {
-                        'IMAGEM': 'https://rocky-citadel-23892.herokuapp.com' + (results[i].IMAGEM_PATH),
+                        'IMAGEM': results[i].IMAGEM_PATH,
                         'NOME': results[i].NOME_PRODUTO,
                         'VALOR': results[i].VALOR,
                         'DESCRICAO': results[i].DESCRICAO,
@@ -574,7 +587,7 @@ app.get('/listarTodasMesas/', (req, res) => {
                         'DESCRICAO': results[i].DESCRICAO,
                         'SN_ATIVO': results[i].SN_ATIVO,
                         'QR_CODE': results[i].QR_CODE,
-                        'IMAGEM_MESA': 'https://rocky-citadel-23892.herokuapp.com' + results[i].PATH_QR_CODE,
+                        'IMAGEM_MESA': results[i].PATH_QR_CODE,
                         'SN_DISPONIVEL': results[i].SN_DISPONIVEL
 
                     }
