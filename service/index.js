@@ -329,7 +329,7 @@ app.get('/listarCardapioAndroid/', (req, res) => {
 
                     var objeto_retorno = {
                         'id_produto': results[i].ID_PRODUTO,
-                        'imagem': 'https://rocky-citadel-23892.herokuapp.com/' + (results[i].IMAGEM_PATH),
+                        'imagem': 'https://rocky-citadel-23892.herokuapp.com' + (results[i].IMAGEM_PATH),
                         'nome': results[i].NOME_PRODUTO,
                         'valor': results[i].VALOR,
                         'descricao': results[i].DESCRICAO
