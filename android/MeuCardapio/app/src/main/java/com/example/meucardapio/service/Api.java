@@ -8,6 +8,7 @@ import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Query;
 
 import com.example.meucardapio.model.Cardapio;
 import com.example.meucardapio.model.Conta;
@@ -83,6 +84,6 @@ public interface Api {
     Call<List<Cardapio>> getCardapio();
 
     @GET("verificarStatusMesaUsuario")
-    Call<StatusCliente> verificarStatusMesaUsuario(@Field("id_cliente") int id_cliente);
+    Call<StatusCliente> verificarStatusMesaUsuario(@Query("id_cliente") Integer id_cliente);
 
 }

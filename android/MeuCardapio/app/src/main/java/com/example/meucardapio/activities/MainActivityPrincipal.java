@@ -66,7 +66,9 @@ public class MainActivityPrincipal extends AppCompatActivity {
 
         try {
             statusCliente = new HttpServiceStatusMesa(preferencias.getIdUsuarioLogado()).execute().get();
-            Log.i("CHEGOU AQUI","STATUSCLIENTE" + statusCliente);
+            Log.i("CHEGOU AQUI","STATUSCLIENTE" + statusCliente.getSn_pago());
+            Log.i("CHEGOU AQUI","STATUSCLIENTE" + statusCliente.getCode_status());
+            Log.i("CHEGOU AQUI","------------------------------------------------------------" + statusCliente.getStatus());
 
         } catch (ExecutionException e) {
             e.printStackTrace();

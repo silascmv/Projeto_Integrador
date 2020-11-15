@@ -465,13 +465,14 @@ app.get("/verificarStatusMesaUsuario/", (req, res) => {
       if (results.length == 0) {
         res.json({
           status: "O Usuário não está associado a nenhuma mesa.",
-          code_status: 00,
+          code_status: 01
         });
       } else {
         var objeto_retorno = {
           id_comanda: results[0].ID_COMANDA,
           id_mesa: results[0].ID_MESA,
           sn_pago: results[0].SN_PAGO,
+          code_status: 00
         };
       }
       res.json(objeto_retorno);
@@ -481,8 +482,6 @@ app.get("/verificarStatusMesaUsuario/", (req, res) => {
 
 
 app.post('/desativarFuncionario/', (req, res) => {
-
-
 
     pool.getConnection(function (err, pool) {
 
