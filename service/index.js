@@ -451,6 +451,33 @@ app.get('/listarTodosFuncionarios/', (req, res) => {
 
 });
 
+app.get("/verificarStatusMesaUsuario/", (req, res) => {
+  let id_cliente = req.param("id_cliente");
+
+  pool.getConnection((err, pool) => {
+    var query = "SELECT ID_COMANDA,ID_MESA,SN_PAGO FROM COMANDA WHERE ID_CLIENTE = " + id_cliente + " AND SN_PAGO = 0";
+    
+    pool.query(query, (error, results, fields) => {
+      if (error) {
+        console.log(error);
+      }
+      if (results.length == 0) {
+        res.json({
+          status: "O Usuário não está associado a nenhuma mesa.",
+          code_status: 00,
+        });
+      } else {
+        var objeto_retorno = {
+          id_comanda: results[0].ID_COMANDA,
+          id_mesa: results[0].ID_MESA,
+          sn_pago: results[0].SN_PAGO,
+        };
+      }
+      res.json(objeto_retorno);
+    });
+  });
+});
+
 
 app.post('/desativarFuncionario/', (req, res) => {
 

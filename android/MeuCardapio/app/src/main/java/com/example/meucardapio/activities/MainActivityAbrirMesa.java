@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Build;
@@ -189,6 +190,7 @@ public class MainActivityAbrirMesa extends AppCompatActivity implements ZXingSca
                 preferencias.salvarMesaUsuario(retornoAbrirMesa.getMesa_cliente());
                 preferencias.snAbriuComanda(true);
                 preferencias.SalvarIdPagamento(0,false);
+                Intent intentTelaCadastro = new Intent(getApplicationContext(), MainActivityPrincipal.class);
 
                 //SCANNER
                 mScannerView.startCamera();
@@ -197,6 +199,8 @@ public class MainActivityAbrirMesa extends AppCompatActivity implements ZXingSca
                     @Override
                     public void run() {
                         mScannerView.resumeCameraPreview(MainActivityAbrirMesa.this);
+                        startActivity(intentTelaCadastro);
+
                     }
                 }, 2000);
             } catch (ExecutionException e) {

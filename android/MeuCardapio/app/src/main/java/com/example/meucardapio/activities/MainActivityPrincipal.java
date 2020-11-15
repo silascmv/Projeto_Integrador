@@ -21,7 +21,11 @@ import com.example.meucardapio.activities.MainActivityCarteira;
 import com.example.meucardapio.activities.MainActivityCupom;
 import com.example.meucardapio.activities.MainActivityLocalizar;
 import com.example.meucardapio.model.Preferencias;
+import com.example.meucardapio.model.StatusCliente;
 import com.example.meucardapio.model.UsuarioLogado;
+import com.example.meucardapio.service.HttpServiceStatusMesa;
+
+import java.util.concurrent.ExecutionException;
 
 public class MainActivityPrincipal extends AppCompatActivity {
 
@@ -58,10 +62,18 @@ public class MainActivityPrincipal extends AppCompatActivity {
         final LinearLayout abrirCarteira = findViewById(R.id.abrirCarteira);
         final LinearLayout abrirAjuda = findViewById(R.id.abrirAjuda);
         final LinearLayout abrirLocalizar = findViewById(R.id.abrirLocalizar);
+        StatusCliente statusCliente ;
 
-        Log.i("TESTE","TESTE" + preferencias.getSnAbriuComanda());
+        try {
+            statusCliente = new HttpServiceStatusMesa(preferencias.getIdUsuarioLogado()).execute().get();
+            Log.i("CHEGOU AQUI","STATUSCLIENTE" + statusCliente);
 
-        Log.i("TESTE","REALIZOU PEDIDO" + preferencias.getRealizouPedido());
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
 
         if(preferencias.getSnAbriuComanda() != false) {
 

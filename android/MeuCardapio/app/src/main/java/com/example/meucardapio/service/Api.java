@@ -12,6 +12,7 @@ import retrofit2.http.POST;
 import com.example.meucardapio.model.Cardapio;
 import com.example.meucardapio.model.Conta;
 import com.example.meucardapio.model.ItemPedido;
+import com.example.meucardapio.model.StatusCliente;
 import com.example.meucardapio.service.CodeStatus;
 
 import java.util.List;
@@ -80,5 +81,8 @@ public interface Api {
 
     @GET("listarCardapioAndroid")
     Call<List<Cardapio>> getCardapio();
+
+    @GET("verificarStatusMesaUsuario")
+    Call<StatusCliente> verificarStatusMesaUsuario(@Field("id_cliente") int id_cliente);
 
 }
