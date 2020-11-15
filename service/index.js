@@ -1,4 +1,5 @@
 //IMPORTAÇÃO DE BIBLIOTECAS EXPRESS(API),MYSQL(DATABASE),BODYPARSER(JSON)
+//
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
