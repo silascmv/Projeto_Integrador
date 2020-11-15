@@ -481,6 +481,36 @@ app.get("/verificarStatusMesaUsuario/", (req, res) => {
 });
 
 
+app.get("/verificarClienteRealizouPedido/", (req, res) => {
+    let id_cliente = req.param("id_cliente");
+  
+    pool.getConnection((err, pool) => {
+      var query = "SELECT COUNT(PRODUTOS.ID_PRODUTO) FROM COMANDA_PRODUTO JOIN PRODUTOS ON PRODUTOS.ID_PRODUTO = ID_PRODUTO_FK JOIN COMANDA  ON COMANDA.ID_COMANDA = COMANDA_PRODUTO.ID_COMANDA_FK JOIN MESAS ON COMANDA.ID_MESA = MESAS.ID_MESA JOIN CLIENTE ON COMANDA.ID_CLIENTE = CLIENTE.ID_CLIENTE JOIN FUNCIONARIO ON COMANDA.ID_FUNCIONARIO = FUNCIONARIO.ID_FUNCIONARIO WHERE COMANDA.SN_PAGO = 0 AND CLIENTE.ID_CLIENTE = " + id_cliente + " GROUP BY PRODUTOS.ID_PRODUTO LIMIT 1";
+      
+      pool.query(query, (error, results, fields) => {
+        if (error) {
+          console.log(error);
+        }
+
+        console.log(results);
+        console.log(fields);
+
+        if (results.length == 0) {
+          res.json({
+            status: "O Usuário não realizou nenhum pedido ainda",
+            code_status: 00
+          });
+        } else {
+          var objeto_retorno = {
+            status: "O Usuário já realizou pedidos",
+            code_status: 01
+          };
+        }
+        res.json(objeto_retorno);
+      });
+    });
+  });
+
 app.post('/desativarFuncionario/', (req, res) => {
 
     pool.getConnection(function (err, pool) {

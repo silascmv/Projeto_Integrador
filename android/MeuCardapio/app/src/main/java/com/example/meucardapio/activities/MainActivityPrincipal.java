@@ -55,31 +55,24 @@ public class MainActivityPrincipal extends AppCompatActivity {
         buildLayout();
     }
 
-    private void buildLayout(){
+    private void buildLayout() {
         final LinearLayout abrirComanda = findViewById(R.id.abrirComanda);
         final LinearLayout abrirCardapio = findViewById(R.id.abrirCardapio);
         final LinearLayout abrirCupom = findViewById(R.id.abrirCupom);
         final LinearLayout abrirCarteira = findViewById(R.id.abrirCarteira);
         final LinearLayout abrirAjuda = findViewById(R.id.abrirAjuda);
         final LinearLayout abrirLocalizar = findViewById(R.id.abrirLocalizar);
-        StatusCliente statusCliente ;
+        StatusCliente statusCliente = null;
 
         try {
             statusCliente = new HttpServiceStatusMesa(preferencias.getIdUsuarioLogado()).execute().get();
-            Log.i("CHEGOU AQUI","STATUSCLIENTE" + statusCliente.getSn_pago());
-            Log.i("CHEGOU AQUI","STATUSCLIENTE" + statusCliente.getCode_status());
-            Log.i("CHEGOU AQUI","------------------------------------------------------------" + statusCliente.getStatus());
 
         } catch (ExecutionException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-
-
-        if(preferencias.getSnAbriuComanda() != false) {
-
-            Log.i("CHEGOU AQUI NO IF","IF" + preferencias.getSnAbriuComanda());
+        if (statusCliente.getCode_status() != 1) {
 
             abrirComanda.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -93,20 +86,17 @@ public class MainActivityPrincipal extends AppCompatActivity {
             abrirCarteira.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intentTelaCarteira = new Intent(getApplicationContext(), MainActivityCarteira.class );
+                    Intent intentTelaCarteira = new Intent(getApplicationContext(), MainActivityCarteira.class);
                     intentTelaCarteira.putExtra("usuarioLogado", (Parcelable) usuarioLogado);
                     startActivity(intentTelaCarteira);
                 }
             });
 
 
-
-        }else if(!preferencias.getRealizouPedido()){
-
-
-            Log.i("CHEGOU AQUI NO ELSE IF","IF" + preferencias.getRealizouPedido());
+        } else if (!preferencias.getRealizouPedido()) {
 
 
+            Log.i("CHEGOU AQUI NO ELSE IF", "IF" + preferencias.getRealizouPedido());
 
 
             abrirCarteira.setOnClickListener(new View.OnClickListener() {
@@ -123,7 +113,7 @@ public class MainActivityPrincipal extends AppCompatActivity {
             abrirComanda.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intentTelaCadastro = new Intent(getApplicationContext(), MainActivityAbrirMesa.class );
+                    Intent intentTelaCadastro = new Intent(getApplicationContext(), MainActivityAbrirMesa.class);
                     intentTelaCadastro.putExtra("usuarioLogado", (Parcelable) usuarioLogado);
                     startActivity(intentTelaCadastro);
 
@@ -131,14 +121,14 @@ public class MainActivityPrincipal extends AppCompatActivity {
             });
 
 
-        }else{
+        } else {
 
-            Log.i("CHEGOU AQUI NO ELSE","ELSE" + preferencias.getRealizouPedido());
+            Log.i("CHEGOU AQUI NO ELSE", "ELSE" + preferencias.getRealizouPedido());
 
             abrirComanda.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intentTelaCadastro = new Intent(getApplicationContext(), MainActivityAbrirMesa.class );
+                    Intent intentTelaCadastro = new Intent(getApplicationContext(), MainActivityAbrirMesa.class);
                     intentTelaCadastro.putExtra("usuarioLogado", (Parcelable) usuarioLogado);
                     startActivity(intentTelaCadastro);
 
@@ -147,12 +137,10 @@ public class MainActivityPrincipal extends AppCompatActivity {
         }
 
 
-
-
         abrirCardapio.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intentTelaCardapio = new Intent(getApplicationContext(), MainActivityCardapio.class );
+                Intent intentTelaCardapio = new Intent(getApplicationContext(), MainActivityCardapio.class);
                 intentTelaCardapio.putExtra("usuarioLogado", (Parcelable) usuarioLogado);
                 startActivity(intentTelaCardapio);
 
@@ -161,7 +149,7 @@ public class MainActivityPrincipal extends AppCompatActivity {
         abrirCupom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intentTelaCupom = new Intent(getApplicationContext(), MainActivityCupom.class );
+                Intent intentTelaCupom = new Intent(getApplicationContext(), MainActivityCupom.class);
                 intentTelaCupom.putExtra("usuarioLogado", (Parcelable) usuarioLogado);
                 startActivity(intentTelaCupom);
             }
@@ -170,7 +158,7 @@ public class MainActivityPrincipal extends AppCompatActivity {
         abrirAjuda.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intentTelaAjuda = new Intent(getApplicationContext(), MainActivityAjuda.class );
+                Intent intentTelaAjuda = new Intent(getApplicationContext(), MainActivityAjuda.class);
                 intentTelaAjuda.putExtra("usuarioLogado", (Parcelable) usuarioLogado);
                 startActivity(intentTelaAjuda);
             }
@@ -179,29 +167,27 @@ public class MainActivityPrincipal extends AppCompatActivity {
         abrirLocalizar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intentTelaLocalizar = new Intent(getApplicationContext(), MainActivityLocalizar.class );
+                Intent intentTelaLocalizar = new Intent(getApplicationContext(), MainActivityLocalizar.class);
                 intentTelaLocalizar.putExtra("usuarioLogado", (Parcelable) usuarioLogado);
                 startActivity(intentTelaLocalizar);
             }
         });
 
 
-
-
     }
 
 
-    private boolean verificaComandaAberta(){
+    private boolean verificaComandaAberta() {
 
         SharedPreferences sharedPreferences = getSharedPreferences("preferencias", Context.MODE_PRIVATE);
         int resultado = sharedPreferences.getInt("idComandaUsuario", 0);
 
 
-        if(resultado == 0){
+        if (resultado == 0) {
 
             return false;
 
-        }else{
+        } else {
 
             return true;
         }
@@ -209,8 +195,7 @@ public class MainActivityPrincipal extends AppCompatActivity {
     }
 
 
-
-    private String getClasseName(){
+    private String getClasseName() {
         //retorna o nome da classe sem o pacote
         String s = getClass().getName();
         return s.substring(s.lastIndexOf("."));
